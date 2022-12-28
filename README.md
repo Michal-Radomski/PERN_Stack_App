@@ -1,2 +1,3 @@
-# PERN_Stack_App
-PERN Stack App
+# PERN Stack Auth App
+
+PERN Stack Auth App
