@@ -1,11 +1,10 @@
-import express, { Router, Request, Response } from "express";
+import express, { Router } from "express";
+
+import { getTestRoute } from "./controller";
 
 const indexRouter: Router = express.Router();
 
 // Test route
-indexRouter.get("/", (req: Request, res: Response) => {
-  console.log("req.ip:", req.ip);
-  res.send("<h1 style='color:blue;text-align:center'>API is running</h1>");
-});
+indexRouter.get("/test", getTestRoute);
 
 export default indexRouter;
