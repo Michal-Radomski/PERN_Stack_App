@@ -10,6 +10,7 @@ import helmet from "helmet";
 
 // Import routes
 import indexRouter from "./indexRouter";
+import { connectDb } from "./psql";
 
 // The server
 const app: Express = express();
@@ -39,6 +40,10 @@ app.use("/api", indexRouter);
 
 // Port
 const port = (process.env.PORT || 5000) as number;
+
+connectDb().then(() => {
+  console.log("Connected to the DB successfully...");
+});
 
 const server = http.createServer(app);
 server.listen({ port: port }, () => {
