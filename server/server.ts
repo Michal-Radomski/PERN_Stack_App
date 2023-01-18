@@ -41,9 +41,7 @@ app.use("/api", indexRouter);
 // Port
 const port = (process.env.PORT || 5000) as number;
 
-connectDb().then(() => {
-  console.log("Connected to the DB successfully...");
-});
+connectDb();
 
 const server = http.createServer(app);
 server.listen({ port: port }, () => {
