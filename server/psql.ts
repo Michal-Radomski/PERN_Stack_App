@@ -13,16 +13,16 @@ const pool = new Pool({
 
 export default pool;
 
-export const connectDb = async () => {
-  try {
-    await pool.connect().then(() => {
-      console.log("Connected to the DB successfully...");
-    });
-    const res = await pool.query("SELECT * FROM users");
-    // await console.log({ pool });
-    await console.log("res.rows:", res.rows);
-    await pool.end();
-  } catch (error) {
-    console.log({ error });
-  }
-};
+// export const connectDb = async () => {
+//   try {
+//     await pool.connect().then(() => {
+//       console.log("Connected to the DB successfully...");
+//     });
+//     const res = await pool.query("SELECT * FROM users");
+//     // await console.log({ pool });
+//     await console.log("res.rows:", res.rows);
+//     await pool.end();
+//   } catch (error) {
+//     console.log({ error });
+//   }
+// };

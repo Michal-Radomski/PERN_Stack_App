@@ -1,8 +1,10 @@
 import express, { Router } from "express";
 
-import { getTestRoute } from "./controller";
+import { getTestRoute, register } from "./controller";
 
 const indexRouter: Router = express.Router();
+
+indexRouter.post("/register", register);
 
 // Test route
 indexRouter.get("/test", getTestRoute);
