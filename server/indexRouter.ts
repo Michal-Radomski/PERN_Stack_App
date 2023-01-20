@@ -13,7 +13,7 @@ indexRouter.post("/register", register);
 
 indexRouter.post("/login", login);
 
-indexRouter.get("/logout", logout);
+indexRouter.post("/logout", logout);
 
 // // Test route
 // indexRouter.get("/test", getTestRoute);

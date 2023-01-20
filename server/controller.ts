@@ -90,7 +90,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     };
     // console.log({ cookieOptions });
 
-    res.status(200).cookie("jwt", jwtToken, cookieOptions).json({ message: "You logged in successfully!" });
+    res.status(200).cookie("jwtToken", jwtToken, cookieOptions).json({ message: "You logged in successfully!" });
   } catch (error) {
     console.error({ error });
     res.status(500).json({ message: "Server error" + error });
@@ -98,12 +98,14 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
 };
 
 export const logout: RequestHandler = async (req: Request, res: Response): Promise<void> => {
-  console.log("req.ip:", req.ip);
-  await res.cookie("jwt", "logout", {
-    expires: new Date(Date.now() + 0.5 * 1000),
-    httpOnly: true,
-  });
-  await setTimeout(() => res.status(200).redirect("/"), 600);
+  try {
+    await console.log("req.ip:", req.ip);
+    await res.clearCookie("jwtToken");
+    await res.status(200).json({ message: "Logout Successfully" });
+  } catch (error) {
+    console.error({ error });
+    res.status(500).json({ message: "Server error" + error });
+  }
 };
 
 // // Test controller
