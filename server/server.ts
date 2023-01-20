@@ -7,6 +7,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import helmet from "helmet";
+import cookieParser from "cookie-parser";
 
 // Import routes
 import indexRouter from "./indexRouter";
@@ -17,6 +18,7 @@ const app: Express = express();
 
 // Middlewares
 app.use(cors());
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("combined"));
