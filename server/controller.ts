@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response } from "express";
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 import pool from "./psql";
@@ -52,8 +52,47 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
   }
 };
 
-// Test controller
-export const getTestRoute: RequestHandler = async (req: Request, res: Response): Promise<void> => {
-  await console.log("req.ip:", req.ip);
-  await res.send("<h1 style='color:blue;text-align:center'>API is running</h1>");
+export const login: RequestHandler = async (req: Request, res: Response): Promise<Object | undefined> => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "Please provide an email and password",
+    });
+  }
+
+  try {
+    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email]);
+    if (user.rows.length === 0) {
+      return res.status(401).json("Invalid Credential - Unknown User");
+    }
+    const validPassword: boolean = await bcrypt.compare(password, user.rows[0].user_password);
+
+    if (!validPassword) {
+      return res.status(401).json("Invalid Credential - Email or Password is incorrect");
+    }
+    // console.log("user:", user);
+
+    const id = user.rows[0].user_id;
+    const name = user.rows[0].user_name;
+
+    const jwtToken = await jwt.sign({ id, name, email }, process.env.jwtSecret as string, {
+      expiresIn: "1h",
+    });
+
+    return res.status(200).json({ jwtToken });
+  } catch (error) {
+    console.error({ error });
+    res.status(500).send("Server error" + error);
+  }
 };
+
+export const logout: RequestHandler = async (req: Request, res: Response): Promise<Object | undefined> => {
+  return undefined;
+};
+
+// // Test controller
+// export const getTestRoute: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+//   await console.log("req.ip:", req.ip);
+//   await res.send("<h1 style='color:blue;text-align:center'>API is running</h1>");
+// };
