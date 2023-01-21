@@ -100,12 +100,19 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
 export const logout: RequestHandler = async (req: Request, res: Response): Promise<void> => {
   try {
     await console.log("req.ip:", req.ip);
+    // await res.cookie("jwtToken", "", { maxAge: 1 })
     await res.clearCookie("jwtToken");
     await res.status(200).json({ message: "Logout Successfully" });
   } catch (error) {
     console.error({ error });
     res.status(500).json({ message: "Server error" + error });
   }
+};
+
+export const dashboard: RequestHandler = async (req: Request, res: Response): Promise<any> => {
+  await console.log("req.ip:", req.ip);
+  // await res.send("<h1 style='color:blue;text-align:center'>Protected Route</h1>");
+  await res.json({ message: "Protected Route" });
 };
 
 // // Test controller

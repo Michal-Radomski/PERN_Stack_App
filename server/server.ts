@@ -51,3 +51,7 @@ server.listen({ port: port }, () => {
   // For testing only
   console.log("Current Time:", new Date().toLocaleTimeString());
 });
+
+//* Generate JWT secret string
+// const JWT_Secret = require("crypto").randomBytes(48).toString("hex");
+// console.log({ JWT_Secret }, JWT_Secret.length);
