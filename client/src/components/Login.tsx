@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import styled from "styled-components";
 
 const LoginForm = styled.div`
@@ -31,7 +32,18 @@ const Login = (): JSX.Element => {
 
   const onSubmitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    alert(`${email} ${password}`);
+    const user = { email, password };
+    // console.log({ user });
+    // alert(`${email} ${password}`);
+    const URL = "/api/login";
+    try {
+      const response = await axios.post(URL, user);
+      // console.log(response);
+      const data = response.data;
+      console.log("data:", data);
+    } catch (error) {
+      console.error({ error });
+    }
   };
 
   return (
