@@ -32,25 +32,23 @@ export const checkAuth = (req: CustomRequest, res: Response, next: NextFunction)
   }
 };
 
-interface CustomRequest extends Request {
-  user?: Object;
-}
-
 // This middleware will continue on if the token is inside the local storage
-const authorize = function (req: CustomRequest, res: Response, next: NextFunction) {
+export const authorize = function (req: CustomRequest, res: Response, next: NextFunction) {
   // Get token from header
-  const jwtToken = req.header("jwt_token");
+  // const jwtToken = req.cookies("jwtToken");
+  const jwtToken = req.cookies.jwtToken;
+  console.log("jwtToken:", jwtToken);
 
   // Check if not token
   if (!jwtToken) {
-    return res.status(403).json({ msg: "authorization denied" });
+    return res.status(403).json({ msg: "Authorization denied" });
   }
 
   // Verify token
   try {
     // It is going to give use the user id (user:{id: user.id})
     const verify = jwt.verify(jwtToken, process.env.jwtSecret as string) as jwt.JwtPayload;
-    // console.log({ verify });
+    console.log({ verify });
 
     req.user = verify.user;
     // console.log("req.user:", req.user);
@@ -60,5 +58,3 @@ const authorize = function (req: CustomRequest, res: Response, next: NextFunctio
     res.status(401).json({ msg: "Token is not valid", error: error });
   }
 };
-
-export default authorize;

@@ -8,7 +8,7 @@ import {
   register,
   verifyToken,
 } from "./controller";
-import authorize, { checkAuth } from "./middleware";
+import { authorize, checkAuth } from "./middleware";
 
 const indexRouter: Router = express.Router();
 

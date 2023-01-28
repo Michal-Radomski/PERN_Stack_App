@@ -118,7 +118,7 @@ export const dashboard: RequestHandler = async (req: Request, res: Response): Pr
 export const verifyToken: RequestHandler = async (req: Request, res: Response) => {
   await console.log("req.ip:", req.ip);
   try {
-    res.json(true);
+    res.json({ message: "jwtToken: Ok" });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");
