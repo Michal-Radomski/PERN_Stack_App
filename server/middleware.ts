@@ -8,9 +8,9 @@ interface CustomRequest extends Request {
 }
 
 export const checkAuth = (req: CustomRequest, res: Response, next: NextFunction) => {
-  // Get token from header
+  //* V1 Get token from header
   // const jwtToken = req.header("jwtToken");
-  // Get token from cookies
+  //* V2 Get token from cookies
   const jwtToken = req.cookies.jwtToken;
 
   // Check if not token
@@ -22,22 +22,18 @@ export const checkAuth = (req: CustomRequest, res: Response, next: NextFunction)
   try {
     const verify = jwt.verify(jwtToken, process.env.jwtSecret as string) as jwt.JwtPayload;
     // console.log({ verify });
-
-    req.user = verify.user;
-    console.log("req.user:", req.user);
-    console.log("verify.user:", verify.user);
+    req.user = verify;
     next();
   } catch (error) {
     res.status(401).json({ msg: "Token is not valid", error: error });
   }
 };
 
-// This middleware will continue on if the token is inside the local storage
+// This middleware will continue on if the token is in cookie
 export const authorize = function (req: CustomRequest, res: Response, next: NextFunction) {
-  // Get token from header
-  // const jwtToken = req.cookies("jwtToken");
+  // Get token from cookie
   const jwtToken = req.cookies.jwtToken;
-  console.log("jwtToken:", jwtToken);
+  // console.log("jwtToken:", jwtToken);
 
   // Check if not token
   if (!jwtToken) {
@@ -48,11 +44,8 @@ export const authorize = function (req: CustomRequest, res: Response, next: Next
   try {
     // It is going to give use the user id (user:{id: user.id})
     const verify = jwt.verify(jwtToken, process.env.jwtSecret as string) as jwt.JwtPayload;
-    console.log({ verify });
-
-    req.user = verify.user;
-    // console.log("req.user:", req.user);
-    // console.log("verify.user:", verify.user);
+    // console.log({ verify });
+    req.user = verify;
     next();
   } catch (error) {
     res.status(401).json({ msg: "Token is not valid", error: error });

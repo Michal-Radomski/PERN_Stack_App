@@ -4,6 +4,10 @@ import bcrypt from "bcrypt";
 
 import pool from "./psql";
 
+interface CustomRequest extends Request {
+  user?: Object;
+}
+
 export const register: RequestHandler = async (req: Request, res: Response): Promise<Object | undefined> => {
   const { name, email, password, passwordConfirm } = req.body;
 
@@ -90,7 +94,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     };
     // console.log({ cookieOptions });
 
-    res.status(200).cookie("jwtToken", jwtToken, cookieOptions).json({ message: "You logged in successfully!" });
+    res.status(200).cookie("jwtToken", jwtToken, cookieOptions).json({ message: "You logged in successfully!", jwtToken });
   } catch (error) {
     console.error({ error });
     res.status(500).json({ message: "Server error" + error });
@@ -109,16 +113,21 @@ export const logout: RequestHandler = async (req: Request, res: Response): Promi
   }
 };
 
-export const dashboard: RequestHandler = async (req: Request, res: Response): Promise<any> => {
+export const dashboard: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
   await console.log("req.ip:", req.ip);
+  // await console.log("req.user:", req.user);
   // await res.send("<h1 style='color:blue;text-align:center'>Protected Route</h1>");
   await res.json({ message: "Protected Route" });
 };
 
-export const verifyToken: RequestHandler = async (req: Request, res: Response) => {
-  await console.log("req.ip:", req.ip);
+// Verify
+export const verifyToken: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
+  // await console.log("req.ip:", req.ip);
+  // await console.log("req.user:", req.user);
+
   try {
-    res.json({ message: "jwtToken: Ok" });
+    // res.json({ message: "jwtToken: Ok" });
+    res.json({ message: req.user });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");

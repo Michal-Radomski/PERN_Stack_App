@@ -20,7 +20,6 @@ indexRouter.post("/logout", logout);
 
 indexRouter.get("/dashboard", checkAuth, dashboard);
 
-// Verify
 indexRouter.post("/verify", authorize, verifyToken);
 
 // // Test route
