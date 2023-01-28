@@ -115,6 +115,16 @@ export const dashboard: RequestHandler = async (req: Request, res: Response): Pr
   await res.json({ message: "Protected Route" });
 };
 
+export const verifyToken: RequestHandler = async (req: Request, res: Response) => {
+  await console.log("req.ip:", req.ip);
+  try {
+    res.json(true);
+  } catch (error) {
+    console.error({ error });
+    res.status(500).send("Server error");
+  }
+};
+
 // // Test controller
 // export const getTestRoute: RequestHandler = async (req: Request, res: Response): Promise<void> => {
 //   await console.log("req.ip:", req.ip);
