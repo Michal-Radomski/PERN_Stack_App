@@ -1,8 +1,11 @@
 import axios from "axios";
 import React from "react";
-import { Button } from "reactstrap";
+import { Button } from "react-bootstrap";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.scss";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 import Login from "./components/Login";
 
 function App(): JSX.Element {
@@ -20,9 +23,17 @@ function App(): JSX.Element {
 
   return (
     <React.Fragment>
-      PERN Stack Auth App
-      <Login />
-      <Button onClick={logout}>Logout</Button>
+      <Router>
+        <Header />
+
+        <Routes>
+          <Route path="/" element={<Login />} />
+
+          {/* <Route path="/*" element={<NotFound />} /> */}
+        </Routes>
+        <Button onClick={logout}>Logout</Button>
+        <Footer />
+      </Router>
     </React.Fragment>
   );
 }
