@@ -1,7 +1,4 @@
 import React from "react";
-import axios from "axios";
-
-import { Button } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.scss";
@@ -25,18 +22,6 @@ function App(): JSX.Element {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  const logout = async () => {
-    const URL = "/api/logout";
-    try {
-      const response = await axios.post(URL);
-      // console.log(response);
-      const data = response.data;
-      console.log("data:", data);
-    } catch (error) {
-      console.error({ error });
-    }
-  };
-
   return (
     <React.Fragment>
       <Router>
@@ -47,7 +32,6 @@ function App(): JSX.Element {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
-        <Button onClick={logout}>Logout</Button>
         <Footer />
       </Router>
     </React.Fragment>
