@@ -8,13 +8,17 @@ import "./App.scss";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./components/Login";
-import { useAppDispatch } from "./redux/hooks";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { checkAuth } from "./redux/actions";
+import Dashboard from "./Dashboard";
 
 const NotFound = (): JSX.Element => <h1 style={{ textAlign: "center", marginTop: "80px" }}>Page Not Found</h1>;
 
 function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
+
+  const [authStatus]: [object] = useAppSelector((state: RootState) => [state?.appState?.authStatus]);
+  console.log("authStatus;", authStatus);
 
   React.useEffect(() => {
     dispatch(checkAuth());
@@ -37,7 +41,8 @@ function App(): JSX.Element {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <Button onClick={logout}>Logout</Button>
