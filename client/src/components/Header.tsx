@@ -21,15 +21,21 @@ const Header = (): JSX.Element => {
     <React.Fragment>
       <Navbar bg="secondary" variant="dark">
         <HeaderContainer>
-          <OverlayTrigger placement={"bottom"} overlay={<Tooltip id={"headerTooltip"}>Test</Tooltip>}>
+          <OverlayTrigger placement={"bottom"} overlay={<Tooltip id={"headerTooltip"}>Main Page</Tooltip>}>
             <Navbar.Brand to="/" as={NavLink}>
-              PERN Stack Auth App
+              <h1>PERN Stack Auth App</h1>
             </Navbar.Brand>
           </OverlayTrigger>
 
           <Nav className="me-auto">
-            <Nav.Link to="/" as={NavLink}>
-              Tabela
+            <Nav.Link to="/login" as={NavLink}>
+              Login
+            </Nav.Link>
+            <Nav.Link to="/register" as={NavLink}>
+              Register
+            </Nav.Link>
+            <Nav.Link to="/dashboard" as={NavLink}>
+              Dashboard
             </Nav.Link>
           </Nav>
         </HeaderContainer>

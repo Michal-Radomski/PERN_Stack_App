@@ -10,7 +10,8 @@ import Header from "./components/Header";
 import Login from "./components/Login";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { checkAuth } from "./redux/actions";
-import Dashboard from "./Dashboard";
+import Dashboard from "./components/Dashboard";
+import Register from "./components/Register";
 
 const NotFound = (): JSX.Element => <h1 style={{ textAlign: "center", marginTop: "80px" }}>Page Not Found</h1>;
 
@@ -42,6 +43,7 @@ function App(): JSX.Element {
         <Header />
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
