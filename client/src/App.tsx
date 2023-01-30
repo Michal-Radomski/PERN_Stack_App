@@ -1,5 +1,6 @@
-import axios from "axios";
 import React from "react";
+import axios from "axios";
+
 import { Button } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -7,8 +8,16 @@ import "./App.scss";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./components/Login";
+import { useAppDispatch } from "./redux/hooks";
+import { checkAuth } from "./redux/actions";
 
 function App(): JSX.Element {
+  const dispatch: AppDispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
   const logout = async () => {
     const URL = "/api/logout";
     try {
