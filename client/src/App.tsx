@@ -9,8 +9,7 @@ import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { checkAuth } from "./redux/actions";
 import Dashboard from "./components/Dashboard";
 import Register from "./components/Register";
-
-const NotFound = (): JSX.Element => <h1 style={{ textAlign: "center", marginTop: "80px" }}>Page Not Found</h1>;
+import NotFound from "./components/NotFound";
 
 function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();

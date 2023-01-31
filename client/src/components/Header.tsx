@@ -1,8 +1,10 @@
-import axios from "axios";
 import React from "react";
 import { Button, Nav, Navbar, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+
+import { logoutAction } from "../redux/actions";
+import { useAppDispatch } from "../redux/hooks";
 
 const HeaderContainer = styled.div`
   position: relative;
@@ -17,19 +19,13 @@ const HeaderContainer = styled.div`
   align-content: center;
 `;
 
-const logout = async () => {
-  const URL = "/api/logout";
-  try {
-    const response = await axios.post(URL);
-    // console.log(response);
-    const data = response.data;
-    console.log("data:", data);
-  } catch (error) {
-    console.error({ error });
-  }
-};
-
 const Header = (): JSX.Element => {
+  const dispatch: AppDispatch = useAppDispatch();
+
+  const logout = () => {
+    dispatch(logoutAction());
+  };
+
   return (
     <React.Fragment>
       <Navbar bg="secondary" variant="dark" fixed="top">

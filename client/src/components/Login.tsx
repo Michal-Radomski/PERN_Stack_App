@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 const LoginForm = styled.div`
-  margin-top: 2rem;
+  margin-top: 3rem;
   width: 600px;
   height: auto;
   margin-left: auto;
