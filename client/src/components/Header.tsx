@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 import { logoutAction } from "../redux/actions";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const HeaderContainer = styled.div`
   position: relative;
@@ -21,6 +21,8 @@ const HeaderContainer = styled.div`
 
 const Header = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
+  const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.auth]);
+  // console.log("authStatus;", authStatus);
 
   const logout = () => {
     dispatch(logoutAction());
@@ -36,18 +38,26 @@ const Header = (): JSX.Element => {
             </Navbar.Brand>
           </OverlayTrigger>
           <Nav>
-            <Nav.Link to="/login" as={NavLink}>
-              Login
-            </Nav.Link>
-            <Nav.Link to="/register" as={NavLink}>
-              Register
-            </Nav.Link>
-            <Nav.Link to="/dashboard" as={NavLink}>
-              Dashboard
-            </Nav.Link>
-            <Button onClick={logout} variant="outline-light">
-              Logout
-            </Button>
+            {!authStatus && (
+              <React.Fragment>
+                <Nav.Link to="/login" as={NavLink}>
+                  Login
+                </Nav.Link>
+                <Nav.Link to="/register" as={NavLink}>
+                  Register
+                </Nav.Link>
+              </React.Fragment>
+            )}
+            {authStatus && (
+              <React.Fragment>
+                <Nav.Link to="/dashboard" as={NavLink}>
+                  Dashboard
+                </Nav.Link>
+                <Button onClick={logout} variant="outline-light">
+                  Logout
+                </Button>
+              </React.Fragment>
+            )}
           </Nav>
         </HeaderContainer>
       </Navbar>

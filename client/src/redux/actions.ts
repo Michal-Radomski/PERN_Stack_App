@@ -61,7 +61,7 @@ export const logoutAction = () => async (dispatch: AppDispatch) => {
 export const loginAction = (user: User) => async (dispatch: AppDispatch) => {
   const URL = "/api/login";
   await axios
-    .post(URL)
+    .post(URL, user)
     .then((response) => {
       const dataToPass = response?.data;
       // console.log("response.status:", response.status);
