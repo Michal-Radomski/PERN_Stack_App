@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { loginAction } from "../redux/actions";
@@ -22,6 +22,7 @@ const LoginForm = styled.div`
 `;
 
 const Login = (): JSX.Element => {
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useAppDispatch();
   const [loginInputs, setLoginInputs] = React.useState<User>({
     email: "",
@@ -43,6 +44,7 @@ const Login = (): JSX.Element => {
     // console.log({ user });
     // alert(`${email} ${password}`);
     await dispatch(loginAction(user));
+    await navigate("/dashboard");
   };
 
   return (

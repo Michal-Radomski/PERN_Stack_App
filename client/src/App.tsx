@@ -14,7 +14,7 @@ import NotFound from "./components/NotFound";
 function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [authStatus]: [object] = useAppSelector((state: RootState) => [state?.appState?.authStatus]);
+  const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.auth]);
   console.log("authStatus;", authStatus);
 
   React.useEffect(() => {
