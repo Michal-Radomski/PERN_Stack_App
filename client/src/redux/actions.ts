@@ -3,8 +3,9 @@ import axios from "axios";
 import { CHECK_AUTH, LOGIN, LOGOUT } from "./actionTypes";
 
 export const checkAuth = () => async (dispatch: AppDispatch) => {
+  const URL = "/api/verify";
   await axios
-    .post("/api/verify")
+    .post(URL)
     .then((response) => {
       const dataToPass = response?.data;
       // console.log("response.status:", response.status);
@@ -59,15 +60,6 @@ export const logoutAction = () => async (dispatch: AppDispatch) => {
 
 export const loginAction = (user: User) => async (dispatch: AppDispatch) => {
   const URL = "/api/login";
-  try {
-    const response = await axios.post(URL, user);
-    // console.log(response);
-    const data = response.data;
-    console.log("data:", data);
-  } catch (error) {
-    console.error({ error });
-  }
-
   await axios
     .post(URL)
     .then((response) => {
