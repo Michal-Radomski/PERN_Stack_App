@@ -1,9 +1,9 @@
 import axios from "axios";
 
-import { CHECK_AUTH } from "./actionTypes";
+import { CHECK_AUTH, LOGOUT } from "./actionTypes";
 
 export const checkAuth = () => async (dispatch: AppDispatch) => {
-  axios
+  await axios
     .post("/api/verify")
     .then((response) => {
       const dataToPass = response?.data;
@@ -34,14 +34,25 @@ export const checkAuth = () => async (dispatch: AppDispatch) => {
     });
 };
 
-export const logoutAction = async () => {
+export const logoutAction = () => async (dispatch: AppDispatch) => {
   const URL = "/api/logout";
-  try {
-    const response = await axios.post(URL);
-    // console.log(response);
-    const data = response.data;
-    console.log("data:", data);
-  } catch (error) {
-    console.error({ error });
-  }
+  await axios
+    .post(URL)
+    .then((response) => {
+      const dataToPass = response?.data;
+      // console.log("dataToPass:", dataToPass);
+      const dataToPassWithStatus = { ...dataToPass, auth: false };
+      // console.log("dataToPassWithStatus:", dataToPassWithStatus);
+      dispatch({ type: LOGOUT, payload: dataToPassWithStatus });
+    })
+    .catch(function (error) {
+      console.log({ error });
+      if (error.response) {
+        if (error.response.status !== 200) {
+          const dataToPass = error.response.data;
+          const dataToPassWithStatus = { ...dataToPass, auth: false };
+          dispatch({ type: LOGOUT, payload: dataToPassWithStatus });
+        }
+      }
+    });
 };
