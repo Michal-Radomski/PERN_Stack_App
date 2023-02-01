@@ -1,10 +1,13 @@
 import React from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+
+import { loginAction } from "../redux/actions";
+import { useAppDispatch } from "../redux/hooks";
 
 const LoginForm = styled.div`
   margin-top: 3rem;
-  width: 600px;
+  width: 300px;
   height: auto;
   margin-left: auto;
   margin-right: auto;
@@ -13,9 +16,13 @@ const LoginForm = styled.div`
   justify-content: center;
   align-items: center;
   align-content: center;
+  form {
+    width: 100%;
+  }
 `;
 
 const Login = (): JSX.Element => {
+  const dispatch: AppDispatch = useAppDispatch();
   const [loginInputs, setLoginInputs] = React.useState<User>({
     email: "",
     password: "",
@@ -32,18 +39,10 @@ const Login = (): JSX.Element => {
 
   const onSubmitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const user = { email, password };
+    const user: User = { email, password };
     // console.log({ user });
     // alert(`${email} ${password}`);
-    const URL = "/api/login";
-    try {
-      const response = await axios.post(URL, user);
-      // console.log(response);
-      const data = response.data;
-      console.log("data:", data);
-    } catch (error) {
-      console.error({ error });
-    }
+    await dispatch(loginAction(user));
   };
 
   return (
@@ -75,9 +74,10 @@ const Login = (): JSX.Element => {
             Submit
           </button>
         </form>
+        <Link to="/register" style={{ width: "100%", textDecoration: "none" }}>
+          Register
+        </Link>
       </LoginForm>
-
-      {/* <Link to="/register">Register</Link> */}
     </React.Fragment>
   );
 };

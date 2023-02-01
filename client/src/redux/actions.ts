@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { CHECK_AUTH, LOGOUT } from "./actionTypes";
+import { CHECK_AUTH, LOGIN, LOGOUT } from "./actionTypes";
 
 export const checkAuth = () => async (dispatch: AppDispatch) => {
   await axios
@@ -9,9 +9,9 @@ export const checkAuth = () => async (dispatch: AppDispatch) => {
       const dataToPass = response?.data;
       // console.log("response.status:", response.status);
       // console.log("dataToPass:", dataToPass);
-      const dataToPassWithStatus = { ...dataToPass, auth: true };
-      // console.log("dataToPassWithStatus:", dataToPassWithStatus);
       if (response.status === 200) {
+        const dataToPassWithStatus = { ...dataToPass, auth: true };
+        // console.log("dataToPassWithStatus:", dataToPassWithStatus);
         dispatch({ type: CHECK_AUTH, payload: dataToPassWithStatus });
       }
     })
@@ -53,6 +53,38 @@ export const logoutAction = () => async (dispatch: AppDispatch) => {
           const dataToPassWithStatus = { ...dataToPass, auth: false };
           dispatch({ type: LOGOUT, payload: dataToPassWithStatus });
         }
+      }
+    });
+};
+
+export const loginAction = (user: User) => async (dispatch: AppDispatch) => {
+  const URL = "/api/login";
+  try {
+    const response = await axios.post(URL, user);
+    // console.log(response);
+    const data = response.data;
+    console.log("data:", data);
+  } catch (error) {
+    console.error({ error });
+  }
+
+  await axios
+    .post(URL)
+    .then((response) => {
+      const dataToPass = response?.data;
+      // console.log("response.status:", response.status);
+      // console.log("dataToPass:", dataToPass);
+      if (response.status === 200) {
+        const dataToPassWithStatus = { ...dataToPass, auth: true };
+        // console.log("dataToPassWithStatus:", dataToPassWithStatus)
+        dispatch({ type: LOGIN, payload: dataToPassWithStatus });
+      }
+    })
+    .catch(function (error) {
+      if (error) {
+        const dataToPass = error.response.data;
+        const dataToPassWithStatus = { ...dataToPass, auth: false };
+        dispatch({ type: CHECK_AUTH, payload: dataToPassWithStatus });
       }
     });
 };
