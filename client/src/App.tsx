@@ -10,6 +10,7 @@ import { checkAuth } from "./redux/actions";
 import Dashboard from "./components/Dashboard";
 import Register from "./components/Register";
 import NotFound from "./components/NotFound";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
@@ -28,7 +29,14 @@ function App(): JSX.Element {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />
