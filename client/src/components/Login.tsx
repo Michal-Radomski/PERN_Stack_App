@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { loginAction } from "../redux/actions";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const LoginForm = styled.div`
   margin-top: 3rem;
@@ -23,7 +23,11 @@ const LoginForm = styled.div`
 
 const Login = (): JSX.Element => {
   const navigate = useNavigate();
+
   const dispatch: AppDispatch = useAppDispatch();
+  const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.auth]);
+  // console.log("authStatus;", authStatus);
+
   const [loginInputs, setLoginInputs] = React.useState<User>({
     email: "",
     password: "",
@@ -44,8 +48,13 @@ const Login = (): JSX.Element => {
     // console.log({ user });
     // alert(`${email} ${password}`);
     await dispatch(loginAction(user));
-    await navigate("/dashboard");
   };
+
+  React.useEffect(() => {
+    if (authStatus) {
+      navigate("/dashboard");
+    }
+  }, [authStatus, navigate]);
 
   return (
     <React.Fragment>

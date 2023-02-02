@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Nav, Navbar, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { logoutAction } from "../redux/actions";
@@ -20,12 +20,14 @@ const HeaderContainer = styled.div`
 `;
 
 const Header = (): JSX.Element => {
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useAppDispatch();
   const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.auth]);
   // console.log("authStatus;", authStatus);
 
-  const logout = () => {
-    dispatch(logoutAction());
+  const logout = async () => {
+    await dispatch(logoutAction());
+    await navigate("/login");
   };
 
   return (
