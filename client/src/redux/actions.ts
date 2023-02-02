@@ -80,3 +80,26 @@ export const loginAction = (user: User) => async (dispatch: AppDispatch) => {
       }
     });
 };
+
+export const registerAction = (user: User) => async (dispatch: AppDispatch) => {
+  const URL = "/api/register";
+  await axios
+    .post(URL, user)
+    .then((response) => {
+      const dataToPass = response?.data;
+      console.log("response.status:", response.status);
+      console.log("dataToPass:", dataToPass);
+      // if (response.status === 200) {
+      //   const dataToPassWithStatus = { ...dataToPass, auth: true };
+      //   // console.log("dataToPassWithStatus:", dataToPassWithStatus)
+      //   dispatch({ type: LOGIN, payload: dataToPassWithStatus });
+      // }
+    })
+    .catch(function (error) {
+      if (error) {
+        const dataToPass = error.response.data;
+        const dataToPassWithStatus = { ...dataToPass, auth: false };
+        // dispatch({ type: CHECK_AUTH, payload: dataToPassWithStatus });
+      }
+    });
+};

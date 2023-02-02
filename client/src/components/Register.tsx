@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { registerAction } from "../redux/actions";
+import { useAppDispatch } from "../redux/hooks";
+
 const RegisterForm = styled.div`
   margin-top: 3rem;
   width: 300px;
@@ -19,6 +22,7 @@ const RegisterForm = styled.div`
 `;
 
 const Register = (): JSX.Element => {
+  const dispatch: AppDispatch = useAppDispatch();
   const [registerInputs, setRegisterInputs] = React.useState<User>({
     name: "",
     email: "",
@@ -38,8 +42,12 @@ const Register = (): JSX.Element => {
   const onSubmitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const user: User = { name, email, password, passwordConfirm };
-    console.log({ user });
-    // await dispatch(loginAction(user));
+    if (password !== passwordConfirm) {
+      console.log("Passwords must be equal");
+      return;
+    }
+    // console.log({ user });
+    await dispatch(registerAction(user));
   };
 
   return (
