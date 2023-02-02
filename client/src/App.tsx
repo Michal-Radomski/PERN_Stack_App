@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 
 import "./App.scss";
 import Footer from "./components/Footer";
@@ -16,7 +16,7 @@ function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
 
   const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.auth]);
-  console.log("authStatus;", authStatus);
+  // console.log("authStatus;", authStatus);
 
   React.useEffect(() => {
     dispatch(checkAuth());
@@ -27,8 +27,9 @@ function App(): JSX.Element {
       <Router>
         <Header />
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={authStatus ? <Navigate replace to="/dashboard" /> : <Login />} />
+          <Route path="/register" element={authStatus ? <Navigate replace to="/dashboard" /> : <Register />} />
+
           <Route
             path="/dashboard"
             element={
