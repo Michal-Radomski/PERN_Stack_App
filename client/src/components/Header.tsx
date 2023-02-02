@@ -34,8 +34,11 @@ const Header = (): JSX.Element => {
     <React.Fragment>
       <Navbar bg="secondary" variant="dark" fixed="top">
         <HeaderContainer>
-          <OverlayTrigger placement={"bottom"} overlay={<Tooltip id={"headerTooltip"}>Main Page</Tooltip>}>
-            <Navbar.Brand to="/" as={NavLink}>
+          <OverlayTrigger
+            placement={"bottom"}
+            overlay={<Tooltip id={"headerTooltip"}>{authStatus ? "Dashboard Page" : "Login Page"}</Tooltip>}
+          >
+            <Navbar.Brand to={authStatus ? "/dashboard" : "/login"} as={NavLink}>
               <h1>PERN Stack Auth App</h1>
             </Navbar.Brand>
           </OverlayTrigger>
