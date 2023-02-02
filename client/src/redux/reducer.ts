@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { CHECK_AUTH, LOGIN, LOGOUT } from "./actionTypes";
+import { CHECK_AUTH, LOGIN, LOGOUT, REGISTER } from "./actionTypes";
 // import { Action, RootState } from "../Interfaces";
 
 const initialState: RootState = {};
@@ -12,6 +12,8 @@ const appReducer = function (state = initialState, action: Action): RootState {
     case LOGOUT:
       return { ...state, authStatus: action.payload };
     case LOGIN:
+      return { ...state, authStatus: action.payload };
+    case REGISTER:
       return { ...state, authStatus: action.payload };
 
     default:

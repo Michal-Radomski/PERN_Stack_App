@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { CHECK_AUTH, LOGIN, LOGOUT } from "./actionTypes";
+import { CHECK_AUTH, LOGIN, LOGOUT, REGISTER } from "./actionTypes";
 
 export const checkAuth = () => async (dispatch: AppDispatch) => {
   const URL = "/api/verify";
@@ -76,7 +76,7 @@ export const loginAction = (user: User) => async (dispatch: AppDispatch) => {
       if (error) {
         const dataToPass = error.response.data;
         const dataToPassWithStatus = { ...dataToPass, auth: false };
-        dispatch({ type: CHECK_AUTH, payload: dataToPassWithStatus });
+        dispatch({ type: LOGIN, payload: dataToPassWithStatus });
       }
     });
 };
@@ -87,19 +87,16 @@ export const registerAction = (user: User) => async (dispatch: AppDispatch) => {
     .post(URL, user)
     .then((response) => {
       const dataToPass = response?.data;
-      console.log("response.status:", response.status);
-      console.log("dataToPass:", dataToPass);
-      // if (response.status === 200) {
-      //   const dataToPassWithStatus = { ...dataToPass, auth: true };
-      //   // console.log("dataToPassWithStatus:", dataToPassWithStatus)
-      //   dispatch({ type: LOGIN, payload: dataToPassWithStatus });
-      // }
+      // console.log("response.status:", response.status);
+      // console.log("dataToPass:", dataToPass);
+      if (response.status === 201) {
+        dispatch({ type: REGISTER, payload: dataToPass });
+      }
     })
     .catch(function (error) {
       if (error) {
         const dataToPass = error.response.data;
-        const dataToPassWithStatus = { ...dataToPass, auth: false };
-        // dispatch({ type: CHECK_AUTH, payload: dataToPassWithStatus });
+        dispatch({ type: REGISTER, payload: dataToPass });
       }
     });
 };
