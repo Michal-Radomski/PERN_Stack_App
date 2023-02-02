@@ -27,8 +27,12 @@ function App(): JSX.Element {
       <Router>
         <Header />
         <Routes>
-          <Route path="/login" element={authStatus ? <Navigate replace to="/dashboard" /> : <Login />} />
-          <Route path="/register" element={authStatus ? <Navigate replace to="/dashboard" /> : <Register />} />
+          <Route
+            path="/"
+            element={authStatus ? <Navigate replace={true} to="/dashboard" /> : <Navigate replace={true} to="/login" />}
+          />
+          <Route path="/login" element={authStatus ? <Navigate replace={true} to="/dashboard" /> : <Login />} />
+          <Route path="/register" element={authStatus ? <Navigate replace={true} to="/dashboard" /> : <Register />} />
 
           <Route
             path="/dashboard"
