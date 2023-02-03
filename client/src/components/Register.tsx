@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { registerAction } from "../redux/actions";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const RegisterForm = styled.div`
   margin-top: 3rem;
@@ -23,12 +23,27 @@ const RegisterForm = styled.div`
 
 const Register = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const [authMessage]: [string] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.message]);
+  // console.log("authMessage;", authMessage);
+
   const [registerInputs, setRegisterInputs] = React.useState<User>({
     name: "",
     email: "",
     password: "",
     passwordConfirm: "",
   });
+
+  React.useEffect(() => {
+    if (authMessage === "User registered") {
+      const postRegisterAction = async () => {
+        await alert("You will be redirected to Login Page");
+        await navigate("/login");
+      };
+      postRegisterAction();
+    }
+  }, [authMessage, navigate]);
 
   const { name, email, password, passwordConfirm } = registerInputs;
 
