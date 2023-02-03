@@ -26,7 +26,7 @@ const Register = (): JSX.Element => {
   const navigate = useNavigate();
 
   const [authMessage]: [string] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.message]);
-  // console.log("authMessage;", authMessage);
+  console.log("authMessage;", authMessage);
 
   const [registerInputs, setRegisterInputs] = React.useState<User>({
     name: "",
@@ -41,7 +41,9 @@ const Register = (): JSX.Element => {
         await alert("You will be redirected to Login Page");
         await navigate("/login");
       };
-      postRegisterAction();
+      setTimeout(() => {
+        postRegisterAction();
+      }, 500);
     }
   }, [authMessage, navigate]);
 
