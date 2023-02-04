@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { loginAction } from "../redux/actions";
+import { loginAction, changeMessage } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const LoginForm = styled.div`
@@ -47,6 +47,7 @@ const Login = (): JSX.Element => {
     const user: User = { email, password };
     // console.log({ user });
     // alert(`${email} ${password}`);
+    await dispatch(changeMessage(""));
     await dispatch(loginAction(user));
   };
 

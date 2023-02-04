@@ -25,16 +25,14 @@ function App(): JSX.Element {
 
   const [message, setMessage] = React.useState<string>("");
   const [color, setColor] = React.useState<string>("");
-  // console.log({ color });
+  // console.log({ message });
 
   React.useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
   React.useEffect(() => {
-    if (authMessage) {
-      setMessage(authMessage);
-    }
+    setMessage(authMessage);
   }, [authMessage, message]);
 
   React.useEffect(() => {

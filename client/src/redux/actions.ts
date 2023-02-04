@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { CHECK_AUTH, LOGIN, LOGOUT, REGISTER } from "./actionTypes";
+import { CHECK_AUTH, LOGIN, LOGOUT, REGISTER, CHANGE_MESSAGE } from "./actionTypes";
 
 export const checkAuth = () => async (dispatch: AppDispatch) => {
   const URL = "/api/verify";
@@ -99,4 +99,12 @@ export const registerAction = (user: User) => async (dispatch: AppDispatch) => {
         dispatch({ type: REGISTER, payload: dataToPass });
       }
     });
+};
+
+export const changeMessage = (str: string, color?: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch({ type: CHANGE_MESSAGE, payload: { message: str, color: color } });
+  } catch (error) {
+    console.log(error);
+  }
 };
