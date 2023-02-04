@@ -11,21 +11,35 @@ import Dashboard from "./components/Dashboard";
 import Register from "./components/Register";
 import NotFound from "./components/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
+import ToastComponent from "./components/ToastComponent";
 
 function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.auth]);
-  // console.log("authStatus;", authStatus);
+  const [authStatus, authMessage]: [boolean, string] = useAppSelector((state: RootState) => [
+    state?.appState?.authStatus?.auth,
+    state?.appState?.authStatus?.message,
+  ]);
+  // console.log("authMessage;", authMessage);
+
+  const [message, setMessage] = React.useState<string>("");
+  // console.log({ message });
 
   React.useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
+  React.useEffect(() => {
+    if (authMessage) {
+      setMessage(authMessage);
+    }
+  }, [authMessage, message]);
+
   return (
     <React.Fragment>
       <Router>
         <Header />
+        {message && <ToastComponent message={message} />}
         <Routes>
           <Route
             path="/"
