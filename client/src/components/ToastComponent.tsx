@@ -5,7 +5,7 @@ import reactIcon from "../Icons/reactIcon.svg";
 
 const ToastComponent = ({ message, color }: { message: string; color: string }): JSX.Element => {
   const [show, setShow] = React.useState<boolean>(false);
-  // console.log({ show });
+  // console.log({ color });
 
   const toggleShow = () => setShow(!show);
 

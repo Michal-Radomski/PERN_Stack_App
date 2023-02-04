@@ -25,7 +25,7 @@ function App(): JSX.Element {
 
   const [message, setMessage] = React.useState<string>("");
   const [color, setColor] = React.useState<string>("");
-  // console.log({ message });
+  // console.log({ color });
 
   React.useEffect(() => {
     dispatch(checkAuth());
@@ -47,7 +47,7 @@ function App(): JSX.Element {
     <React.Fragment>
       <Router>
         <Header />
-        {message && <ToastComponent message={message} color={color || "info"} />}
+        {message && <ToastComponent message={message} color={color ? color : "info"} />}
         <Routes>
           <Route
             path="/"

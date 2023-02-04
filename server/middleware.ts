@@ -15,7 +15,7 @@ export const checkAuth = (req: CustomRequest, res: Response, next: NextFunction)
 
   // Check if not token
   if (!jwtToken) {
-    return res.status(403).json({ message: "Not authorized, token not available" });
+    return res.status(403).json({ message: "Not authorized, token not available", color: "danger" });
   }
 
   // Verify token

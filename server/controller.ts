@@ -14,18 +14,21 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
   if (!email || !password || !name || !passwordConfirm) {
     return res.status(400).json({
       message: "Please fill all the fields",
+      color: "warning",
     });
   }
 
   if (password !== passwordConfirm) {
     return res.status(400).json({
       message: "Passwords do not match",
+      color: "warning",
     });
   }
 
   if (password.length < 8 || passwordConfirm.length < 8) {
     return res.status(400).json({
       message: "Password is too short",
+      color: "warning",
     });
   }
 
@@ -34,7 +37,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     // console.log({ user });
 
     if (user.rows.length > 0) {
-      return res.status(401).json({ message: "User already exist!" });
+      return res.status(401).json({ message: "User already exist!", color: "danger" });
     }
 
     const salt = await bcrypt.genSalt(12);
@@ -49,6 +52,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
 
     return res.status(201).json({
       message: "User registered",
+      color: "success",
     });
   } catch (error) {
     console.error({ error });
@@ -62,6 +66,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
   if (!email || !password) {
     return res.status(400).json({
       message: "Please provide an email and password",
+      color: "warning",
     });
   }
 
@@ -73,7 +78,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     const validPassword: boolean = await bcrypt.compare(password, user.rows[0].user_password);
 
     if (!validPassword) {
-      return res.status(401).json({ message: "Invalid Credential - Email or Password is incorrect" });
+      return res.status(401).json({ message: "Invalid Credential - Email or Password is incorrect", color: "danger" });
     }
     // console.log("user:", user);
 
@@ -94,7 +99,10 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     };
     // console.log({ cookieOptions });
 
-    res.status(200).cookie("jwtToken", jwtToken, cookieOptions).json({ message: "You logged in successfully!", jwtToken });
+    res
+      .status(200)
+      .cookie("jwtToken", jwtToken, cookieOptions)
+      .json({ message: "You logged in successfully!", jwtToken, color: "success" });
   } catch (error) {
     console.error({ error });
     res.status(500).json({ message: "Server error" + error });
@@ -106,7 +114,7 @@ export const logout: RequestHandler = async (req: Request, res: Response): Promi
     await console.log("req.ip:", req.ip);
     // await res.cookie("jwtToken", "", { maxAge: 1 })
     await res.clearCookie("jwtToken");
-    await res.status(200).json({ message: "Logout Successfully" });
+    await res.status(200).json({ message: "Logout Successfully", color: "success" });
   } catch (error) {
     console.error({ error });
     res.status(500).json({ message: "Server error" + error });
@@ -127,7 +135,7 @@ export const verifyToken: RequestHandler = async (req: CustomRequest, res: Respo
 
   try {
     // res.json({ message: "jwtToken: Ok" });
-    res.json({ message: "jwtToken: Ok", tokenUser: req.user });
+    res.json({ message: "jwtToken: Ok", tokenUser: req.user, color: "primary" });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");
