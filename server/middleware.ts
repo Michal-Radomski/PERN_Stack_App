@@ -15,7 +15,7 @@ export const checkAuth = (req: CustomRequest, res: Response, next: NextFunction)
 
   // Check if not token
   if (!jwtToken) {
-    return res.status(403).json({ msg: "Not authorized, token not available" });
+    return res.status(403).json({ message: "Not authorized, token not available" });
   }
 
   // Verify token
@@ -25,7 +25,7 @@ export const checkAuth = (req: CustomRequest, res: Response, next: NextFunction)
     req.user = verify;
     next();
   } catch (error) {
-    res.status(401).json({ msg: "Token is not valid", error: error });
+    res.status(401).json({ message: "Token is not valid", error: error });
   }
 };
 
@@ -37,7 +37,7 @@ export const authorize = function (req: CustomRequest, res: Response, next: Next
 
   // Check if not token
   if (!jwtToken) {
-    return res.status(403).json({ msg: "Authorization denied" });
+    return res.status(403).json({ message: "Authorization denied" });
   }
 
   // Verify token
@@ -48,6 +48,6 @@ export const authorize = function (req: CustomRequest, res: Response, next: Next
     req.user = verify;
     next();
   } catch (error) {
-    res.status(401).json({ msg: "Token is not valid", error: error });
+    res.status(401).json({ message: "Token is not valid", error: error });
   }
 };

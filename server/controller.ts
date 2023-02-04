@@ -127,7 +127,7 @@ export const verifyToken: RequestHandler = async (req: CustomRequest, res: Respo
 
   try {
     // res.json({ message: "jwtToken: Ok" });
-    res.json({ message: req.user });
+    res.json({ message: "jwtToken: Ok", tokenUser: req.user });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");
