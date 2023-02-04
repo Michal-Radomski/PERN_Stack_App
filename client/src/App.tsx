@@ -16,13 +16,15 @@ import ToastComponent from "./components/ToastComponent";
 function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [authStatus, authMessage]: [boolean, string] = useAppSelector((state: RootState) => [
+  const [authStatus, authMessage, colorStatus]: [boolean, string, string] = useAppSelector((state: RootState) => [
     state?.appState?.authStatus?.auth,
     state?.appState?.authStatus?.message,
+    state?.appState?.authStatus?.color,
   ]);
   // console.log("authMessage;", authMessage);
 
   const [message, setMessage] = React.useState<string>("");
+  const [color, setColor] = React.useState<string>("");
   // console.log({ message });
 
   React.useEffect(() => {
@@ -35,11 +37,17 @@ function App(): JSX.Element {
     }
   }, [authMessage, message]);
 
+  React.useEffect(() => {
+    if (colorStatus) {
+      setColor(colorStatus);
+    }
+  }, [colorStatus, message]);
+
   return (
     <React.Fragment>
       <Router>
         <Header />
-        {message && <ToastComponent message={message} />}
+        {message && <ToastComponent message={message} color={color || "info"} />}
         <Routes>
           <Route
             path="/"

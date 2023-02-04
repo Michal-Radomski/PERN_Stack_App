@@ -37,7 +37,7 @@ export const authorize = function (req: CustomRequest, res: Response, next: Next
 
   // Check if not token
   if (!jwtToken) {
-    return res.status(403).json({ message: "Authorization denied" });
+    return res.status(403).json({ message: "Authorization denied", color: "warning" });
   }
 
   // Verify token
