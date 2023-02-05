@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 
 import { logoutAction } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { timestampToString } from "../utils/helpers";
 
 const HeaderContainer = styled.div`
   position: relative;
@@ -107,10 +108,10 @@ const Header = (): JSX.Element => {
               </TokenLine>
               <TokenLine>
                 <P>
-                  Iat: <span>{new Date(token.iat * 1000).toLocaleString()}</span>
+                  Iat: <span>{timestampToString(token.iat)}</span>
                 </P>
                 <P>
-                  Exp: <span>{new Date(token.exp * 1000).toLocaleString()}</span>
+                  Exp: <span>{timestampToString(token.exp)}</span>
                 </P>
               </TokenLine>
             </TokenContainer>
