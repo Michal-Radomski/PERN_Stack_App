@@ -25,7 +25,7 @@ const Dashboard = (): JSX.Element => {
 
   return (
     <React.Fragment>
-      <h1 style={{ textAlign: "center", marginTop: "80px" }}>Welcome to the Dashboard of the PERN Stack Auth App</h1>
+      <h1 style={{ textAlign: "center", marginTop: "100px" }}>Welcome to the Dashboard of the PERN Stack Auth App</h1>
       <h3 style={{ textAlign: "center" }}>
         message: <span style={{ fontWeight: "bold" }}>{privateState}</span>
       </h3>

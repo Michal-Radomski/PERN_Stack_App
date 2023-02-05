@@ -6,7 +6,7 @@ const NotFound = (): JSX.Element => {
   return (
     <React.Fragment>
       <Header />
-      <h1 style={{ textAlign: "center", marginTop: "80px" }}>404 Page Not Found</h1>
+      <h1 style={{ textAlign: "center", marginTop: "100px" }}>404, Page Not Found</h1>
       <Footer />
     </React.Fragment>
   );

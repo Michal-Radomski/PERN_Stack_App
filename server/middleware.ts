@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 interface CustomRequest extends Request {
+  token?: string;
   user?: Object;
 }
 
@@ -46,6 +47,7 @@ export const authorize = function (req: CustomRequest, res: Response, next: Next
     const verify = jwt.verify(jwtToken, process.env.jwtSecret as string) as jwt.JwtPayload;
     // console.log({ verify });
     req.user = verify;
+    req.token = jwtToken;
     next();
   } catch (error) {
     res.status(401).json({ message: "Token is not valid", error: error });

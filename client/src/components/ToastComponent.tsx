@@ -1,7 +1,7 @@
 import React from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 
-import reactIcon from "../Icons/reactIcon.svg";
+import reduxIcon from "../Icons/reduxIcon.svg";
 
 const ToastComponent = ({ message, color }: { message: string; color: string }): JSX.Element => {
   const [show, setShow] = React.useState<boolean>(false);
@@ -21,7 +21,7 @@ const ToastComponent = ({ message, color }: { message: string; color: string }):
         {message && (
           <Toast show={show} onClose={toggleShow} bg={color} delay={3000} autohide={true}>
             <Toast.Header>
-              <img src={reactIcon} width={25} height={25} alt="React Icon" style={{ marginRight: "0.5rem" }} />
+              <img src={reduxIcon} width={25} height={25} alt="Redux Icon" style={{ marginRight: "0.5rem" }} />
               <strong className="me-auto">PERN Stack App</strong>
             </Toast.Header>
             <Toast.Body>{message}</Toast.Body>

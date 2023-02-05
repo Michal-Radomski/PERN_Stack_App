@@ -6,7 +6,7 @@ import { changeMessage, registerAction } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const RegisterForm = styled.div`
-  margin-top: 3rem;
+  margin-top: 4rem;
   width: 300px;
   height: auto;
   margin-left: auto;

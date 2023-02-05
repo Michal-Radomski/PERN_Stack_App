@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import pool from "./psql";
 
 interface CustomRequest extends Request {
+  token?: string;
   user?: Object;
 }
 
@@ -135,7 +136,7 @@ export const verifyToken: RequestHandler = async (req: CustomRequest, res: Respo
 
   try {
     // res.json({ message: "jwtToken: Ok" });
-    res.json({ message: "jwtToken: Ok", tokenUser: req.user, color: "primary" });
+    res.json({ message: "jwtToken: Ok", tokenUser: req.user, color: "primary", jwtToken: req.token });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");

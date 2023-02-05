@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Nav, Navbar, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import jwt_decode from "jwt-decode";
 
 import { logoutAction } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -11,7 +12,7 @@ const HeaderContainer = styled.div`
   margin-left: 1rem;
   margin-right: 1rem;
   width: calc(100% - 2rem);
-  height: 58px;
+  height: 74px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -19,11 +20,57 @@ const HeaderContainer = styled.div`
   align-content: center;
 `;
 
+const TokenContainer = styled.div`
+  color: white;
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-between;
+  align-content: center;
+  font-size: 95%;
+`;
+
+const TokenLine = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  gap: 1rem;
+`;
+
+const P = styled.p`
+  margin-bottom: 0;
+  span {
+    font-weight: bold;
+  }
+`;
+
 const Header = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useAppDispatch();
-  const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.auth]);
-  // console.log("authStatus;", authStatus);
+  const [authStatus, jwtToken]: [boolean, string] = useAppSelector((state: RootState) => [
+    state?.appState?.authStatus?.auth,
+    state?.appState?.authStatus?.jwtToken,
+  ]);
+  // console.log("jwtToken;", jwtToken);
+
+  const [token, setToken] = React.useState<Token>({
+    id: "",
+    name: "",
+    email: "",
+    iat: 0,
+    exp: 0,
+  });
+
+  React.useEffect(() => {
+    if (jwtToken) {
+      const decodedToken = jwt_decode(jwtToken);
+      setToken(decodedToken as Token);
+    }
+  }, [jwtToken]);
 
   const logout = async () => {
     await dispatch(logoutAction());
@@ -32,7 +79,7 @@ const Header = (): JSX.Element => {
 
   return (
     <React.Fragment>
-      <Navbar bg="secondary" variant="dark" fixed="top">
+      <Navbar bg="secondary" variant="dark" fixed="top" style={{ padding: "0px" }}>
         <HeaderContainer>
           <OverlayTrigger
             placement={"bottom"}
@@ -42,6 +89,33 @@ const Header = (): JSX.Element => {
               <h1>PERN Stack Auth App</h1>
             </Navbar.Brand>
           </OverlayTrigger>
+
+          {authStatus && (
+            <TokenContainer>
+              <TokenLine>
+                <P style={{ width: "100%", textAlign: "center" }}>
+                  Id: <span>{token.id}</span>
+                </P>
+              </TokenLine>
+              <TokenLine>
+                <P>
+                  Name: <span>{token.name}</span>
+                </P>
+                <P>
+                  Email: <span>{token.email}</span>
+                </P>
+              </TokenLine>
+              <TokenLine>
+                <P>
+                  Iat: <span>{new Date(token.iat * 1000).toLocaleString()}</span>
+                </P>
+                <P>
+                  Exp: <span>{new Date(token.exp * 1000).toLocaleString()}</span>
+                </P>
+              </TokenLine>
+            </TokenContainer>
+          )}
+
           <Nav>
             {!authStatus && (
               <React.Fragment>
