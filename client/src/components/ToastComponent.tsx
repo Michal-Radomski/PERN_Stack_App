@@ -2,6 +2,7 @@ import React from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 
 import reduxIcon from "../Icons/reduxIcon.svg";
+import { timestampToString } from "../utils/helpers";
 
 const ToastComponent = ({ message, color }: { message: string; color: string }): JSX.Element => {
   const [show, setShow] = React.useState<boolean>(false);
@@ -17,14 +18,17 @@ const ToastComponent = ({ message, color }: { message: string; color: string }):
 
   return (
     <React.Fragment>
-      <ToastContainer className="p-3" position={"middle-end"}>
+      <ToastContainer className="p-3" position={"top-end"} style={{ marginTop: "80px" }}>
         {message && (
-          <Toast show={show} onClose={toggleShow} bg={color} delay={3000} autohide={true}>
+          <Toast show={show} onClose={toggleShow} bg={color} delay={4000} autohide={true}>
             <Toast.Header>
               <img src={reduxIcon} width={25} height={25} alt="Redux Icon" style={{ marginRight: "0.5rem" }} />
               <strong className="me-auto">PERN Stack App</strong>
+              <small>{timestampToString(Date.now() / 1000)}</small>
             </Toast.Header>
-            <Toast.Body>{message}</Toast.Body>
+            <Toast.Body>
+              <h5>{message}</h5>
+            </Toast.Body>
           </Toast>
         )}
       </ToastContainer>

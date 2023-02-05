@@ -41,7 +41,7 @@ const Register = (): JSX.Element => {
         // await alert("You will be redirected to Login Page");
         setTimeout(() => {
           dispatch(changeMessage("You are redirected to Login Page, please Login", "primary"));
-        }, 3000);
+        }, 4000);
         await navigate("/login");
       };
       setTimeout(() => {
