@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 import pool from "./psql";
+import { validEmail, validPassword } from "./validator";
 
 interface CustomRequest extends Request {
   token?: string;
@@ -17,6 +18,14 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
       message: "Please fill all the fields",
       color: "warning",
     });
+  }
+
+  if (!validPassword(password)) {
+    return res.status(401).json({ message: "Password must contain at least one letter and one number", color: "warning" });
+  }
+
+  if (!validEmail(email)) {
+    return res.status(401).json({ message: "Invalid email", color: "warning" });
   }
 
   if (password !== passwordConfirm) {
@@ -69,6 +78,14 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
       message: "Please provide an email and password",
       color: "warning",
     });
+  }
+
+  if (!validPassword(password)) {
+    return res.status(401).json({ message: "Password must contain at least one letter and one number", color: "warning" });
+  }
+
+  if (!validEmail(email)) {
+    return res.status(401).json({ message: "Invalid email", color: "warning" });
   }
 
   try {
