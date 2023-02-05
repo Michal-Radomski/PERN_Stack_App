@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { registerAction } from "../redux/actions";
+import { changeMessage, registerAction } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const RegisterForm = styled.div`
@@ -38,14 +38,17 @@ const Register = (): JSX.Element => {
   React.useEffect(() => {
     if (authMessage === "User registered") {
       const postRegisterAction = async () => {
-        await alert("You will be redirected to Login Page");
+        // await alert("You will be redirected to Login Page");
+        setTimeout(() => {
+          dispatch(changeMessage("You are redirected to Login Page, please Login", "primary"));
+        }, 3000);
         await navigate("/login");
       };
       setTimeout(() => {
         postRegisterAction();
       }, 500);
     }
-  }, [authMessage, navigate]);
+  }, [authMessage, dispatch, navigate]);
 
   const { name, email, password, passwordConfirm } = registerInputs;
 
@@ -60,7 +63,8 @@ const Register = (): JSX.Element => {
     event.preventDefault();
     const user: User = { name, email, password, passwordConfirm };
     if (password !== passwordConfirm) {
-      console.log("Passwords must be equal");
+      // console.log("Passwords must be equal");
+      await dispatch(changeMessage("Passwords must be equal", "warning"));
       return;
     }
     // console.log({ user });
