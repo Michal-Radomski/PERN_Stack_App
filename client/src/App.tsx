@@ -12,6 +12,7 @@ import Register from "./components/Register";
 import NotFound from "./components/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 import ToastComponent from "./components/ToastComponent";
+import LandingPage from "./components/LandingPage";
 
 function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
@@ -47,13 +48,9 @@ function App(): JSX.Element {
         <Header />
         {message && <ToastComponent message={message} color={color ? color : "info"} />}
         <Routes>
-          <Route
-            path="/"
-            element={authStatus ? <Navigate replace={true} to="/dashboard" /> : <Navigate replace={true} to="/login" />}
-          />
+          <Route path="/" element={authStatus ? <Navigate replace={true} to="/dashboard" /> : <LandingPage />} />
           <Route path="/login" element={authStatus ? <Navigate replace={true} to="/dashboard" /> : <Login />} />
           <Route path="/register" element={authStatus ? <Navigate replace={true} to="/dashboard" /> : <Register />} />
-
           <Route
             path="/dashboard"
             element={

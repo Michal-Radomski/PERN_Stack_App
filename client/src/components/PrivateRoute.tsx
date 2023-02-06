@@ -10,7 +10,7 @@ const PrivateRoute = ({ children }: { children: JSX.Element }): JSX.Element => {
   if (!authStatus) {
     return (
       <React.Fragment>
-        <Navigate to="/login" state={{ from: location }} replace={true} />
+        <Navigate to="/" state={{ from: location }} replace={true} />
       </React.Fragment>
     );
   }

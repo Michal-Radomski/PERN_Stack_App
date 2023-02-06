@@ -75,7 +75,7 @@ const Header = (): JSX.Element => {
 
   const logout = async () => {
     await dispatch(logoutAction());
-    await navigate("/login");
+    await navigate("/");
   };
 
   return (
@@ -84,9 +84,9 @@ const Header = (): JSX.Element => {
         <HeaderContainer>
           <OverlayTrigger
             placement={"bottom"}
-            overlay={<Tooltip id={"headerTooltip"}>{authStatus ? "Dashboard Page" : "Login Page"}</Tooltip>}
+            overlay={<Tooltip id={"headerTooltip"}>{authStatus ? "Dashboard Page" : "Home Page"}</Tooltip>}
           >
-            <Navbar.Brand to={authStatus ? "/dashboard" : "/login"} as={NavLink}>
+            <Navbar.Brand to={authStatus ? "/dashboard" : "/"} as={NavLink}>
               <h1>PERN Stack Auth App</h1>
             </Navbar.Brand>
           </OverlayTrigger>
