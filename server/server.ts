@@ -11,6 +11,8 @@ import cookieParser from "cookie-parser";
 
 // Import routes
 import indexRouter from "./indexRouter";
+// Import DB connection/ pool
+import pool from "./psql";
 // import { connectDb } from "./psql";
 
 // The server
@@ -44,6 +46,12 @@ app.use("/api", indexRouter);
 const port = (process.env.PORT || 5000) as number;
 
 // connectDb();
+pool
+  .connect()
+  .then(() => {
+    console.log("Connected to the DB successfully...");
+  })
+  .catch((error) => console.error({ error }));
 
 const server = http.createServer(app);
 server.listen({ port: port }, () => {
