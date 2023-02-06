@@ -2,14 +2,15 @@ import { Request, RequestHandler, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-import pool from "./psql";
-import { validEmail, validPassword } from "./validator";
+import pool from "../psql";
+import { validEmail, validPassword } from "../validator";
 
 interface CustomRequest extends Request {
   token?: string;
-  user?: Object;
+  user?: { id: string };
 }
 
+//* Auth
 export const register: RequestHandler = async (req: Request, res: Response): Promise<Object | undefined> => {
   const { name, email, password, passwordConfirm } = req.body;
 
