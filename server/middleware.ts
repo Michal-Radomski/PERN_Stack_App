@@ -13,37 +13,15 @@ export const checkAuth = (req: CustomRequest, res: Response, next: NextFunction)
   // const jwtToken = req.header("jwtToken");
   //* V2 Get token from cookies
   const jwtToken = req.cookies.jwtToken;
+  // console.log("jwtToken:", jwtToken)
 
   // Check if not token
   if (!jwtToken) {
-    return res.status(403).json({ message: "Not authorized, token not available", color: "danger" });
+    return res.status(403).json({ message: "Not authorized, token not available", color: "warning" });
   }
 
   // Verify token
   try {
-    const verify = jwt.verify(jwtToken, process.env.jwtSecret as string) as jwt.JwtPayload;
-    // console.log({ verify });
-    req.user = verify;
-    next();
-  } catch (error) {
-    res.status(401).json({ message: "Token is not valid", error: error });
-  }
-};
-
-// This middleware will continue on if the token is in cookie
-export const authorize = function (req: CustomRequest, res: Response, next: NextFunction) {
-  // Get token from cookie
-  const jwtToken = req.cookies.jwtToken;
-  // console.log("jwtToken:", jwtToken);
-
-  // Check if not token
-  if (!jwtToken) {
-    return res.status(403).json({ message: "You are not authorized", color: "warning" });
-  }
-
-  // Verify token
-  try {
-    // It is going to give use the user id (user:{id: user.id})
     const verify = jwt.verify(jwtToken, process.env.jwtSecret as string) as jwt.JwtPayload;
     // console.log({ verify });
     req.user = verify;
