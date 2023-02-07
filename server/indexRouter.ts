@@ -8,7 +8,7 @@ import {
   register,
   verifyToken,
 } from "./controllers/authController";
-import { getUserList } from "./controllers/todoListController";
+import { getUserList, getWholeList } from "./controllers/todoListController";
 import { checkAuth } from "./middleware";
 
 const indexRouter: Router = express.Router();
@@ -25,6 +25,8 @@ indexRouter.get("/dashboard", checkAuth, dashboard);
 indexRouter.post("/verify", checkAuth, verifyToken);
 
 //* Todo List
+indexRouter.get("/dashboard/all-todos", checkAuth, getWholeList);
+
 indexRouter.get("/dashboard/list", checkAuth, getUserList);
 
 // // Test route

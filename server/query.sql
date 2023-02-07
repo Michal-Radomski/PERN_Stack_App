@@ -92,7 +92,7 @@ from
   users as u
   join todos as t on t.user_id = u.user_id;
 
--- All Todos for a User:
+-- All Todos for a User (LEFT JOIN in a case user has no todos):
 select
   u.user_name,
   u.user_email,
@@ -102,9 +102,22 @@ select
   t.updated_at
 from
   users as u
-  join todos as t on t.user_id = u.user_id
+  left join todos as t on t.user_id = u.user_id
 where
   u.user_id = '32531434-2efd-4d3f-9579-16802799392f';
+
+select
+  u.user_name,
+  u.user_email,
+  t.todo_id,
+  t.description,
+  t.created_at,
+  t.updated_at
+from
+  users as u
+  left join todos as t on t.user_id = u.user_id
+where
+  u.user_id = 'b3118196-f227-4f6d-8d00-62e026e53f00';
 
 -- //* Old Version
 -- Table 2 - Todos - old Version
