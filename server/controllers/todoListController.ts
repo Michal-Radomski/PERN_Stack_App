@@ -8,6 +8,7 @@ interface CustomRequest extends Request {
 }
 
 //* ToDo List
+// Get All Todos
 export const getWholeList: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
   console.log("req.ip:", req.ip);
   try {
@@ -21,6 +22,7 @@ export const getWholeList: RequestHandler = async (req: CustomRequest, res: Resp
   }
 };
 
+// Get User's Todos
 export const getUserList: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
   // console.log("req.user:", req.user);
   // console.log("req.user!.id:", req.user!.id);
@@ -33,5 +35,21 @@ export const getUserList: RequestHandler = async (req: CustomRequest, res: Respo
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");
+  }
+};
+
+// Create a todo
+export const createTodo: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
+  try {
+    // console.log("req.user:", req.user);
+    // console.log("req.body:", req.body);
+    const { description } = req.body;
+    const newTodo = await pool.query("INSERT INTO todos (user_id, description) VALUES ($1, $2) RETURNING *", [
+      req.user!.id,
+      description,
+    ]);
+    res.status(201).json({ answerPSQL: newTodo.rows[0], message: "Todo successfully created", color: "success" });
+  } catch (error) {
+    console.error({ error });
   }
 };
