@@ -140,12 +140,13 @@ export const logout: RequestHandler = async (req: Request, res: Response): Promi
   }
 };
 
-export const dashboard: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
-  await console.log("req.ip:", req.ip);
-  // await console.log("req.user:", req.user);
-  // await res.send("<h1 style='color:blue;text-align:center'>Protected Route</h1>");
-  await res.json({ message: "Protected Route" });
-};
+//* Unnecessary - for testing only
+// export const dashboard: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
+//   await console.log("req.ip:", req.ip);
+//   // await console.log("req.user:", req.user);
+//   // await res.send("<h1 style='color:blue;text-align:center'>Protected Route</h1>");
+//   await res.json({ message: "Protected Route" });
+// };
 
 // Verify
 export const verifyToken: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {

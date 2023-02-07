@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 
 import {
-  dashboard,
+  // dashboard,
   // getTestRoute,
   login,
   logout,
@@ -20,7 +20,8 @@ indexRouter.post("/login", login);
 
 indexRouter.post("/logout", logout);
 
-indexRouter.get("/dashboard", checkAuth, dashboard);
+//* Unnecessary - for testing only
+// indexRouter.get("/dashboard", checkAuth, dashboard);
 
 indexRouter.post("/verify", checkAuth, verifyToken);
 
