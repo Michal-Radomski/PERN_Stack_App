@@ -53,3 +53,25 @@ export const createTodo: RequestHandler = async (req: CustomRequest, res: Respon
     console.error({ error });
   }
 };
+
+// Update a todo
+export const updateTodo = async (req: CustomRequest, res: Response): Promise<object | undefined> => {
+  try {
+    const { id } = req.params;
+    const { description } = req.body;
+    // console.log({ id, description });
+
+    const updateTodo = await pool.query(
+      "UPDATE todos SET description = $1, updated_at = CURRENT_TIMESTAMP WHERE todo_id = $2 AND user_id = $3 RETURNING *",
+      [description, id, req.user!.id]
+    );
+    // console.log("updateTodo.rows:", updateTodo.rows);
+
+    if (updateTodo.rows.length === 0) {
+      return res.status(403).json({ message: "This todo is not yours", color: "danger" });
+    }
+    res.status(200).json({ message: "Todo was updated", color: "success" });
+  } catch (error) {
+    console.error({ error });
+  }
+};

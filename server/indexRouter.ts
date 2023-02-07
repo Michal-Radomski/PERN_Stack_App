@@ -8,7 +8,7 @@ import {
   register,
   verifyToken,
 } from "./controllers/authController";
-import { createTodo, getUserList, getWholeList } from "./controllers/todoListController";
+import { createTodo, getUserList, getWholeList, updateTodo } from "./controllers/todoListController";
 import { checkAuth } from "./middleware";
 
 const indexRouter: Router = express.Router();
@@ -31,6 +31,9 @@ indexRouter.get("/dashboard/all-todos", checkAuth, getWholeList);
 indexRouter.get("/dashboard/user-list", checkAuth, getUserList);
 
 indexRouter.post("/todos", checkAuth, createTodo);
+
+// Update a todo
+indexRouter.put("/todos/:id", checkAuth, updateTodo);
 
 // // Test route
 // indexRouter.get("/test", getTestRoute);
