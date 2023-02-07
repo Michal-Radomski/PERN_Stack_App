@@ -28,7 +28,7 @@ indexRouter.post("/verify", checkAuth, verifyToken);
 //* Todo List
 indexRouter.get("/dashboard/all-todos", checkAuth, getWholeList);
 
-indexRouter.get("/dashboard/list", checkAuth, getUserList);
+indexRouter.get("/dashboard/user-list", checkAuth, getUserList);
 
 // // Test route
 // indexRouter.get("/test", getTestRoute);

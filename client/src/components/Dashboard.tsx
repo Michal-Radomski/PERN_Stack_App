@@ -1,38 +1,15 @@
-import axios from "axios";
 import React from "react";
+import { getAllTodos, getUserTodos } from "../redux/actions";
+
+import { useAppDispatch } from "../redux/hooks";
 
 const Dashboard = (): JSX.Element => {
-  React.useEffect(() => {
-    const URL = "/api/dashboard/all-todos";
-    axios
-      .get(URL)
-      .then((response) => {
-        const dataToPass = response?.data;
-        console.log("response.status:", response.status);
-        console.log("dataToPass:", dataToPass);
-      })
-      .catch(function (error) {
-        if (error) {
-          console.log({ error });
-        }
-      });
-  }, []);
+  const dispatch: AppDispatch = useAppDispatch();
 
   React.useEffect(() => {
-    const URL = "/api/dashboard/list";
-    axios
-      .get(URL)
-      .then((response) => {
-        const dataToPass = response?.data;
-        console.log("response.status:", response.status);
-        console.log("dataToPass:", dataToPass);
-      })
-      .catch(function (error) {
-        if (error) {
-          console.log({ error });
-        }
-      });
-  }, []);
+    dispatch(getUserTodos);
+    dispatch(getAllTodos);
+  }, [dispatch]);
 
   return (
     <React.Fragment>

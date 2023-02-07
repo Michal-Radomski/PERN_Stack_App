@@ -53,8 +53,8 @@ const Header = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useAppDispatch();
   const [authStatus, jwtToken]: [boolean, string] = useAppSelector((state: RootState) => [
-    state?.appState?.authStatus?.auth,
-    state?.appState?.authStatus?.jwtToken,
+    state?.auth?.authStatus?.auth,
+    state?.auth?.authStatus?.jwtToken,
   ]);
   // console.log("jwtToken;", jwtToken);
 

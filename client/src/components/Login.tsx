@@ -25,7 +25,7 @@ const Login = (): JSX.Element => {
   const navigate = useNavigate();
 
   const dispatch: AppDispatch = useAppDispatch();
-  const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.auth]);
+  const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.auth?.authStatus?.auth]);
   // console.log("authStatus;", authStatus);
 
   const [loginInputs, setLoginInputs] = React.useState<User>({

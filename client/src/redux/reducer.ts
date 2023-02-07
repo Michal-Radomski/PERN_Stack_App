@@ -5,7 +5,7 @@ import { CHECK_AUTH, LOGIN, LOGOUT, REGISTER, CHANGE_MESSAGE } from "./actionTyp
 
 const initialState: RootState = {};
 
-const appReducer = function (state = initialState, action: Action): RootState {
+const authReducer = function (state = initialState, action: Action): RootState {
   switch (action.type) {
     case CHECK_AUTH:
       return { ...state, authStatus: action.payload };
@@ -25,7 +25,7 @@ const appReducer = function (state = initialState, action: Action): RootState {
 
 // CombineReducer
 const rootReducer = combineReducers({
-  appState: appReducer,
+  auth: authReducer,
 });
 
 export default rootReducer;

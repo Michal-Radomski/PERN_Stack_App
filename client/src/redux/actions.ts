@@ -1,7 +1,8 @@
 import axios from "axios";
 
-import { CHECK_AUTH, LOGIN, LOGOUT, REGISTER, CHANGE_MESSAGE } from "./actionTypes";
+import { CHECK_AUTH, LOGIN, LOGOUT, REGISTER, CHANGE_MESSAGE, GET_ALL_TODOS, GET_USER_TODOS } from "./actionTypes";
 
+//* Auth
 export const checkAuth = () => async (dispatch: AppDispatch) => {
   const URL = "/api/verify";
   await axios
@@ -107,4 +108,43 @@ export const changeMessage = (str: string, color?: string) => async (dispatch: A
   } catch (error) {
     console.log(error);
   }
+};
+
+//* Get Todos
+export const getAllTodos = () => async (dispatch: AppDispatch) => {
+  const URL = "/api/dashboard/all-todos";
+  await axios
+    .get(URL)
+    .then((response) => {
+      const dataToPass = response?.data;
+      // console.log("response.status:", response.status);
+      // console.log("dataToPass:", dataToPass);
+      if (response.status === 200) {
+        dispatch({ type: GET_ALL_TODOS, payload: dataToPass });
+      }
+    })
+    .catch(function (error) {
+      if (error) {
+        console.log({ error });
+      }
+    });
+};
+
+export const getUserTodos = () => async (dispatch: AppDispatch) => {
+  const URL = "/api/dashboard/user-list";
+  await axios
+    .get(URL)
+    .then((response) => {
+      const dataToPass = response?.data;
+      // console.log("response.status:", response.status);
+      // console.log("dataToPass:", dataToPass);
+      if (response.status === 200) {
+        dispatch({ type: GET_USER_TODOS, payload: dataToPass });
+      }
+    })
+    .catch(function (error) {
+      if (error) {
+        console.log({ error });
+      }
+    });
 };

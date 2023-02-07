@@ -18,9 +18,9 @@ function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
 
   const [authStatus, authMessage, colorStatus]: [boolean, string, string] = useAppSelector((state: RootState) => [
-    state?.appState?.authStatus?.auth,
-    state?.appState?.authStatus?.message,
-    state?.appState?.authStatus?.color,
+    state?.auth?.authStatus?.auth,
+    state?.auth?.authStatus?.message,
+    state?.auth?.authStatus?.color,
   ]);
   // console.log("authMessage;", authMessage);
 

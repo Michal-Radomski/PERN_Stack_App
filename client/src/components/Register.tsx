@@ -25,7 +25,7 @@ const Register = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [authMessage]: [string] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.message]);
+  const [authMessage]: [string] = useAppSelector((state: RootState) => [state?.auth?.authStatus?.message]);
   // console.log("authMessage;", authMessage);
 
   const [registerInputs, setRegisterInputs] = React.useState<User>({

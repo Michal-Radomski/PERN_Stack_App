@@ -4,7 +4,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }): JSX.Element => {
-  const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.appState?.authStatus?.auth]);
+  const [authStatus]: [boolean] = useAppSelector((state: RootState) => [state?.auth?.authStatus?.auth]);
   let location = useLocation();
 
   if (!authStatus) {
