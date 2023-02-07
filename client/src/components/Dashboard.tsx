@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Table } from "react-bootstrap";
+import { Badge, Button, Table } from "react-bootstrap";
 import styled from "styled-components";
 import jwt_decode from "jwt-decode";
 
@@ -76,7 +76,11 @@ const Dashboard = (): JSX.Element => {
             usersTodos?.map((todo, index) => {
               return (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  <td>
+                    <Badge bg="primary" pill={true}>
+                      {index + 1}
+                    </Badge>
+                  </td>
                   <td>{todo.description}</td>
                   <td>{timeStringRefactor(todo.created_at)}</td>
                   <td>{timeStringRefactor(todo.updated_at)}</td>
@@ -90,7 +94,9 @@ const Dashboard = (): JSX.Element => {
                       Delete
                     </Button>
                   </td>
-                  <td>{todo.todo_id}</td>
+                  <td>
+                    <Badge bg="success">{todo.todo_id}</Badge>
+                  </td>
                 </tr>
               );
             })}

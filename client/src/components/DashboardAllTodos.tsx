@@ -1,5 +1,6 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Badge, Table } from "react-bootstrap";
+import jwt_decode from "jwt-decode";
 
 import { getAllTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -15,11 +16,15 @@ const DashboardAllTodo = (): JSX.Element => {
   ]);
 
   const [token, setToken] = React.useState<string>("");
+  const [userEmail, setUserEmail] = React.useState<string>("");
   const [allTodos, setAllTodos] = React.useState<Array<Todo> | null>(null);
 
   React.useEffect(() => {
     if (jwtToken) {
       setToken(jwtToken);
+      const decodedToken = jwt_decode(jwtToken);
+      const { email } = decodedToken as Token;
+      setUserEmail(email);
     }
   }, [jwtToken]);
 
@@ -54,13 +59,20 @@ const DashboardAllTodo = (): JSX.Element => {
             allTodos?.map((todo, index) => {
               return (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  <td>
+                    {" "}
+                    <Badge bg="primary" pill={true}>
+                      {index + 1}
+                    </Badge>
+                  </td>
                   <td>{todo.description}</td>
                   <td>{todo.user_name}</td>
                   <td>{todo.user_email}</td>
                   <td>{timeStringRefactor(todo.created_at)}</td>
                   <td>{timeStringRefactor(todo.updated_at)}</td>
-                  <td>{todo.todo_id}</td>
+                  <td>
+                    <Badge bg={userEmail === todo.user_email ? "success" : "danger"}>{todo.todo_id}</Badge>
+                  </td>
                 </tr>
               );
             })}
