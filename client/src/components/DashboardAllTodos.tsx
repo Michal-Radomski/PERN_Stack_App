@@ -69,7 +69,7 @@ const DashboardAllTodo = (): JSX.Element => {
                   <td>{todo.user_name}</td>
                   <td>{todo.user_email}</td>
                   <td>{timeStringRefactor(todo.created_at)}</td>
-                  <td>{timeStringRefactor(todo.updated_at)}</td>
+                  <td>{todo.updated_at !== todo.created_at ? timeStringRefactor(todo.updated_at) : "---"}</td>
                   <td>
                     <Badge bg={userEmail === todo.user_email ? "success" : "danger"}>{todo.todo_id}</Badge>
                   </td>

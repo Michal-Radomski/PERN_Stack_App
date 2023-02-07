@@ -83,7 +83,7 @@ const Dashboard = (): JSX.Element => {
                   </td>
                   <td>{todo.description}</td>
                   <td>{timeStringRefactor(todo.created_at)}</td>
-                  <td>{timeStringRefactor(todo.updated_at)}</td>
+                  <td>{todo.updated_at !== todo.created_at ? timeStringRefactor(todo.updated_at) : "---"}</td>
                   <td>
                     <Button variant="warning" size="sm">
                       Update
