@@ -4,3 +4,10 @@ export const timestampToString = (timestamp: number): string => {
   const dateToReturn = dateArray[0];
   return dateToReturn;
 };
+
+export const timeStringRefactor = (timeString: string): string => {
+  const dateString = timeString.replace("T", ", ");
+  const dateArray = dateString.split(".");
+  const dateToReturn = dateArray[0];
+  return dateToReturn;
+};

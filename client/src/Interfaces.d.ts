@@ -19,3 +19,12 @@ interface Token {
   iat: number;
   exp: number;
 }
+
+interface Todo {
+  created_at: string;
+  description: string;
+  todo_id: number;
+  updated_at: string;
+  user_email: string;
+  user_name: string;
+}
