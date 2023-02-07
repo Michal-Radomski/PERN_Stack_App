@@ -60,7 +60,6 @@ export const updateTodo = async (req: CustomRequest, res: Response): Promise<obj
     const { id } = req.params;
     const { description } = req.body;
     // console.log({ id, description });
-
     const updateTodo = await pool.query(
       "UPDATE todos SET description = $1, updated_at = CURRENT_TIMESTAMP WHERE todo_id = $2 AND user_id = $3 RETURNING *",
       [description, id, req.user!.id]
@@ -71,6 +70,23 @@ export const updateTodo = async (req: CustomRequest, res: Response): Promise<obj
       return res.status(403).json({ message: "This todo is not yours", color: "danger" });
     }
     res.status(200).json({ message: "Todo was updated", color: "success" });
+  } catch (error) {
+    console.error({ error });
+  }
+};
+
+// Delete a todo
+export const deleteTodo = async (req: CustomRequest, res: Response): Promise<object | undefined> => {
+  try {
+    const { id } = req.params;
+    const deleteTodo = await pool.query("DELETE FROM todos WHERE todo_id = $1 AND user_id = $2 RETURNING *", [
+      id,
+      req.user!.id,
+    ]);
+    if (deleteTodo.rows.length === 0) {
+      return res.status(403).json({ message: "This todo is not yours", color: "danger" });
+    }
+    res.status(200).json({ message: "Todo was deleted", color: "success" });
   } catch (error) {
     console.error({ error });
   }
