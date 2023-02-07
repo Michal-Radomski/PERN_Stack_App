@@ -9,6 +9,7 @@ interface CustomRequest extends Request {
 
 //* ToDo List
 export const getWholeList: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
+  console.log("req.ip:", req.ip);
   try {
     const list = await pool.query(
       "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at from users as u join todos as t on t.user_id = u.user_id"
@@ -21,6 +22,8 @@ export const getWholeList: RequestHandler = async (req: CustomRequest, res: Resp
 };
 
 export const getUserList: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
+  // console.log("req.user:", req.user);
+  // console.log("req.user!.id:", req.user!.id);
   try {
     const userList = await pool.query(
       "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at from users as u left join todos as t on t.user_id = u.user_id where u.user_id = $1",
