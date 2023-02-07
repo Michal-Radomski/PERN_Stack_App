@@ -131,7 +131,13 @@ const Header = (): JSX.Element => {
             {authStatus && (
               <React.Fragment>
                 <Nav.Link to="/dashboard" as={NavLink}>
-                  Dashboard
+                  <span className="span_bold" style={{ color: "lightyellow" }}>
+                    {token.name}'s
+                  </span>{" "}
+                  Todos
+                </Nav.Link>
+                <Nav.Link to="/dashboard/all-todos" as={NavLink}>
+                  All Todos
                 </Nav.Link>
                 <Button onClick={logout} variant="outline-light">
                   Logout

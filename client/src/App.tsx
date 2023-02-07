@@ -13,6 +13,7 @@ import NotFound from "./components/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 import ToastComponent from "./components/ToastComponent";
 import LandingPage from "./components/LandingPage";
+import DashboardAllTodo from "./components/DashboardAllTodos";
 
 function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
@@ -56,6 +57,14 @@ function App(): JSX.Element {
             element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard/all-todos"
+            element={
+              <PrivateRoute>
+                <DashboardAllTodo />
               </PrivateRoute>
             }
           />

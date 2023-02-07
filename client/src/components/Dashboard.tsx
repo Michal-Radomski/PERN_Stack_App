@@ -3,17 +3,17 @@ import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
 import jwt_decode from "jwt-decode";
 
-import { getAllTodos, getUserTodos } from "../redux/actions";
+import { getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { timeStringRefactor } from "../utils/helpers";
 
-const P = styled.p`
+export const P = styled.p`
   font-size: 65%;
   margin-top: 80px;
   text-align: center;
 `;
 
-const ToDoDiv = styled.div`
+export const ToDoDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,14 +27,14 @@ const ToDoDiv = styled.div`
 const Dashboard = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [jwtToken, allTodosFromRedux, userTodosFromRedux]: [string, Array<Todo>, Array<Todo>] = useAppSelector(
-    (state: RootState) => [state?.auth?.authStatus?.jwtToken, state?.todos.allTodos, state?.todos.userTodos]
-  );
+  const [jwtToken, usersTodosFromRedux]: [string, Array<Todo>] = useAppSelector((state: RootState) => [
+    state?.auth?.authStatus?.jwtToken,
+    state?.todos.userTodos,
+  ]);
 
   const [token, setToken] = React.useState<string>("");
   const [userName, setUserName] = React.useState<string>("");
-  const [allTodos, setAllTodos] = React.useState<Array<Todo> | null>(null);
-  const [userTodos, setUserTodos] = React.useState<Array<Todo> | null>(null);
+  const [usersTodos, setUsersTodos] = React.useState<Array<Todo> | null>(null);
 
   React.useEffect(() => {
     if (jwtToken) {
@@ -48,65 +48,32 @@ const Dashboard = (): JSX.Element => {
   React.useEffect(() => {
     if (token) {
       dispatch(getUserTodos());
-      dispatch(getAllTodos());
     }
   }, [dispatch, token]);
 
   React.useEffect(() => {
-    if (allTodosFromRedux && userTodosFromRedux) {
-      setAllTodos(allTodosFromRedux);
-      setUserTodos(userTodosFromRedux);
+    if (usersTodosFromRedux) {
+      setUsersTodos(usersTodosFromRedux);
     }
-  }, [allTodosFromRedux, userTodosFromRedux]);
+  }, [usersTodosFromRedux]);
 
-  const AllTodoTable = (): JSX.Element => {
+  const UsersTodoTable = (): JSX.Element => {
     return (
       <Table striped bordered hover size="sm" variant="dark">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Description</th>
-            <th>User's Name</th>
-            <th>User's mail</th>
-            <th>Created At</th>
-            <th>Updated At</th>
+            <th style={{ width: "35px" }}>#</th>
+            <th style={{ width: "auto" }}>Description</th>
+            <th style={{ width: "175px" }}>Created At</th>
+            <th style={{ width: "175px" }}>Updated At</th>
+            <th style={{ width: "80px" }}>Update</th>
+            <th style={{ width: "80px" }}>Delete</th>
+            <th style={{ width: "35px" }}>Id</th>
           </tr>
         </thead>
         <tbody>
-          {allTodos &&
-            allTodos?.map((todo, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{todo.description}</td>
-                  <td>{todo.user_name}</td>
-                  <td>{todo.user_email}</td>
-                  <td>{timeStringRefactor(todo.created_at)}</td>
-                  <td>{timeStringRefactor(todo.updated_at)}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
-    );
-  };
-
-  const UserTodoTable = (): JSX.Element => {
-    return (
-      <Table striped bordered hover size="sm" variant="dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Description</th>
-            <th>Created At</th>
-            <th>Updated At</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userTodos &&
-            userTodos?.map((todo, index) => {
+          {usersTodos &&
+            usersTodos?.map((todo, index) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -114,11 +81,16 @@ const Dashboard = (): JSX.Element => {
                   <td>{timeStringRefactor(todo.created_at)}</td>
                   <td>{timeStringRefactor(todo.updated_at)}</td>
                   <td>
-                    <Button variant="warning">Update</Button>
+                    <Button variant="warning" size="sm">
+                      Update
+                    </Button>
                   </td>
                   <td>
-                    <Button variant="danger">Delete</Button>
+                    <Button variant="danger" size="sm">
+                      Delete
+                    </Button>
                   </td>
+                  <td>{todo.todo_id}</td>
                 </tr>
               );
             })}
@@ -133,14 +105,10 @@ const Dashboard = (): JSX.Element => {
         JWT Token: <span className="span_bold">{token}</span>
       </P>
       <ToDoDiv>
-        <h1 style={{ textAlign: "center", marginTop: "80px" }}>All Todos</h1>
-        {allTodos && <AllTodoTable />}
-      </ToDoDiv>
-      <ToDoDiv>
         <h1 style={{ textAlign: "center", marginTop: "80px" }}>
           <span className="span_bold">{userName}'s</span> Todos
         </h1>
-        {userTodos && <UserTodoTable />}
+        {usersTodos && <UsersTodoTable />}
       </ToDoDiv>
     </React.Fragment>
   );
