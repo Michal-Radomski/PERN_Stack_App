@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { getAllTodos, getUserTodos } from "../redux/actions";
 
+import { getAllTodos, getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const P = styled.p`
@@ -24,9 +24,11 @@ const Dashboard = (): JSX.Element => {
   }, [jwtToken]);
 
   React.useEffect(() => {
-    dispatch(getUserTodos);
-    dispatch(getAllTodos);
-  }, [dispatch]);
+    if (token) {
+      dispatch(getUserTodos());
+      dispatch(getAllTodos());
+    }
+  }, [dispatch, token]);
 
   return (
     <React.Fragment>
