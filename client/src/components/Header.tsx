@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Nav, Navbar, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import jwt_decode from "jwt-decode";
 
@@ -51,6 +51,10 @@ const P = styled.p`
 
 const Header = (): JSX.Element => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location?.pathname;
+  // console.log({ path });
+
   const dispatch: AppDispatch = useAppDispatch();
   const [authStatus, jwtToken]: [boolean, string] = useAppSelector((state: RootState) => [
     state?.auth?.authStatus?.auth,
@@ -130,13 +134,14 @@ const Header = (): JSX.Element => {
             )}
             {authStatus && (
               <React.Fragment>
-                <Nav.Link to="/dashboard" as={NavLink}>
-                  <span className="span_bold" style={{ color: "lightyellow" }}>
-                    {token.name}'s
-                  </span>{" "}
-                  Todos
+                <Nav.Link to="/dashboard" as={NavLink} style={{ color: path === "/dashboard" ? "lightyellow" : "" }}>
+                  <span className="span_bold">{token.name}'s</span> Todos
                 </Nav.Link>
-                <Nav.Link to="/dashboard/all-todos" as={NavLink}>
+                <Nav.Link
+                  to="/dashboard/all-todos"
+                  as={NavLink}
+                  style={{ color: path === "/dashboard/all-todos" ? "lightyellow" : "" }}
+                >
                   All Todos
                 </Nav.Link>
                 <Button onClick={logout} variant="outline-light">
