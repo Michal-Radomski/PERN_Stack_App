@@ -43,6 +43,30 @@ INSERT INTO
 VALUES
   ('32531434-2efd-4d3f-9579-16802799392f', 'test') Returning *;
 
+INSERT INTO
+  todos (user_id, description)
+VALUES
+  (
+    '32531434-2efd-4d3f-9579-16802799392f',
+    'todo 2 - test 2'
+  ) Returning *;
+
+INSERT INTO
+  todos (user_id, description)
+VALUES
+  (
+    '2e356dac-7dcb-468a-ba05-370035ae0bc3',
+    'User 3 - test'
+  ) Returning *;
+
+INSERT INTO
+  todos (user_id, description)
+VALUES
+  (
+    '6aa1082b-0e16-43a3-950d-22586bf27e3a',
+    'User 4 - test'
+  ) Returning *;
+
 UPDATE
   todos
 SET
@@ -55,6 +79,32 @@ SELECT
   *
 FROM
   todos;
+
+-- All Todos:
+select
+  u.user_name,
+  u.user_email,
+  t.todo_id,
+  t.description,
+  t.created_at,
+  t.updated_at
+from
+  users as u
+  join todos as t on t.user_id = u.user_id;
+
+-- All Todos for a User:
+select
+  u.user_name,
+  u.user_email,
+  t.todo_id,
+  t.description,
+  t.created_at,
+  t.updated_at
+from
+  users as u
+  join todos as t on t.user_id = u.user_id
+where
+  u.user_id = '32531434-2efd-4d3f-9579-16802799392f';
 
 -- //* Old Version
 -- Table 2 - Todos - old Version

@@ -8,10 +8,10 @@ interface CustomRequest extends Request {
 }
 
 //* ToDo List
-export const getList: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
+export const getUserList: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
   try {
     const user = await pool.query(
-      "SELECT u.user_name, t.todo_id, t.description FROM users AS u LEFT JOIN todos AS t ON u.user_id = t.user_id WHERE u.user_id = $1",
+      "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at from users as u join todos as t on t.user_id = u.user_id where u.user_id = $1",
       [req.user!.id]
     );
     res.status(200).json(user.rows);
