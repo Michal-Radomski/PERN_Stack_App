@@ -5,9 +5,13 @@ import bcrypt from "bcrypt";
 import pool from "../psql";
 import { validEmail, validPassword } from "../validator";
 
-interface CustomRequest extends Request {
+interface CustomObject extends Object {
+  id?: string;
+}
+
+export interface CustomRequest extends Request {
   token?: string;
-  user?: { id: string };
+  user?: CustomObject;
 }
 
 //* Auth
@@ -107,6 +111,9 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     const jwtToken = await jwt.sign({ id, name, email }, process.env.jwtSecret as string, {
       expiresIn: "1h",
     });
+    const refreshToken = await jwt.sign({ id, name, email }, process.env.jwtRefreshSecret as string, {
+      expiresIn: "3h",
+    });
 
     //* V1 JSON
     // return res.status(200).json({ jwtToken });
@@ -116,12 +123,17 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
       expires: new Date(Date.now() + 1 * 60 * 60 * 1000),
       httpOnly: true,
     };
-    // console.log({ cookieOptions });
+    const cookieOptions2 = {
+      expires: new Date(Date.now() + 3 * 60 * 60 * 1000),
+      httpOnly: true,
+    };
+    // console.log({ cookieOptions, cookieOptions2 });
 
     res
       .status(200)
       .cookie("jwtToken", jwtToken, cookieOptions)
-      .json({ message: "You logged in successfully!", jwtToken, color: "success" });
+      .cookie("refreshToken", refreshToken, cookieOptions2)
+      .json({ message: "You logged in successfully!", jwtToken, color: "success", refreshToken });
   } catch (error) {
     console.error({ error });
     res.status(500).json({ message: "Server error" + error });
@@ -133,6 +145,7 @@ export const logout: RequestHandler = async (req: Request, res: Response): Promi
     await console.log("req.ip:", req.ip);
     // await res.cookie("jwtToken", "", { maxAge: 1 })
     await res.clearCookie("jwtToken");
+    await res.clearCookie("refreshToken");
     await res.status(200).json({ message: "Logout Successfully", color: "success" });
   } catch (error) {
     console.error({ error });
@@ -149,9 +162,9 @@ export const logout: RequestHandler = async (req: Request, res: Response): Promi
 // };
 
 // Verify
-export const verifyToken: RequestHandler = async (req: CustomRequest, res: Response): Promise<void> => {
-  // await console.log("req.ip:", req.ip);
-  // await console.log("req.user:", req.user);
+export const verifyToken: RequestHandler = (req: CustomRequest, res: Response): void => {
+  // console.log("req.ip:", req.ip);
+  // console.log("req.user:", req.user);
 
   try {
     // res.json({ message: "jwtToken: Ok" });
@@ -167,3 +180,50 @@ export const verifyToken: RequestHandler = async (req: CustomRequest, res: Respo
 //   await console.log("req.ip:", req.ip);
 //   await res.send("<h1 style='color:blue;text-align:center'>API is running</h1>");
 // };
+
+//* Refresh Access Token
+export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: Response): Promise<object | undefined> => {
+  const { email } = req.body;
+  const refreshToken = req.cookies.refreshToken;
+  // console.log("refreshToken:", refreshToken);
+
+  // Check if not refreshToken
+  if (!refreshToken) {
+    return res.status(403).json({ message: "Not authorized, token not available", color: "warning" });
+  }
+
+  // Verify RefreshToken
+  const verifyRefreshToken = jwt.verify(refreshToken, process.env.jwtRefreshSecret as string) as jwt.JwtPayload;
+  // console.log({ verifyRefreshToken });
+
+  if (!verifyRefreshToken) {
+    return res.status(403).json({ message: "Could not refresh access token", color: "danger" });
+  }
+
+  try {
+    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email]);
+    // console.log("user:", user);
+    if (user.rows.length === 0) {
+      return res.status(401).json({ message: "Invalid Credential - Unknown User" });
+    }
+
+    // Sign a new access token
+    const id = user.rows[0].user_id;
+    const name = user.rows[0].user_name;
+
+    const jwtToken = await jwt.sign({ id, name, email }, process.env.jwtSecret as string, {
+      expiresIn: "1h",
+    });
+    const cookieOptions = {
+      expires: new Date(Date.now() + 1 * 60 * 60 * 1000),
+      httpOnly: true,
+    };
+
+    res
+      .status(200)
+      .cookie("jwtToken", jwtToken, cookieOptions)
+      .json({ message: "Your access token is refreshed!", jwtToken, color: "success" });
+  } catch (error) {
+    res.status(401).json({ message: "Token is not valid", error: error });
+  }
+};

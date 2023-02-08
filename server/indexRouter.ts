@@ -5,6 +5,7 @@ import {
   // getTestRoute,
   login,
   logout,
+  refreshJWT_Token,
   register,
   verifyToken,
 } from "./controllers/authController";
@@ -19,6 +20,8 @@ indexRouter.post("/register", register);
 indexRouter.post("/login", login);
 
 indexRouter.post("/logout", logout);
+
+indexRouter.post("/refresh", refreshJWT_Token);
 
 //* Unnecessary - for testing only
 // indexRouter.get("/dashboard", checkAuth, dashboard);

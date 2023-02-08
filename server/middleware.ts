@@ -1,14 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, RequestHandler, Response } from "express";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
+
 dotenv.config();
 
-interface CustomRequest extends Request {
-  token?: string;
-  user?: Object;
-}
+import { CustomRequest } from "./controllers/authController";
 
-export const checkAuth = (req: CustomRequest, res: Response, next: NextFunction) => {
+export const checkAuth: RequestHandler = (req: CustomRequest, res: Response, next: NextFunction): object | undefined => {
   //* V1 Get token from header
   // const jwtToken = req.header("jwtToken");
   //* V2 Get token from cookies
