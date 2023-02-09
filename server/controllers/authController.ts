@@ -1,6 +1,7 @@
 import { Request, RequestHandler, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import jwt_decode from "jwt-decode";
 
 import pool from "../psql";
 import { validEmail, validPassword } from "../validator";
@@ -12,6 +13,10 @@ interface CustomObject extends Object {
 export interface CustomRequest extends Request {
   token?: string;
   user?: CustomObject;
+}
+
+interface Token {
+  email: string;
 }
 
 //* Auth
@@ -112,7 +117,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
       expiresIn: "1h",
     });
     const refreshToken = await jwt.sign({ id, name, email }, process.env.jwtRefreshSecret as string, {
-      expiresIn: "3h",
+      expiresIn: "24h",
     });
 
     //* V1 JSON
@@ -124,7 +129,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
       httpOnly: true,
     };
     const cookieOptions2 = {
-      expires: new Date(Date.now() + 3 * 60 * 60 * 1000),
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       httpOnly: true,
     };
     // console.log({ cookieOptions, cookieOptions2 });
@@ -183,7 +188,6 @@ export const verifyToken: RequestHandler = (req: CustomRequest, res: Response): 
 
 //* Refresh Access Token
 export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: Response): Promise<object | undefined> => {
-  const { email } = req.body;
   const refreshToken = req.cookies.refreshToken;
   // console.log("refreshToken:", refreshToken);
 
@@ -201,7 +205,10 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
   }
 
   try {
-    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email]);
+    const decodedRefreshToken = jwt_decode(refreshToken) as Token;
+    const userEmail = decodedRefreshToken.email;
+
+    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [userEmail]);
     // console.log("user:", user);
     if (user.rows.length === 0) {
       return res.status(401).json({ message: "Invalid Credential - Unknown User" });
@@ -211,7 +218,7 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
     const id = user.rows[0].user_id;
     const name = user.rows[0].user_name;
 
-    const jwtToken = await jwt.sign({ id, name, email }, process.env.jwtSecret as string, {
+    const jwtToken = await jwt.sign({ id, name, userEmail }, process.env.jwtSecret as string, {
       expiresIn: "1h",
     });
     const cookieOptions = {
