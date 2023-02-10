@@ -12,9 +12,14 @@ export const checkAuth: RequestHandler = (req: CustomRequest, res: Response, nex
   //* V2 Get token from cookies
   const jwtToken = req.cookies.jwtToken;
   // console.log("jwtToken:", jwtToken)
+  const refreshToken = req.cookies.refreshToken;
+  // console.log("refreshToken:", refreshToken);
 
   // Check if not token
   if (!jwtToken) {
+    return res.status(403).json({ message: "Not authorized, token not available", color: "warning" });
+  }
+  if (!refreshToken) {
     return res.status(403).json({ message: "Not authorized, token not available", color: "warning" });
   }
 
@@ -24,6 +29,7 @@ export const checkAuth: RequestHandler = (req: CustomRequest, res: Response, nex
     // console.log({ verify });
     req.user = verify;
     req.token = jwtToken;
+    req.refreshToken = refreshToken;
     next();
   } catch (error) {
     res.status(401).json({ message: "Token is not valid", error: error });

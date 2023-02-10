@@ -11,6 +11,7 @@ interface CustomObject extends Object {
 }
 
 export interface CustomRequest extends Request {
+  refreshToken?: string;
   token?: string;
   user?: CustomObject;
 }
@@ -173,7 +174,13 @@ export const verifyToken: RequestHandler = (req: CustomRequest, res: Response): 
 
   try {
     // res.json({ message: "jwtToken: Ok" });
-    res.json({ message: "jwtToken: Ok", tokenUser: req.user, color: "primary", jwtToken: req.token });
+    res.json({
+      message: "jwtToken and refreshToken: Ok",
+      tokenUser: req.user,
+      color: "primary",
+      jwtToken: req.token,
+      refreshToken: req.refreshToken,
+    });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");

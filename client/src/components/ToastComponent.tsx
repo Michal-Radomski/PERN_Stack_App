@@ -18,7 +18,7 @@ const ToastComponent = ({ message, color }: { message: string; color: string }):
 
   return (
     <React.Fragment>
-      <ToastContainer className="p-3" position={"top-end"} style={{ marginTop: "80px" }}>
+      <ToastContainer className="p-3" position={"top-end"} style={{ marginTop: "100px" }}>
         {message && (
           <Toast show={show} onClose={toggleShow} bg={color} delay={4000} autohide={true}>
             <Toast.Header>
