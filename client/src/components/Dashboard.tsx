@@ -10,7 +10,12 @@ import { timeStringRefactor } from "../utils/helpers";
 export const P = styled.p`
   font-size: 65%;
   margin-top: 80px;
+  margin-bottom: 0;
   text-align: center;
+`;
+
+export const P2 = styled(P)`
+  margin-top: 0;
 `;
 
 export const ToDoDiv = styled.div`
@@ -27,12 +32,12 @@ export const ToDoDiv = styled.div`
 const Dashboard = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [jwtToken, usersTodosFromRedux]: [string, Array<Todo>] = useAppSelector((state: RootState) => [
-    state?.auth?.authStatus?.jwtToken,
-    state?.todos.userTodos,
-  ]);
+  const [jwtToken, usersTodosFromRedux, refreshTokenFromRedux]: [string, Array<Todo>, string] = useAppSelector(
+    (state: RootState) => [state?.auth?.authStatus?.jwtToken, state?.todos.userTodos, state?.auth?.authStatus?.refreshToken]
+  );
 
   const [token, setToken] = React.useState<string>("");
+  const [refreshToken, setRefreshToken] = React.useState<string>("");
   const [userName, setUserName] = React.useState<string>("");
   const [usersTodos, setUsersTodos] = React.useState<Array<Todo> | null>(null);
 
@@ -44,6 +49,12 @@ const Dashboard = (): JSX.Element => {
       setUserName(name);
     }
   }, [jwtToken]);
+
+  React.useEffect(() => {
+    if (refreshTokenFromRedux) {
+      setRefreshToken(refreshTokenFromRedux);
+    }
+  }, [refreshTokenFromRedux]);
 
   React.useEffect(() => {
     if (token) {
@@ -110,6 +121,9 @@ const Dashboard = (): JSX.Element => {
       <P>
         JWT Token: <span className="span_bold">{token}</span>
       </P>
+      <P2>
+        JWT Refresh Token: <span className="span_bold">{refreshToken}</span>
+      </P2>
       <ToDoDiv>
         <h1 style={{ textAlign: "center", marginTop: "80px" }}>
           <span className="span_bold">{userName}'s</span> Todos
