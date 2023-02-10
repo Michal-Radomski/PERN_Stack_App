@@ -5,7 +5,8 @@ import jwt_decode from "jwt-decode";
 import { getAllTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { timeStringRefactor } from "../utils/helpers";
-import { P, ToDoDiv } from "./Dashboard";
+import { ToDoDiv } from "./Dashboard";
+import TokensInfo from "./TokensInfo";
 
 const DashboardAllTodo = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
@@ -15,24 +16,20 @@ const DashboardAllTodo = (): JSX.Element => {
     state?.todos.allTodos,
   ]);
 
-  const [token, setToken] = React.useState<string>("");
   const [userEmail, setUserEmail] = React.useState<string>("");
   const [allTodos, setAllTodos] = React.useState<Array<Todo> | null>(null);
 
   React.useEffect(() => {
     if (jwtToken) {
-      setToken(jwtToken);
-      const decodedToken = jwt_decode(jwtToken);
-      const { email } = decodedToken as Token;
-      setUserEmail(email);
+      const initialActions = async () => {
+        const decodedToken = await jwt_decode(jwtToken);
+        const { email } = decodedToken as Token;
+        await setUserEmail(email);
+        await dispatch(getAllTodos());
+      };
+      initialActions();
     }
-  }, [jwtToken]);
-
-  React.useEffect(() => {
-    if (token) {
-      dispatch(getAllTodos());
-    }
-  }, [dispatch, token]);
+  }, [dispatch, jwtToken]);
 
   React.useEffect(() => {
     if (allTodosFromRedux) {
@@ -83,9 +80,7 @@ const DashboardAllTodo = (): JSX.Element => {
 
   return (
     <React.Fragment>
-      <P>
-        JWT Token: <span className="span_bold">{token}</span>
-      </P>
+      <TokensInfo />
       <ToDoDiv>
         <h1 style={{ textAlign: "center", marginTop: "80px" }}>All Todos</h1>
         {allTodos && <AllTodosTable />}

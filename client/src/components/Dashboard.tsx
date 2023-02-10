@@ -6,17 +6,7 @@ import jwt_decode from "jwt-decode";
 import { getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { timeStringRefactor } from "../utils/helpers";
-
-export const P = styled.p`
-  font-size: 65%;
-  margin-top: 80px;
-  margin-bottom: 0;
-  text-align: center;
-`;
-
-export const P2 = styled(P)`
-  margin-top: 0;
-`;
+import TokensInfo from "./TokensInfo";
 
 export const ToDoDiv = styled.div`
   display: flex;
@@ -32,35 +22,25 @@ export const ToDoDiv = styled.div`
 const Dashboard = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [jwtToken, usersTodosFromRedux, refreshTokenFromRedux]: [string, Array<Todo>, string] = useAppSelector(
-    (state: RootState) => [state?.auth?.authStatus?.jwtToken, state?.todos.userTodos, state?.auth?.authStatus?.refreshToken]
-  );
+  const [jwtToken, usersTodosFromRedux]: [string, Array<Todo>] = useAppSelector((state: RootState) => [
+    state?.auth?.authStatus?.jwtToken,
+    state?.todos.userTodos,
+  ]);
 
-  const [token, setToken] = React.useState<string>("");
-  const [refreshToken, setRefreshToken] = React.useState<string>("");
   const [userName, setUserName] = React.useState<string>("");
   const [usersTodos, setUsersTodos] = React.useState<Array<Todo> | null>(null);
 
   React.useEffect(() => {
     if (jwtToken) {
-      setToken(jwtToken);
-      const decodedToken = jwt_decode(jwtToken);
-      const { name } = decodedToken as Token;
-      setUserName(name);
+      const initialActions = async () => {
+        const decodedToken = await jwt_decode(jwtToken);
+        const { name } = decodedToken as Token;
+        await setUserName(name);
+        await dispatch(getUserTodos());
+      };
+      initialActions();
     }
-  }, [jwtToken]);
-
-  React.useEffect(() => {
-    if (refreshTokenFromRedux) {
-      setRefreshToken(refreshTokenFromRedux);
-    }
-  }, [refreshTokenFromRedux]);
-
-  React.useEffect(() => {
-    if (token) {
-      dispatch(getUserTodos());
-    }
-  }, [dispatch, token]);
+  }, [dispatch, jwtToken]);
 
   React.useEffect(() => {
     if (usersTodosFromRedux) {
@@ -118,12 +98,7 @@ const Dashboard = (): JSX.Element => {
 
   return (
     <React.Fragment>
-      <P>
-        JWT Token: <span className="span_bold">{token}</span>
-      </P>
-      <P2>
-        JWT Refresh Token: <span className="span_bold">{refreshToken}</span>
-      </P2>
+      <TokensInfo />
       <ToDoDiv>
         <h1 style={{ textAlign: "center", marginTop: "80px" }}>
           <span className="span_bold">{userName}'s</span> Todos
