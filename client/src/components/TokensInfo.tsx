@@ -5,7 +5,7 @@ import { useAppSelector } from "../redux/hooks";
 
 const P = styled.p`
   font-size: 65%;
-  margin-top: 80px;
+  margin-top: 82px;
   margin-bottom: 0;
   text-align: center;
 `;

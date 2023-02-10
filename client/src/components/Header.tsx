@@ -13,7 +13,7 @@ const HeaderContainer = styled.div`
   margin-left: 1rem;
   margin-right: 1rem;
   width: calc(100% - 2rem);
-  height: 74px;
+  height: 82px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -30,7 +30,7 @@ const TokenContainer = styled.div`
   justify-content: center;
   align-items: space-between;
   align-content: center;
-  font-size: 95%;
+  font-size: 85%;
 `;
 
 const TokenLine = styled.div`
@@ -56,13 +56,21 @@ const Header = (): JSX.Element => {
   // console.log({ path });
 
   const dispatch: AppDispatch = useAppDispatch();
-  const [authStatus, jwtToken]: [boolean, string] = useAppSelector((state: RootState) => [
+  const [authStatus, jwtToken, refreshTokenFromRedux]: [boolean, string, string] = useAppSelector((state: RootState) => [
     state?.auth?.authStatus?.auth,
     state?.auth?.authStatus?.jwtToken,
+    state?.auth?.authStatus?.refreshToken,
   ]);
   // console.log("jwtToken;", jwtToken);
 
   const [token, setToken] = React.useState<Token>({
+    id: "",
+    name: "",
+    email: "",
+    iat: 0,
+    exp: 0,
+  });
+  const [refreshToken, setRefreshToken] = React.useState<Token>({
     id: "",
     name: "",
     email: "",
@@ -76,6 +84,13 @@ const Header = (): JSX.Element => {
       setToken(decodedToken as Token);
     }
   }, [jwtToken]);
+
+  React.useEffect(() => {
+    if (refreshTokenFromRedux) {
+      const decodedToken = jwt_decode(refreshTokenFromRedux);
+      setRefreshToken(decodedToken as Token);
+    }
+  }, [refreshTokenFromRedux]);
 
   const logout = async () => {
     await dispatch(logoutAction());
@@ -112,10 +127,18 @@ const Header = (): JSX.Element => {
               </TokenLine>
               <TokenLine>
                 <P>
-                  Iat: <span>{timestampToString(token.iat)}</span>
+                  Token Iat: <span>{timestampToString(token.iat)}</span>
                 </P>
                 <P>
-                  Exp: <span>{timestampToString(token.exp)}</span>
+                  Token Exp: <span>{timestampToString(token.exp)}</span>
+                </P>
+              </TokenLine>
+              <TokenLine>
+                <P>
+                  Refresh Token Iat: <span>{timestampToString(refreshToken.iat)}</span>
+                </P>
+                <P>
+                  Refresh Token Exp: <span>{timestampToString(refreshToken.exp)}</span>
                 </P>
               </TokenLine>
             </TokenContainer>
