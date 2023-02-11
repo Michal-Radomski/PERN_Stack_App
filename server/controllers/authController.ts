@@ -213,9 +213,9 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
 
   try {
     const decodedRefreshToken = jwt_decode(refreshToken) as Token;
-    const userEmail = decodedRefreshToken.email;
+    const email = decodedRefreshToken.email;
 
-    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [userEmail]);
+    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email]);
     // console.log("user:", user);
     if (user.rows.length === 0) {
       return res.status(401).json({ message: "Invalid Credential - Unknown User" });
@@ -225,7 +225,7 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
     const id = user.rows[0].user_id;
     const name = user.rows[0].user_name;
 
-    const jwtToken = await jwt.sign({ id, name, userEmail }, process.env.jwtSecret as string, {
+    const jwtToken = await jwt.sign({ id, name, email }, process.env.jwtSecret as string, {
       expiresIn: "1h",
     });
     const cookieOptions = {

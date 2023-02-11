@@ -28,7 +28,6 @@ const authReducer = function (state = initialState, action: Action): RootState {
     case CHANGE_MESSAGE:
       return { ...state, authStatus: action.payload };
     case REFRESH_TOKEN:
-      // return { ...state, authStatus: { ...state.authStatus, jwtToken: action.payload } };
       return { ...state, authStatus: action.payload };
 
     default:
