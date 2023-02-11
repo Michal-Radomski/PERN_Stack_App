@@ -9,6 +9,8 @@ export const REGISTER = "REGISTER";
 
 export const CHANGE_MESSAGE = "CHANGE_MESSAGE";
 
+export const REFRESH_TOKEN = "REFRESH_TOKEN";
+
 // Get Todos
 export const GET_ALL_TODOS = "GET_ALL_TODOS";
 

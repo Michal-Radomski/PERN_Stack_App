@@ -1,10 +1,10 @@
 import React from "react";
-import { Button, Nav, Navbar, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, ButtonGroup, Nav, Navbar, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import jwt_decode from "jwt-decode";
 
-import { logoutAction } from "../redux/actions";
+import { changeMessage, logoutAction, refreshTokenAction } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { timestampToString } from "../utils/helpers";
 
@@ -97,6 +97,11 @@ const Header = (): JSX.Element => {
     await navigate("/");
   };
 
+  const refreshTokenButton = async () => {
+    await dispatch(changeMessage(""));
+    await dispatch(refreshTokenAction());
+  };
+
   return (
     <React.Fragment>
       <Navbar bg="secondary" variant="dark" fixed="top" style={{ padding: "0px" }}>
@@ -155,6 +160,7 @@ const Header = (): JSX.Element => {
                 </Nav.Link>
               </React.Fragment>
             )}
+
             {authStatus && (
               <React.Fragment>
                 <Nav.Link to="/dashboard" as={NavLink} style={{ color: path === "/dashboard" ? "lightyellow" : "" }}>
@@ -167,9 +173,14 @@ const Header = (): JSX.Element => {
                 >
                   All Todos
                 </Nav.Link>
-                <Button onClick={logout} variant="outline-light">
-                  Logout
-                </Button>
+                <ButtonGroup>
+                  <Button onClick={logout} variant="outline-light" size="sm">
+                    Logout
+                  </Button>
+                  <Button onClick={refreshTokenButton} variant="outline-warning" size="sm">
+                    Refresh Token
+                  </Button>
+                </ButtonGroup>
               </React.Fragment>
             )}
           </Nav>

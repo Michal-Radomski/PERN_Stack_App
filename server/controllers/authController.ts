@@ -236,7 +236,7 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
     res
       .status(200)
       .cookie("jwtToken", jwtToken, cookieOptions)
-      .json({ message: "Your access token is refreshed!", jwtToken, color: "success" });
+      .json({ message: "Your access token is refreshed!", jwtToken, color: "info", refreshToken });
   } catch (error) {
     res.status(401).json({ message: "Token is not valid", error: error });
   }

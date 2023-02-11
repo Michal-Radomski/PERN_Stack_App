@@ -61,6 +61,7 @@ const Register = (): JSX.Element => {
 
   const onSubmitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    await dispatch(changeMessage(""));
     const user: User = { name, email, password, passwordConfirm };
     if (password !== passwordConfirm) {
       // console.log("Passwords must be equal");
