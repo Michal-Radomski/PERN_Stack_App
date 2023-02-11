@@ -18,6 +18,7 @@ const DashboardAllTodo = (): JSX.Element => {
 
   const [userEmail, setUserEmail] = React.useState<string>("");
   const [allTodos, setAllTodos] = React.useState<Array<Todo> | null>(null);
+  // console.log("allTodos:", allTodos)
 
   React.useEffect(() => {
     if (jwtToken) {
@@ -53,6 +54,7 @@ const DashboardAllTodo = (): JSX.Element => {
         </thead>
         <tbody>
           {allTodos &&
+            allTodos[0]?.created_at &&
             allTodos?.map((todo, index) => {
               return (
                 <tr key={index}>
@@ -83,7 +85,11 @@ const DashboardAllTodo = (): JSX.Element => {
       <TokensInfo />
       <ToDoDiv>
         <h1 style={{ textAlign: "center", marginTop: "80px" }}>All Todos</h1>
-        {allTodos && <AllTodosTable />}
+        {allTodos && allTodos[0]?.created_at ? (
+          <AllTodosTable />
+        ) : (
+          <h1 style={{ textAlign: "center", marginTop: "20px" }}>Empty List</h1>
+        )}
       </ToDoDiv>
     </React.Fragment>
   );

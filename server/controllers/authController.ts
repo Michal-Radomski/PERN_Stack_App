@@ -102,7 +102,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
   try {
     const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email]);
     if (user.rows.length === 0) {
-      return res.status(401).json({ message: "Invalid Credential - Unknown User" });
+      return res.status(401).json({ message: "Invalid Credential - Unknown User", color: "danger" });
     }
     const validPassword: boolean = await bcrypt.compare(password, user.rows[0].user_password);
 

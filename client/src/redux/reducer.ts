@@ -42,6 +42,8 @@ const todosReducer = function (state = initialState, action: Action): RootState 
       return { ...state, allTodos: action.payload };
     case GET_USER_TODOS:
       return { ...state, userTodos: action.payload };
+    case LOGOUT:
+      return { ...state, allTodos: {}, userTodos: {} };
 
     default:
       return state;
