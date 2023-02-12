@@ -4,7 +4,7 @@ import { Toast, ToastContainer } from "react-bootstrap";
 import reduxIcon from "../Icons/reduxIcon.svg";
 import { timestampToString } from "../utils/helpers";
 
-const ToastComponent = ({ message, color }: { message: string; color: string }): JSX.Element => {
+const ToastComponent = ({ message, color, distance }: { message: string; color: string; distance: string }): JSX.Element => {
   const [show, setShow] = React.useState<boolean>(false);
   // console.log({ color });
 
@@ -18,7 +18,7 @@ const ToastComponent = ({ message, color }: { message: string; color: string }):
 
   return (
     <React.Fragment>
-      <ToastContainer className="p-3" position={"top-end"} style={{ marginTop: "100px" }}>
+      <ToastContainer className="p-3" position={"top-end"} style={{ marginTop: distance }}>
         {message && (
           <Toast show={show} onClose={toggleShow} bg={color} delay={4000} autohide={true}>
             <Toast.Header>

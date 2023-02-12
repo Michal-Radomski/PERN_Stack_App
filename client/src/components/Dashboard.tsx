@@ -23,7 +23,7 @@ export const ToDoDiv = styled.div`
 const Dashboard = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [jwtToken, usersTodosFromRedux]: [string, Array<Todo>] = useAppSelector((state: RootState) => [
+  const [jwtToken, usersTodosFromRedux]: [string, { list: Array<Todo> }] = useAppSelector((state: RootState) => [
     state?.auth?.authStatus?.jwtToken,
     state?.todos.userTodos,
   ]);
@@ -46,7 +46,7 @@ const Dashboard = (): JSX.Element => {
 
   React.useEffect(() => {
     if (usersTodosFromRedux) {
-      setUsersTodos(usersTodosFromRedux);
+      setUsersTodos(usersTodosFromRedux?.list);
     }
   }, [usersTodosFromRedux]);
 

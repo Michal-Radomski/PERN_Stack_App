@@ -18,36 +18,80 @@ import DashboardAllTodo from "./components/DashboardAllTodos";
 function App(): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [authStatus, authMessage, colorStatus]: [boolean, string, string] = useAppSelector((state: RootState) => [
+  const [
+    authStatus,
+    authMessageFromRedux,
+    colorAuthStatus,
+    userMessageFromRedux,
+    userColorFromRedux,
+    allTodosMessageFromRedux,
+    allTodosColorFromRedux,
+  ]: [boolean, string, string, string, string, string, string] = useAppSelector((state: RootState) => [
     state?.auth?.authStatus?.auth,
     state?.auth?.authStatus?.message,
     state?.auth?.authStatus?.color,
+    state?.todos?.userTodos?.message,
+    state?.todos?.userTodos?.color,
+    state?.todos?.allTodos?.message,
+    state?.todos?.allTodos?.color,
   ]);
   // console.log("authMessage;", authMessage);
 
-  const [message, setMessage] = React.useState<string>("");
-  const [color, setColor] = React.useState<string>("");
-  // console.log({ message });
+  const [authMessage, setAuthMessage] = React.useState<string>("");
+  const [authColor, setAuthColor] = React.useState<string>("");
+  const [userMessage, setUserMessage] = React.useState<string>("");
+  const [userColor, setUserColor] = React.useState<string>("");
+  const [allTodosMessage, setAllTodosMessage] = React.useState<string>("");
+  const [allTodosColor, setAllTodosColor] = React.useState<string>("");
+  // console.log({ authMessage });
 
   React.useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
   React.useEffect(() => {
-    setMessage(authMessage);
-  }, [authMessage, message]);
+    setAuthMessage(authMessageFromRedux);
+  }, [authMessageFromRedux, authMessage]);
 
   React.useEffect(() => {
-    if (colorStatus) {
-      setColor(colorStatus);
+    if (colorAuthStatus) {
+      setAuthColor(colorAuthStatus);
     }
-  }, [colorStatus, message]);
+  }, [colorAuthStatus, authMessage]);
+
+  React.useEffect(() => {
+    if (userMessageFromRedux) {
+      setUserMessage(userMessageFromRedux);
+    }
+  }, [userMessageFromRedux]);
+
+  React.useEffect(() => {
+    if (userColorFromRedux) {
+      setUserColor(userColorFromRedux);
+    }
+  }, [userColorFromRedux]);
+
+  React.useEffect(() => {
+    if (allTodosMessageFromRedux) {
+      setAllTodosMessage(allTodosMessageFromRedux);
+    }
+  }, [allTodosMessageFromRedux]);
+
+  React.useEffect(() => {
+    if (allTodosColorFromRedux) {
+      setAllTodosColor(allTodosColorFromRedux);
+    }
+  }, [allTodosColorFromRedux]);
 
   return (
     <React.Fragment>
       <Router>
         <Header />
-        {message && <ToastComponent message={message} color={color ? color : "info"} />}
+        {authMessage && <ToastComponent message={authMessage} color={authColor ? authColor : "info"} distance="100px" />}
+        {userMessage && <ToastComponent message={userMessage} color={userColor ? userColor : "info"} distance="225px" />}
+        {allTodosMessage && (
+          <ToastComponent message={allTodosMessage} color={allTodosColor ? allTodosColor : "info"} distance="225px" />
+        )}
         <Routes>
           <Route path="/" element={authStatus ? <Navigate replace={true} to="/dashboard" /> : <LandingPage />} />
           <Route path="/login" element={authStatus ? <Navigate replace={true} to="/dashboard" /> : <Login />} />

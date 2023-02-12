@@ -15,7 +15,7 @@ export const getWholeList: RequestHandler = async (req: CustomRequest, res: Resp
     const list = await pool.query(
       "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at from users as u join todos as t on t.user_id = u.user_id"
     );
-    res.status(200).json({ list: list.rows, message: "200, All Todos list ok" });
+    res.status(200).json({ list: list.rows, message: "200, All todos list is ok", color: "info" });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");
@@ -31,7 +31,7 @@ export const getUserList: RequestHandler = async (req: CustomRequest, res: Respo
       "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at from users as u left join todos as t on t.user_id = u.user_id where u.user_id = $1",
       [req.user!.id]
     );
-    res.status(200).json({ list: userList.rows, message: "200, User's list oki" });
+    res.status(200).json({ list: userList.rows, message: "200, Your todo list is ok", color: "info" });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");

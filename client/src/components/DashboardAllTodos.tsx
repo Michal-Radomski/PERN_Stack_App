@@ -11,7 +11,7 @@ import TokensInfo from "./TokensInfo";
 const DashboardAllTodo = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [jwtToken, allTodosFromRedux]: [string, Array<Todo>] = useAppSelector((state: RootState) => [
+  const [jwtToken, allTodosFromRedux]: [string, { list: Array<Todo> }] = useAppSelector((state: RootState) => [
     state?.auth?.authStatus?.jwtToken,
     state?.todos.allTodos,
   ]);
@@ -34,7 +34,7 @@ const DashboardAllTodo = (): JSX.Element => {
 
   React.useEffect(() => {
     if (allTodosFromRedux) {
-      setAllTodos(allTodosFromRedux);
+      setAllTodos(allTodosFromRedux?.list);
     }
   }, [allTodosFromRedux]);
 
