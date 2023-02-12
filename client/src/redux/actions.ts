@@ -1,4 +1,5 @@
 import axios from "axios";
+import customAxiosInstance from "../utils/interceptor";
 
 import {
   CHECK_AUTH,
@@ -151,8 +152,9 @@ export const refreshTokenAction = () => async (dispatch: AppDispatch) => {
 
 //* Get Todos
 export const getAllTodos = () => async (dispatch: AppDispatch) => {
-  const URL = "/api/dashboard/all-todos";
-  await axios
+  const URL = "/dashboard/all-todos";
+  // await axios
+  await customAxiosInstance
     .get(URL)
     .then((response) => {
       const dataToPass = response?.data;
@@ -170,8 +172,9 @@ export const getAllTodos = () => async (dispatch: AppDispatch) => {
 };
 
 export const getUserTodos = () => async (dispatch: AppDispatch) => {
-  const URL = "/api/dashboard/user-list";
-  await axios
+  const URL = "/dashboard/user-list";
+  // await axios
+  await customAxiosInstance
     .get(URL)
     .then((response) => {
       const dataToPass = response?.data;
