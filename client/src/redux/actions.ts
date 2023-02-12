@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import customAxiosInstance from "../utils/interceptor";
 
 import {
@@ -153,7 +154,6 @@ export const refreshTokenAction = () => async (dispatch: AppDispatch) => {
 //* Get Todos
 export const getAllTodos = () => async (dispatch: AppDispatch) => {
   const URL = "/dashboard/all-todos";
-  // await axios
   await customAxiosInstance
     .get(URL)
     .then((response) => {
@@ -173,7 +173,6 @@ export const getAllTodos = () => async (dispatch: AppDispatch) => {
 
 export const getUserTodos = () => async (dispatch: AppDispatch) => {
   const URL = "/dashboard/user-list";
-  // await axios
   await customAxiosInstance
     .get(URL)
     .then((response) => {
