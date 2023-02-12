@@ -45,11 +45,11 @@ const AutoLogout = ({ children }: { children: JSX.Element }): JSX.Element => {
   }, []);
 
   const autoLogout = async () => {
-    await dispatch(changeMessage("You will logout after 10s", "info"));
+    await dispatch(changeMessage("You will logout after 5s", "info"));
     await setTimeout(async () => {
       await dispatch(logoutAction());
       await navigate("/");
-    }, 10000);
+    }, 5000);
   };
   return children;
 };

@@ -29,7 +29,7 @@ const Footer = (): JSX.Element => {
           console.log({ error });
         });
     };
-    // fetchDate();
+    fetchDate();
   });
 
   return (
