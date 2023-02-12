@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { timeStringRefactor } from "../utils/helpers";
 import TokensInfo from "./TokensInfo";
 import AutoLogout from "./AutoLogout";
+import AddTodo from "./AddTodo";
 
 export const ToDoDiv = styled.div`
   display: flex;
@@ -104,7 +105,8 @@ const Dashboard = (): JSX.Element => {
       <React.Fragment>
         <TokensInfo />
         <ToDoDiv>
-          <h1 style={{ textAlign: "center", marginTop: "80px" }}>
+          <AddTodo />
+          <h1 style={{ textAlign: "center", marginTop: "50px" }}>
             <span className="span_bold">{userName}'s</span> Todos
           </h1>
           {usersTodos && usersTodos[0]?.created_at ? (
