@@ -52,6 +52,7 @@ customAxiosInstance.interceptors.response.use(
             const dataToPassWithStatus = { ...dataToPass, auth: true };
             // console.log("dataToPassWithStatus:", dataToPassWithStatus);
             store.dispatch({ type: REFRESH_TOKEN, payload: dataToPassWithStatus });
+            return customAxiosInstance(originalConfig);
           }
         })
         .catch(function (error) {
