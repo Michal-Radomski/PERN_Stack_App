@@ -26,29 +26,31 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
 
   if (!email || !password || !name || !passwordConfirm) {
     return res.status(400).json({
-      message: "Please fill all the fields",
+      message: "400, Please fill all the fields",
       color: "warning",
     });
   }
 
   if (!validPassword(password)) {
-    return res.status(401).json({ message: "Password must contain at least one letter and one number", color: "warning" });
+    return res
+      .status(401)
+      .json({ message: "401, Password must contain at least one letter and one number", color: "warning" });
   }
 
   if (!validEmail(email)) {
-    return res.status(401).json({ message: "Invalid email", color: "warning" });
+    return res.status(401).json({ message: "401, Invalid email", color: "warning" });
   }
 
   if (password !== passwordConfirm) {
     return res.status(400).json({
-      message: "Passwords do not match",
+      message: "400, Passwords do not match",
       color: "warning",
     });
   }
 
   if (password.length < 8 || passwordConfirm.length < 8) {
     return res.status(400).json({
-      message: "Password is too short",
+      message: "400, Password is too short",
       color: "warning",
     });
   }
@@ -58,7 +60,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     // console.log({ user });
 
     if (user.rows.length > 0) {
-      return res.status(401).json({ message: "User already exist!", color: "danger" });
+      return res.status(401).json({ message: "401, User already exist!", color: "danger" });
     }
 
     const salt = await bcrypt.genSalt(12);
@@ -72,7 +74,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     // console.log({ newUser });
 
     return res.status(201).json({
-      message: "User registered",
+      message: "201, User registered",
       color: "success",
     });
   } catch (error) {
@@ -86,17 +88,19 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
 
   if (!email || !password) {
     return res.status(400).json({
-      message: "Please provide an email and password",
+      message: "400, Please provide an email and password",
       color: "warning",
     });
   }
 
   if (!validPassword(password)) {
-    return res.status(401).json({ message: "Password must contain at least one letter and one number", color: "warning" });
+    return res
+      .status(401)
+      .json({ message: "401, Password must contain at least one letter and one number", color: "warning" });
   }
 
   if (!validEmail(email)) {
-    return res.status(401).json({ message: "Invalid email", color: "warning" });
+    return res.status(401).json({ message: "401, Invalid email", color: "warning" });
   }
 
   try {
@@ -107,7 +111,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     const validPassword: boolean = await bcrypt.compare(password, user.rows[0].user_password);
 
     if (!validPassword) {
-      return res.status(401).json({ message: "Invalid Credential - Email or Password is incorrect", color: "danger" });
+      return res.status(401).json({ message: "401, Invalid Credential - Email or Password is incorrect", color: "danger" });
     }
     // console.log("user:", user);
 
@@ -139,7 +143,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
       .status(200)
       .cookie("jwtToken", jwtToken, cookieOptions)
       .cookie("refreshToken", refreshToken, cookieOptions2)
-      .json({ message: "You logged in successfully!", jwtToken, color: "success", refreshToken });
+      .json({ message: "200, You logged in successfully!", jwtToken, color: "success", refreshToken });
   } catch (error) {
     console.error({ error });
     res.status(500).json({ message: "Server error" + error });
@@ -152,7 +156,7 @@ export const logout: RequestHandler = async (req: Request, res: Response): Promi
     // await res.cookie("jwtToken", "", { maxAge: 1 })
     await res.clearCookie("jwtToken");
     await res.clearCookie("refreshToken");
-    await res.status(200).json({ message: "Logout Successfully", color: "success" });
+    await res.status(200).json({ message: "200, Logout Successfully", color: "success" });
   } catch (error) {
     console.error({ error });
     res.status(500).json({ message: "Server error" + error });
@@ -174,8 +178,8 @@ export const verifyToken: RequestHandler = (req: CustomRequest, res: Response): 
 
   try {
     // res.json({ message: "jwtToken: Ok" });
-    res.json({
-      message: "jwtToken and refreshToken: Ok",
+    res.status(200).json({
+      message: "200, jwtToken and refreshToken: Ok",
       tokenUser: req.user,
       color: "primary",
       jwtToken: req.token,
@@ -200,7 +204,7 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
 
   // Check if not refreshToken
   if (!refreshToken) {
-    return res.status(403).json({ message: "Not authorized, token not available", color: "warning" });
+    return res.status(401).json({ message: "401, Not authorized, token not available", color: "warning" });
   }
 
   // Verify RefreshToken
@@ -208,7 +212,7 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
   // console.log({ verifyRefreshToken });
 
   if (!verifyRefreshToken) {
-    return res.status(403).json({ message: "Could not refresh access token", color: "danger" });
+    return res.status(403).json({ message: "403, Could not refresh access token", color: "danger" });
   }
 
   try {
@@ -218,7 +222,7 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
     const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email]);
     // console.log("user:", user);
     if (user.rows.length === 0) {
-      return res.status(401).json({ message: "Invalid Credential - Unknown User" });
+      return res.status(401).json({ message: "401, Invalid Credential - Unknown User" });
     }
 
     // Sign a new access token
@@ -236,8 +240,8 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
     res
       .status(200)
       .cookie("jwtToken", jwtToken, cookieOptions)
-      .json({ message: "Your access token is refreshed!", jwtToken, color: "info", refreshToken });
+      .json({ message: "200, Your access token is refreshed!", jwtToken, color: "info", refreshToken });
   } catch (error) {
-    res.status(401).json({ message: "Token is not valid", error: error });
+    res.status(401).json({ message: "401, Token is not valid", error: error });
   }
 };

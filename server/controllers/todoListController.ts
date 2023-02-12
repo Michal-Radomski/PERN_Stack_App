@@ -15,7 +15,7 @@ export const getWholeList: RequestHandler = async (req: CustomRequest, res: Resp
     const list = await pool.query(
       "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at from users as u join todos as t on t.user_id = u.user_id"
     );
-    res.status(200).json(list.rows);
+    res.status(200).json({ list: list.rows, message: "200, All Todos list ok" });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");
@@ -31,7 +31,7 @@ export const getUserList: RequestHandler = async (req: CustomRequest, res: Respo
       "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at from users as u left join todos as t on t.user_id = u.user_id where u.user_id = $1",
       [req.user!.id]
     );
-    res.status(200).json(userList.rows);
+    res.status(200).json({ list: userList.rows, message: "200, User's list oki" });
   } catch (error) {
     console.error({ error });
     res.status(500).send("Server error");
@@ -48,7 +48,7 @@ export const createTodo: RequestHandler = async (req: CustomRequest, res: Respon
       req.user!.id,
       description,
     ]);
-    res.status(201).json({ answerPSQL: newTodo.rows[0], message: "Todo successfully created", color: "success" });
+    res.status(201).json({ answerPSQL: newTodo.rows[0], message: "201, Todo successfully created", color: "success" });
   } catch (error) {
     console.error({ error });
   }
@@ -67,9 +67,9 @@ export const updateTodo = async (req: CustomRequest, res: Response): Promise<obj
     // console.log("updateTodo.rows:", updateTodo.rows);
 
     if (updateTodo.rows.length === 0) {
-      return res.status(403).json({ message: "This todo is not yours", color: "danger" });
+      return res.status(403).json({ message: "403, This todo is not yours", color: "danger" });
     }
-    res.status(200).json({ message: "Todo was updated", color: "success" });
+    res.status(200).json({ message: "200, Todo was updated", color: "success" });
   } catch (error) {
     console.error({ error });
   }
@@ -84,9 +84,9 @@ export const deleteTodo = async (req: CustomRequest, res: Response): Promise<obj
       req.user!.id,
     ]);
     if (deleteTodo.rows.length === 0) {
-      return res.status(403).json({ message: "This todo is not yours", color: "danger" });
+      return res.status(403).json({ message: "403, This todo is not yours", color: "danger" });
     }
-    res.status(200).json({ message: "Todo was deleted", color: "success" });
+    res.status(200).json({ message: "200, Todo was deleted", color: "success" });
   } catch (error) {
     console.error({ error });
   }
