@@ -7,6 +7,7 @@ import { getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { timeStringRefactor } from "../utils/helpers";
 import TokensInfo from "./TokensInfo";
+import AutoLogout from "./AutoLogout";
 
 export const ToDoDiv = styled.div`
   display: flex;
@@ -99,19 +100,21 @@ const Dashboard = (): JSX.Element => {
   };
 
   return (
-    <React.Fragment>
-      <TokensInfo />
-      <ToDoDiv>
-        <h1 style={{ textAlign: "center", marginTop: "80px" }}>
-          <span className="span_bold">{userName}'s</span> Todos
-        </h1>
-        {usersTodos && usersTodos[0]?.created_at ? (
-          <UsersTodoTable />
-        ) : (
-          <h1 style={{ textAlign: "center", marginTop: "20px" }}>Your List is Empty</h1>
-        )}
-      </ToDoDiv>
-    </React.Fragment>
+    <AutoLogout>
+      <React.Fragment>
+        <TokensInfo />
+        <ToDoDiv>
+          <h1 style={{ textAlign: "center", marginTop: "80px" }}>
+            <span className="span_bold">{userName}'s</span> Todos
+          </h1>
+          {usersTodos && usersTodos[0]?.created_at ? (
+            <UsersTodoTable />
+          ) : (
+            <h1 style={{ textAlign: "center", marginTop: "20px" }}>Your List is Empty</h1>
+          )}
+        </ToDoDiv>
+      </React.Fragment>
+    </AutoLogout>
   );
 };
 

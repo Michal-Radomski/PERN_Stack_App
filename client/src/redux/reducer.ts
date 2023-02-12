@@ -26,7 +26,7 @@ const authReducer = function (state = initialState, action: Action): RootState {
     case REGISTER:
       return { ...state, authStatus: action.payload };
     case CHANGE_MESSAGE:
-      return { ...state, authStatus: action.payload };
+      return { ...state, authStatus: { ...state.authStatus, ...action.payload } };
     case REFRESH_TOKEN:
       return { ...state, authStatus: action.payload };
 
