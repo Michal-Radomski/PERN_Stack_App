@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import customAxiosInstance from "../utils/interceptor";
+import customAxiosInstance from "../utils/axiosInterceptor";
 
 import {
   CHECK_AUTH,
