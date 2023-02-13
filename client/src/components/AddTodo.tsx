@@ -1,15 +1,12 @@
 import React from "react";
-import { addTodo } from "../redux/actions";
 
+import { addTodo, getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const AddTodo = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
-
-  const [jwtToken, usersTodosFromRedux]: [string, { list: Array<Todo> }] = useAppSelector((state: RootState) => [
-    state?.auth?.authStatus?.jwtToken,
-    state?.todos.userTodos,
-  ]);
+  const [userMessageFromRedux]: [string] = useAppSelector((state: RootState) => [state?.todos?.userTodos?.message]);
+  // console.log({ userMessageFromRedux });
 
   const [description, setDescription] = React.useState<string>("");
   // console.log({ description });
@@ -21,8 +18,18 @@ const AddTodo = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    setDescription("");
-  }, []);
+    if (userMessageFromRedux) {
+      // const messageStatusArray = userMessageFromRedux.split(",");
+      // const messageStatus = messageStatusArray[0];
+      // console.log({ messageStatus });
+      // if (messageStatus === "201") {
+      setTimeout(async () => {
+        await setDescription("");
+        await dispatch(getUserTodos());
+      }, 200);
+      // }
+    }
+  }, [dispatch, userMessageFromRedux]);
 
   return (
     <React.Fragment>

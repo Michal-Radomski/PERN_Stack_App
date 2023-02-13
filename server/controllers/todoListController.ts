@@ -48,7 +48,11 @@ export const createTodo: RequestHandler = async (req: CustomRequest, res: Respon
       req.user!.id,
       description,
     ]);
-    res.status(201).json({ answerPSQL: newTodo.rows[0], message: "201, Todo successfully created", color: "success" });
+    res.status(201).json({
+      answerPSQL: newTodo.rows[0],
+      message: `201, Todo id:${newTodo.rows[0]?.todo_id} successfully created`,
+      color: "success",
+    });
   } catch (error) {
     console.error({ error });
   }

@@ -1,12 +1,17 @@
 import React from "react";
 import { Badge, Table } from "react-bootstrap";
 import jwt_decode from "jwt-decode";
+import styled from "styled-components";
 
 import { getAllTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { timeStringRefactor } from "../utils/helpers";
-import { ToDoDiv } from "./Dashboard";
+import { ToDoDiv, TableContainer } from "./Dashboard";
 import TokensInfo from "./TokensInfo";
+
+const TableContainer2 = styled(TableContainer)`
+  height: 60vh;
+`;
 
 const DashboardAllTodo = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
@@ -41,7 +46,7 @@ const DashboardAllTodo = (): JSX.Element => {
   const AllTodosTable = (): JSX.Element => {
     return (
       <Table striped bordered hover size="sm" variant="dark">
-        <thead>
+        <thead style={{ position: "sticky", top: "0" }}>
           <tr>
             <th style={{ width: "35px" }}>#</th>
             <th style={{ width: "auto" }}>Description</th>
@@ -86,7 +91,9 @@ const DashboardAllTodo = (): JSX.Element => {
       <ToDoDiv>
         <h1 style={{ textAlign: "center", marginTop: "80px" }}>All Todos</h1>
         {allTodos && allTodos[0]?.created_at ? (
-          <AllTodosTable />
+          <TableContainer2>
+            <AllTodosTable />
+          </TableContainer2>
         ) : (
           <h1 style={{ textAlign: "center", marginTop: "20px" }}>Empty List</h1>
         )}

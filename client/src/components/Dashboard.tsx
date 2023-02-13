@@ -19,6 +19,15 @@ export const ToDoDiv = styled.div`
   max-width: 1260px;
   margin-left: auto;
   margin-right: auto;
+  overflow-y: scroll;
+`;
+
+export const TableContainer = styled.div`
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  height: 50vh;
+  overflow-y: scroll;
 `;
 
 const Dashboard = (): JSX.Element => {
@@ -54,7 +63,7 @@ const Dashboard = (): JSX.Element => {
   const UsersTodoTable = (): JSX.Element => {
     return (
       <Table striped bordered hover size="sm" variant="dark">
-        <thead>
+        <thead style={{ position: "sticky", top: "0" }}>
           <tr>
             <th style={{ width: "35px" }}>#</th>
             <th style={{ width: "auto" }}>Description</th>
@@ -110,7 +119,9 @@ const Dashboard = (): JSX.Element => {
             <span className="span_bold">{userName}'s</span> Todos
           </h1>
           {usersTodos && usersTodos[0]?.created_at ? (
-            <UsersTodoTable />
+            <TableContainer>
+              <UsersTodoTable />
+            </TableContainer>
           ) : (
             <h1 style={{ textAlign: "center", marginTop: "20px" }}>Your List is Empty</h1>
           )}
