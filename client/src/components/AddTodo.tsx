@@ -19,15 +19,15 @@ const AddTodo = (): JSX.Element => {
 
   React.useEffect(() => {
     if (userMessageFromRedux) {
-      // const messageStatusArray = userMessageFromRedux.split(",");
-      // const messageStatus = messageStatusArray[0];
+      const messageStatusArray = userMessageFromRedux.split(",");
+      const messageStatus = messageStatusArray[0];
       // console.log({ messageStatus });
-      // if (messageStatus === "201") {
-      setTimeout(async () => {
-        await setDescription("");
-        await dispatch(getUserTodos());
-      }, 200);
-      // }
+      if (messageStatus === "201") {
+        setTimeout(async () => {
+          await setDescription("");
+          await dispatch(getUserTodos());
+        }, 2000);
+      }
     }
   }, [dispatch, userMessageFromRedux]);
 

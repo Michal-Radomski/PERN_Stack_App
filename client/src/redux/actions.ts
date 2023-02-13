@@ -199,7 +199,7 @@ export const addTodo = (body: { description: string }) => async (dispatch: AppDi
       const dataToPass = response?.data;
       // console.log("response.status:", response.status);
       if (response.status === 201) {
-        console.log("dataToPass:", dataToPass);
+        // console.log("dataToPass:", dataToPass);
         dispatch({ type: ADD_TODO, payload: dataToPass });
       }
     })
