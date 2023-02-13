@@ -3,7 +3,7 @@ import { Badge, Button, Table } from "react-bootstrap";
 import styled from "styled-components";
 import jwt_decode from "jwt-decode";
 
-import { getUserTodos } from "../redux/actions";
+import { deleteTodoAction, getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { timeStringRefactor } from "../utils/helpers";
 import TokensInfo from "./TokensInfo";
@@ -24,7 +24,7 @@ export const ToDoDiv = styled.div`
 
 export const TableContainer = styled.div`
   margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   width: 100%;
   height: 50vh;
   overflow-y: scroll;
@@ -33,14 +33,18 @@ export const TableContainer = styled.div`
 const Dashboard = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [jwtToken, usersTodosFromRedux]: [string, { list: Array<Todo> }] = useAppSelector((state: RootState) => [
-    state?.auth?.authStatus?.jwtToken,
-    state?.todos.userTodos,
-  ]);
+  const [jwtToken, usersTodosFromRedux, userMessageFromRedux]: [string, { list: Array<Todo> }, string] = useAppSelector(
+    (state: RootState) => [state?.auth?.authStatus?.jwtToken, state?.todos.userTodos, state?.todos?.userTodos?.message]
+  );
 
   const [userName, setUserName] = React.useState<string>("");
   const [usersTodos, setUsersTodos] = React.useState<Array<Todo> | null>(null);
   // console.log("usersTodos:", usersTodos);
+
+  const deleteTodo = async (id: number) => {
+    // console.log({ id });
+    await dispatch(deleteTodoAction(id));
+  };
 
   React.useEffect(() => {
     if (jwtToken) {
@@ -59,6 +63,19 @@ const Dashboard = (): JSX.Element => {
       setUsersTodos(usersTodosFromRedux?.list);
     }
   }, [usersTodosFromRedux]);
+
+  React.useEffect(() => {
+    if (userMessageFromRedux) {
+      const messageStatusArray = userMessageFromRedux.split(",");
+      const messageStatus = messageStatusArray[0];
+      // console.log({ messageStatus });
+      if (messageStatus === "200") {
+        setTimeout(async () => {
+          await dispatch(getUserTodos());
+        }, 2000);
+      }
+    }
+  }, [dispatch, userMessageFromRedux]);
 
   const UsersTodoTable = (): JSX.Element => {
     return (
@@ -94,7 +111,7 @@ const Dashboard = (): JSX.Element => {
                     </Button>
                   </td>
                   <td>
-                    <Button variant="danger" size="sm">
+                    <Button variant="danger" size="sm" onClick={() => deleteTodo(todo.todo_id)}>
                       Delete
                     </Button>
                   </td>

@@ -12,6 +12,7 @@ import {
   GET_USER_TODOS,
   REFRESH_TOKEN,
   ADD_TODO,
+  DELETE_TODO,
 } from "./actionTypes";
 
 //* Auth
@@ -206,6 +207,28 @@ export const addTodo = (body: { description: string }) => async (dispatch: AppDi
     .catch(function (error) {
       if (error.response) {
         if (error.response.status !== 201) {
+          const data = error.response.data;
+          console.log({ data });
+        }
+      }
+    });
+};
+
+export const deleteTodoAction = (id: number) => async (dispatch: AppDispatch) => {
+  const URL = `/todos/${id}`;
+  await customAxiosInstance
+    .delete(URL)
+    .then((response) => {
+      const dataToPass = response?.data;
+      // console.log("response.status:", response.status);
+      // console.log("dataToPass:", dataToPass);
+      if (response.status === 200) {
+        dispatch({ type: DELETE_TODO, payload: dataToPass });
+      }
+    })
+    .catch(function (error) {
+      if (error.response) {
+        if (error.response.status !== 200) {
           const data = error.response.data;
           console.log({ data });
         }

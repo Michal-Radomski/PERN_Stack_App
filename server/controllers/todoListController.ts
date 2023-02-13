@@ -50,7 +50,7 @@ export const createTodo: RequestHandler = async (req: CustomRequest, res: Respon
     ]);
     res.status(201).json({
       answerPSQL: newTodo.rows[0],
-      message: `201, Todo id:${newTodo.rows[0]?.todo_id} successfully created`,
+      message: `201, Todo id: ${newTodo.rows[0]?.todo_id} successfully created`,
       color: "success",
     });
   } catch (error) {
@@ -90,7 +90,7 @@ export const deleteTodo = async (req: CustomRequest, res: Response): Promise<obj
     if (deleteTodo.rows.length === 0) {
       return res.status(403).json({ message: "403, This todo is not yours", color: "danger" });
     }
-    res.status(200).json({ message: "200, Todo was deleted", color: "success" });
+    res.status(200).json({ message: `200, Todo id: ${id} was deleted`, color: "warning" });
   } catch (error) {
     console.error({ error });
   }
