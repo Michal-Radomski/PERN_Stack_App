@@ -73,7 +73,7 @@ export const updateTodo = async (req: CustomRequest, res: Response): Promise<obj
     if (updateTodo.rows.length === 0) {
       return res.status(403).json({ message: "403, This todo is not yours", color: "danger" });
     }
-    res.status(200).json({ message: "200, Todo was updated", color: "success" });
+    res.status(200).json({ message: `200, Todo id: ${id} was updated`, color: "success" });
   } catch (error) {
     console.error({ error });
   }

@@ -9,6 +9,7 @@ import { timeStringRefactor } from "../utils/helpers";
 import TokensInfo from "./TokensInfo";
 import AutoLogout from "./AutoLogout";
 import AddTodo from "./AddTodo";
+import UpdateTodo from "./UpdateTodo";
 
 export const ToDoDiv = styled.div`
   display: flex;
@@ -43,7 +44,9 @@ const Dashboard = (): JSX.Element => {
 
   const deleteTodo = async (id: number) => {
     // console.log({ id });
-    await dispatch(deleteTodoAction(id));
+    if (window.confirm(`Do you really want to delete todo id: ${id}?`)) {
+      await dispatch(deleteTodoAction(id));
+    }
   };
 
   React.useEffect(() => {
@@ -106,9 +109,7 @@ const Dashboard = (): JSX.Element => {
                   <td>{timeStringRefactor(todo.created_at)}</td>
                   <td>{todo.updated_at !== todo.created_at ? timeStringRefactor(todo.updated_at) : "---"}</td>
                   <td>
-                    <Button variant="warning" size="sm">
-                      Update
-                    </Button>
+                    <UpdateTodo todo={todo} />
                   </td>
                   <td>
                     <Button variant="danger" size="sm" onClick={() => deleteTodo(todo.todo_id)}>
