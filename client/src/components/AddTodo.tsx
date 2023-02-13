@@ -1,13 +1,28 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { addTodo } from "../redux/actions";
+
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const AddTodo = (): JSX.Element => {
+  const dispatch: AppDispatch = useAppDispatch();
+
+  const [jwtToken, usersTodosFromRedux]: [string, { list: Array<Todo> }] = useAppSelector((state: RootState) => [
+    state?.auth?.authStatus?.jwtToken,
+    state?.todos.userTodos,
+  ]);
+
   const [description, setDescription] = React.useState<string>("");
-  console.log({ description });
+  // console.log({ description });
 
   const onSubmitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    const body = { description: description };
+    dispatch(addTodo(body));
   };
+
+  React.useEffect(() => {
+    setDescription("");
+  }, []);
 
   return (
     <React.Fragment>
@@ -19,9 +34,9 @@ const AddTodo = (): JSX.Element => {
           placeholder="Enter description"
           onChange={(event) => setDescription(event.target.value)}
         />
-        <Button variant="success" size="sm" style={{ width: "100px" }}>
+        <button className="btn btn-success btn-sm" style={{ width: "100px" }}>
           Add Todo
-        </Button>
+        </button>
       </form>
     </React.Fragment>
   );

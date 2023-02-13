@@ -9,6 +9,7 @@ import {
   GET_ALL_TODOS,
   GET_USER_TODOS,
   REFRESH_TOKEN,
+  ADD_TODO,
 } from "./actionTypes";
 // import { Action, RootState } from "../Interfaces";
 
@@ -44,6 +45,8 @@ const todosReducer = function (state = initialState, action: Action): RootState 
       return { ...state, userTodos: action.payload };
     case LOGOUT:
       return { ...state, allTodos: {}, userTodos: {} };
+    case ADD_TODO:
+      return { ...state, userTodos: { ...state.userTodos, ...action.payload } };
 
     default:
       return state;

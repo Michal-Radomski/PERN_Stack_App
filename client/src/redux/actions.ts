@@ -11,6 +11,7 @@ import {
   GET_ALL_TODOS,
   GET_USER_TODOS,
   REFRESH_TOKEN,
+  ADD_TODO,
 } from "./actionTypes";
 
 //* Auth
@@ -186,6 +187,28 @@ export const getUserTodos = () => async (dispatch: AppDispatch) => {
     .catch(function (error) {
       if (error) {
         console.log({ error });
+      }
+    });
+};
+
+export const addTodo = (body: { description: string }) => async (dispatch: AppDispatch) => {
+  const URL = "/todos";
+  await customAxiosInstance
+    .post(URL, body)
+    .then((response) => {
+      const dataToPass = response?.data;
+      // console.log("response.status:", response.status);
+      if (response.status === 201) {
+        console.log("dataToPass:", dataToPass);
+        dispatch({ type: ADD_TODO, payload: dataToPass });
+      }
+    })
+    .catch(function (error) {
+      if (error.response) {
+        if (error.response.status !== 201) {
+          const data = error.response.data;
+          console.log({ data });
+        }
       }
     });
 };

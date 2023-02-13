@@ -15,3 +15,5 @@ export const REFRESH_TOKEN = "REFRESH_TOKEN";
 export const GET_ALL_TODOS = "GET_ALL_TODOS";
 
 export const GET_USER_TODOS = "GET_USER_TODOS";
+
+export const ADD_TODO = "ADD_TODO";
