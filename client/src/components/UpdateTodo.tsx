@@ -38,7 +38,7 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
           }
         });
     } finally {
-      handleClose();
+      await handleClose();
     }
   };
 
@@ -64,7 +64,7 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
               className="form-control"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
-              minLength={3}
+              minLength={4}
               required={true}
               placeholder="Enter description"
             />

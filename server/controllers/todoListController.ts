@@ -63,8 +63,14 @@ export const updateTodo = async (req: CustomRequest, res: Response): Promise<obj
   try {
     const { id } = req.params;
     const { description } = req.body;
-
     // console.log({ id, description });
+
+    if (description.length <= 3) {
+      return res
+        .status(406)
+        .json({ message: "406, The description should contain at least 4 characters", color: "warning" });
+    }
+
     const updateTodo = await pool.query(
       "UPDATE todos SET description = $1, updated_at = CURRENT_TIMESTAMP WHERE todo_id = $2 AND user_id = $3 RETURNING *",
       [description, id, req.user!.id]
