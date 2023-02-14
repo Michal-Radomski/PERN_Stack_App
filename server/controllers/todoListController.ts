@@ -63,6 +63,7 @@ export const updateTodo = async (req: CustomRequest, res: Response): Promise<obj
   try {
     const { id } = req.params;
     const { description } = req.body;
+
     // console.log({ id, description });
     const updateTodo = await pool.query(
       "UPDATE todos SET description = $1, updated_at = CURRENT_TIMESTAMP WHERE todo_id = $2 AND user_id = $3 RETURNING *",
