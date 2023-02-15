@@ -1,5 +1,6 @@
-export const timestampToString = (timestamp: number): string => {
-  const dateString = new Date(timestamp * 1000);
+export const timestampToString = (timestamp: number | string): string => {
+  const dateString = typeof timestamp === "number" ? new Date(timestamp * 1000) : new Date(timestamp);
+
   function padTo2Digits(num: number) {
     return num.toString().padStart(2, "0");
   }
@@ -18,11 +19,4 @@ export const timestampToString = (timestamp: number): string => {
   const dateTimeString = `${dateToExport}, ${timeToExport}`;
   // console.log("dateTimeString:", dateTimeString);
   return dateTimeString;
-};
-
-export const timeStringRefactor = (timeString: string): string => {
-  const dateString = timeString.replace("T", ", ");
-  const dateArray = dateString.split(".");
-  const dateToReturn = dateArray[0];
-  return dateToReturn;
 };

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { getAllTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { timeStringRefactor } from "../utils/helpers";
+import { timestampToString } from "../utils/helpers";
 import { ToDoDiv, TableContainer } from "./Dashboard";
 import TokensInfo from "./TokensInfo";
 
@@ -73,8 +73,8 @@ const DashboardAllTodo = (): JSX.Element => {
                   <td>{todo.description}</td>
                   <td>{todo.user_name}</td>
                   <td>{todo.user_email}</td>
-                  <td>{timeStringRefactor(todo.created_at)}</td>
-                  <td>{todo.updated_at !== todo.created_at ? timeStringRefactor(todo.updated_at) : "---"}</td>
+                  <td>{timestampToString(todo.created_at)}</td>
+                  <td>{todo.updated_at !== todo.created_at ? timestampToString(todo.updated_at) : "---"}</td>
                   <td>
                     <Badge bg={userEmail === todo.user_email ? "success" : "danger"}>{todo.todo_id}</Badge>
                   </td>

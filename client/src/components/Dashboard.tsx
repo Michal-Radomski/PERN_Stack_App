@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 
 import { deleteTodoAction, getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { timeStringRefactor } from "../utils/helpers";
+import { timestampToString } from "../utils/helpers";
 import TokensInfo from "./TokensInfo";
 import AutoLogout from "./AutoLogout";
 import AddTodo from "./AddTodo";
@@ -107,8 +107,8 @@ const Dashboard = (): JSX.Element => {
                     </Badge>
                   </td>
                   <td>{todo.description}</td>
-                  <td>{timeStringRefactor(todo.created_at)}</td>
-                  <td>{todo.updated_at !== todo.created_at ? timeStringRefactor(todo.updated_at) : "---"}</td>
+                  <td>{timestampToString(todo.created_at)}</td>
+                  <td>{todo.updated_at !== todo.created_at ? timestampToString(todo.updated_at) : "---"}</td>
                   <td>
                     <UpdateTodo todo={todo} />
                   </td>
