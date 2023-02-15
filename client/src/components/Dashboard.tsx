@@ -93,6 +93,7 @@ const Dashboard = (): JSX.Element => {
             <th style={{ width: "80px" }}>Update</th>
             <th style={{ width: "80px" }}>Delete</th>
             <th style={{ width: "35px" }}>Id</th>
+            <th style={{ width: "40px" }}>Private</th>
           </tr>
         </thead>
         <tbody>
@@ -120,6 +121,7 @@ const Dashboard = (): JSX.Element => {
                   <td>
                     <Badge bg="success">{todo.todo_id}</Badge>
                   </td>
+                  <td>{todo.private ? todo.private : "???"}</td>
                 </tr>
               );
             })}

@@ -119,6 +119,31 @@ from
 where
   u.user_id = 'b3118196-f227-4f6d-8d00-62e026e53f00';
 
+-- //* Updating Todos Table - column private was added
+ALTER TABLE
+  todos
+ADD
+  COLUMN private BOOLEAN;
+
+UPDATE
+  todos
+SET
+  private = 'f';
+
+ALTER TABLE
+  todos
+ALTER COLUMN
+  private
+SET
+  NOT NULL;
+
+ALTER TABLE
+  todos
+ALTER COLUMN
+  private
+SET
+  DEFAULT FALSE;
+
 -- //* Old Version
 -- Table 2 - Todos - old Version
 CREATE TABLE todos(

@@ -27,4 +27,5 @@ interface Todo {
   updated_at: string;
   user_email: string;
   user_name: string;
+  private: boolean;
 }
