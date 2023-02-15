@@ -11,6 +11,7 @@ import {
   REFRESH_TOKEN,
   ADD_TODO,
   DELETE_TODO,
+  UPDATE_TODO,
 } from "./actionTypes";
 // import { Action, RootState } from "../Interfaces";
 
@@ -49,6 +50,8 @@ const todosReducer = function (state = initialState, action: Action): RootState 
     case ADD_TODO:
       return { ...state, userTodos: { ...state.userTodos, ...action.payload } };
     case DELETE_TODO:
+      return { ...state, userTodos: { ...state.userTodos, ...action.payload } };
+    case UPDATE_TODO:
       return { ...state, userTodos: { ...state.userTodos, ...action.payload } };
 
     default:

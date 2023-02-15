@@ -1,10 +1,12 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 
-import customAxiosInstance from "../utils/axiosInterceptor";
+import { getUserTodos, updateTodo } from "../redux/actions";
+import { useAppDispatch } from "../redux/hooks";
 
 const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
   // console.log({ todo });
+  const dispatch: AppDispatch = useAppDispatch();
 
   const [show, setShow] = React.useState(false);
   const [description, setDescription] = React.useState<string>(todo.description);
@@ -16,27 +18,10 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
   const updateDescription = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     try {
-      const body = { description };
-      // console.log("body:", body);
-      const URL = `/todos/${todo.todo_id}`;
-      await customAxiosInstance
-        .put(URL, body)
-        .then((response) => {
-          const dataToPass = response?.data;
-          // console.log("response.status:", response.status);
-          if (response.status === 200) {
-            console.log("dataToPass:", dataToPass);
-            // dispatch({ type: ADD_TODO, payload: dataToPass });
-          }
-        })
-        .catch(function (error) {
-          if (error.response) {
-            if (error.response.status !== 201) {
-              const data = error.response.data;
-              console.log({ data });
-            }
-          }
-        });
+      await dispatch(updateTodo(todo.todo_id, description));
+      setTimeout(async () => {
+        await dispatch(getUserTodos());
+      }, 2000);
     } finally {
       await handleClose();
     }
@@ -74,7 +59,11 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
           <Button variant="secondary" onClick={resetDescription}>
             Close
           </Button>
-          <Button variant="primary" onClick={(event) => updateDescription(event)}>
+          <Button
+            variant="primary"
+            onClick={(event) => updateDescription(event)}
+            disabled={todo.description === description ? true : false}
+          >
             Update
           </Button>
         </Modal.Footer>
