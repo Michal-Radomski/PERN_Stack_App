@@ -10,6 +10,8 @@ import TokensInfo from "./TokensInfo";
 import AutoLogout from "./AutoLogout";
 import AddTodo from "./AddTodo";
 import UpdateTodo from "./UpdateTodo";
+import allowedIcon from "../Icons/allowedIcon.svg";
+import forbiddenIcon from "../Icons/forbiddenIcon.svg";
 
 export const ToDoDiv = styled.div`
   display: flex;
@@ -29,6 +31,15 @@ export const TableContainer = styled.div`
   width: 100%;
   height: 50vh;
   overflow-y: scroll;
+`;
+
+const TdDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 0.25rem;
 `;
 
 const Dashboard = (): JSX.Element => {
@@ -93,7 +104,7 @@ const Dashboard = (): JSX.Element => {
             <th style={{ width: "80px" }}>Update</th>
             <th style={{ width: "80px" }}>Delete</th>
             <th style={{ width: "35px" }}>Id</th>
-            <th style={{ width: "40px" }}>Private</th>
+            <th style={{ width: "75px" }}>Private</th>
           </tr>
         </thead>
         <tbody>
@@ -121,7 +132,17 @@ const Dashboard = (): JSX.Element => {
                   <td>
                     <Badge bg="success">{todo.todo_id}</Badge>
                   </td>
-                  <td>{JSON.stringify(todo.private)}</td>
+                  <td>
+                    <TdDiv>
+                      <img
+                        width={20}
+                        height={20}
+                        src={JSON.stringify(todo.private) === "true" ? allowedIcon : forbiddenIcon}
+                        alt="Allowed or Forbidden Icon"
+                      />{" "}
+                      {JSON.stringify(todo.private)}
+                    </TdDiv>
+                  </td>
                 </tr>
               );
             })}
