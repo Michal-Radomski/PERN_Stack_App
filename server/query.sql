@@ -87,10 +87,13 @@ select
   t.todo_id,
   t.description,
   t.created_at,
-  t.updated_at
+  t.updated_at,
+  t.private
 from
   users as u
-  join todos as t on t.user_id = u.user_id;
+  join todos as t on t.user_id = u.user_id
+where
+  t.private = false;
 
 -- All Todos for a User (LEFT JOIN in a case user has no todos):
 select
@@ -99,7 +102,8 @@ select
   t.todo_id,
   t.description,
   t.created_at,
-  t.updated_at
+  t.updated_at,
+  t.private
 from
   users as u
   left join todos as t on t.user_id = u.user_id
@@ -112,7 +116,8 @@ select
   t.todo_id,
   t.description,
   t.created_at,
-  t.updated_at
+  t.updated_at,
+  t.private
 from
   users as u
   left join todos as t on t.user_id = u.user_id
@@ -143,6 +148,14 @@ ALTER COLUMN
   private
 SET
   DEFAULT FALSE;
+
+-- //* Updating data
+UPDATE
+  todos
+SET
+  private = 't'
+WHERE
+  todo_id = 28;
 
 -- //* Old Version
 -- Table 2 - Todos - old Version

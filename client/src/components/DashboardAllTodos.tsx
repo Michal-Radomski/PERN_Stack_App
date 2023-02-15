@@ -39,7 +39,8 @@ const DashboardAllTodo = (): JSX.Element => {
 
   React.useEffect(() => {
     if (allTodosFromRedux) {
-      const allTodosFromReduxSorted = allTodosFromRedux.list.sort((a: Todo, b: Todo) => a.todo_id - b.todo_id);
+      let allTodosFromReduxSorted = allTodosFromRedux.list.sort((a: Todo, b: Todo) => a.todo_id - b.todo_id);
+      allTodosFromReduxSorted = allTodosFromReduxSorted.filter((todo) => JSON.stringify(todo.private) === "false");
       setAllTodos(allTodosFromReduxSorted);
     }
   }, [allTodosFromRedux]);

@@ -13,7 +13,7 @@ export const getWholeList: RequestHandler = async (req: CustomRequest, res: Resp
   console.log("req.ip:", req.ip);
   try {
     const list = await pool.query(
-      "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at from users as u join todos as t on t.user_id = u.user_id"
+      "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at, t.private from users as u join todos as t on t.user_id = u.user_id where t.private=false"
     );
     res.status(200).json({ list: list.rows, message: "200, All todos list is ok", color: "info" });
   } catch (error) {
@@ -28,7 +28,7 @@ export const getUserList: RequestHandler = async (req: CustomRequest, res: Respo
   // console.log("req.user!.id:", req.user!.id);
   try {
     const userList = await pool.query(
-      "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at from users as u left join todos as t on t.user_id = u.user_id where u.user_id = $1",
+      "select u.user_name, u.user_email, t.todo_id, t.description, t.created_at, t.updated_at, t.private from users as u left join todos as t on t.user_id = u.user_id where u.user_id = $1",
       [req.user!.id]
     );
     res.status(200).json({ list: userList.rows, message: "200, Your todo list is ok", color: "info" });

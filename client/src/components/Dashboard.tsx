@@ -121,7 +121,7 @@ const Dashboard = (): JSX.Element => {
                   <td>
                     <Badge bg="success">{todo.todo_id}</Badge>
                   </td>
-                  <td>{todo.private ? todo.private : "???"}</td>
+                  <td>{JSON.stringify(todo.private)}</td>
                 </tr>
               );
             })}
