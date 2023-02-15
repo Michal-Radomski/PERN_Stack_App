@@ -34,7 +34,7 @@ export const TableContainer = styled.div`
 const Dashboard = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [jwtToken, usersTodosFromRedux, userMessageFromRedux]: [string, { list: Array<Todo> }, string] = useAppSelector(
+  const [jwtToken, userTodosFromRedux, userMessageFromRedux]: [string, { list: Array<Todo> }, string] = useAppSelector(
     (state: RootState) => [state?.auth?.authStatus?.jwtToken, state?.todos.userTodos, state?.todos?.userTodos?.message]
   );
 
@@ -62,10 +62,11 @@ const Dashboard = (): JSX.Element => {
   }, [dispatch, jwtToken]);
 
   React.useEffect(() => {
-    if (usersTodosFromRedux) {
-      setUsersTodos(usersTodosFromRedux?.list);
+    if (userTodosFromRedux) {
+      const userTodosFromReduxSorted = userTodosFromRedux.list.sort((a: Todo, b: Todo) => a.todo_id - b.todo_id);
+      setUsersTodos(userTodosFromReduxSorted);
     }
-  }, [usersTodosFromRedux]);
+  }, [userTodosFromRedux]);
 
   React.useEffect(() => {
     if (userMessageFromRedux) {
