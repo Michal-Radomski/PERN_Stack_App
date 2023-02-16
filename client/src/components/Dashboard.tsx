@@ -10,8 +10,8 @@ import TokensInfo from "./TokensInfo";
 import AutoLogout from "./AutoLogout";
 import AddTodo from "./AddTodo";
 import UpdateTodo from "./UpdateTodo";
-import allowedIcon from "../Icons/allowedIcon.svg";
-import forbiddenIcon from "../Icons/forbiddenIcon.svg";
+import trueIcon from "../Icons/trueIcon.svg";
+import falseIcon from "../Icons/falseIcon.svg";
 
 export const ToDoDiv = styled.div`
   display: flex;
@@ -137,8 +137,8 @@ const Dashboard = (): JSX.Element => {
                       <img
                         width={20}
                         height={20}
-                        src={JSON.stringify(todo.private) === "true" ? allowedIcon : forbiddenIcon}
-                        alt="Allowed or Forbidden Icon"
+                        src={JSON.stringify(todo.private) === "true" ? trueIcon : falseIcon}
+                        alt="True or False Icon"
                       />{" "}
                       {JSON.stringify(todo.private)}
                     </TdDiv>

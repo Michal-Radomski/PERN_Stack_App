@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 
 import { getUserTodos, updateTodo } from "../redux/actions";
 import { useAppDispatch } from "../redux/hooks";
@@ -43,7 +43,7 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
           <Modal.Title>Update Todo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="modal-body">
+          {/* <div className="modal-body">
             <input
               type="text"
               className="form-control"
@@ -53,7 +53,19 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
               required={true}
               placeholder="Enter description"
             />
-          </div>
+          </div> */}
+
+          <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Description</Form.Label>
+              <Form.Control type="text" placeholder="Enter description" />
+              <Form.Text className="text-muted">Enter description of your todo</Form.Text>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check type="checkbox" label="Check me out" />
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={resetDescription}>
