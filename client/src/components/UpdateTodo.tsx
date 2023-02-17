@@ -10,7 +10,12 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
 
   const [show, setShow] = React.useState(false);
   const [description, setDescription] = React.useState<string>(todo.description);
+  const [privateTodo, setPrivateTodo] = React.useState<boolean>(todo.private);
   // console.log({ description });
+
+  const changePrivateTodo = () => {
+    setPrivateTodo(!privateTodo);
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -18,7 +23,9 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
   const updateDescription = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     try {
-      await dispatch(updateTodo(todo.todo_id, description));
+      const body = { description, privateTodo };
+      // console.log({ body });
+      await dispatch(updateTodo(todo.todo_id, body));
       setTimeout(async () => {
         await dispatch(getUserTodos());
       }, 2000);
@@ -43,27 +50,27 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
           <Modal.Title>Update Todo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <div className="modal-body">
-            <input
-              type="text"
-              className="form-control"
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              minLength={4}
-              required={true}
-              placeholder="Enter description"
-            />
-          </div> */}
-
           <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3">
               <Form.Label>Description</Form.Label>
-              <Form.Control type="text" placeholder="Enter description" />
+              <Form.Control
+                type="text"
+                placeholder="Enter description"
+                as="input"
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+              />
               <Form.Text className="text-muted">Enter description of your todo</Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+            <Form.Group className="mb-3">
+              <Form.Check
+                type="switch"
+                id="private_todo"
+                label="Private todo?"
+                checked={privateTodo}
+                onChange={changePrivateTodo}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -74,7 +81,9 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
           <Button
             variant="primary"
             onClick={(event) => updateDescription(event)}
-            disabled={todo.description === description ? true : false}
+            disabled={
+              (todo.description === description && todo.private === privateTodo) || description === "" ? true : false
+            }
           >
             Update
           </Button>

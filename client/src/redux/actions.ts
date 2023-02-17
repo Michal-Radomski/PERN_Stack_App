@@ -237,26 +237,26 @@ export const deleteTodoAction = (id: number) => async (dispatch: AppDispatch) =>
     });
 };
 
-export const updateTodo = (id: number, description: string) => async (dispatch: AppDispatch) => {
-  const URL = `/todos/${id}`;
-  const body = { description };
+export const updateTodo =
+  (id: number, body: { description: string; privateTodo: boolean }) => async (dispatch: AppDispatch) => {
+    const URL = `/todos/${id}`;
 
-  await customAxiosInstance
-    .put(URL, body)
-    .then((response) => {
-      const dataToPass = response?.data;
-      // console.log("response.status:", response.status);
-      if (response.status === 200) {
-        // console.log("dataToPass:", dataToPass);
-        dispatch({ type: UPDATE_TODO, payload: dataToPass });
-      }
-    })
-    .catch(function (error) {
-      if (error.response) {
-        if (error.response.status !== 201) {
-          const data = error.response.data;
-          console.log({ data });
+    await customAxiosInstance
+      .put(URL, body)
+      .then((response) => {
+        const dataToPass = response?.data;
+        // console.log("response.status:", response.status);
+        if (response.status === 200) {
+          // console.log("dataToPass:", dataToPass);
+          dispatch({ type: UPDATE_TODO, payload: dataToPass });
         }
-      }
-    });
-};
+      })
+      .catch(function (error) {
+        if (error.response) {
+          if (error.response.status !== 201) {
+            const data = error.response.data;
+            console.log({ data });
+          }
+        }
+      });
+  };
