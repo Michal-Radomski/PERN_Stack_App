@@ -62,8 +62,8 @@ export const createTodo: RequestHandler = async (req: CustomRequest, res: Respon
 export const updateTodo = async (req: CustomRequest, res: Response): Promise<object | undefined> => {
   try {
     const { id } = req.params;
-    const { description } = req.body;
-    // console.log({ id, description });
+    const { description, privateTodo } = req.body;
+    // console.log({ id, description, privateTodo });
 
     if (description.length <= 3) {
       return res
@@ -72,8 +72,8 @@ export const updateTodo = async (req: CustomRequest, res: Response): Promise<obj
     }
 
     const updateTodo = await pool.query(
-      "UPDATE todos SET description = $1, updated_at = CURRENT_TIMESTAMP WHERE todo_id = $2 AND user_id = $3 RETURNING *",
-      [description, id, req.user!.id]
+      "UPDATE todos SET description = $1, private = $2, updated_at = CURRENT_TIMESTAMP WHERE todo_id = $3 AND user_id = $4 RETURNING *",
+      [description, privateTodo, id, req.user!.id]
     );
     // console.log("updateTodo.rows:", updateTodo.rows);
 
