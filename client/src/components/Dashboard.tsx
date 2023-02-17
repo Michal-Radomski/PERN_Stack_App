@@ -12,6 +12,7 @@ import AddTodo from "./AddTodo";
 import UpdateTodo from "./UpdateTodo";
 import trueIcon from "../Icons/trueIcon.svg";
 import falseIcon from "../Icons/falseIcon.svg";
+import AddTodo2 from "./AddTodo2";
 
 export const ToDoDiv = styled.div`
   display: flex;
@@ -160,6 +161,7 @@ const Dashboard = (): JSX.Element => {
           <h1 style={{ textAlign: "center", marginTop: "50px" }}>
             <span className="span_bold">{userName}'s</span> Todos
           </h1>
+          <AddTodo2 />
           {usersTodos && usersTodos[0]?.created_at ? (
             <TableContainer>
               <UsersTodoTable />
