@@ -42,12 +42,27 @@ const TdDiv = styled.div`
   gap: 0.25rem;
 `;
 
+const HeaderDiv = styled.div`
+  background-color: yellow;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  h1 {
+    text-align: center;
+  }
+`;
+
 const Dashboard = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
 
   const [jwtToken, userTodosFromRedux, userMessageFromRedux]: [string, { list: Array<Todo> }, string] = useAppSelector(
     (state: RootState) => [state?.auth?.authStatus?.jwtToken, state?.todos.userTodos, state?.todos?.userTodos?.message]
   );
+  // console.log("userTodosFromRedux:", userTodosFromRedux);
 
   const [userName, setUserName] = React.useState<string>("");
   const [usersTodos, setUsersTodos] = React.useState<Array<Todo> | null>(null);
@@ -73,7 +88,7 @@ const Dashboard = (): JSX.Element => {
   }, [dispatch, jwtToken]);
 
   React.useEffect(() => {
-    if (userTodosFromRedux) {
+    if (userTodosFromRedux && Object.keys(userTodosFromRedux).length >= 1) {
       const userTodosFromReduxSorted = userTodosFromRedux.list.sort((a: Todo, b: Todo) => a.todo_id - b.todo_id);
       setUsersTodos(userTodosFromReduxSorted);
     }
@@ -156,10 +171,15 @@ const Dashboard = (): JSX.Element => {
       <React.Fragment>
         <TokensInfo />
         <ToDoDiv>
-          <h1 style={{ textAlign: "center", marginTop: "50px" }}>
-            <span className="span_bold">{userName}'s</span> Todos
-          </h1>
-          <AddTodo />
+          <HeaderDiv>
+            <h1>
+              <span className="span_bold">{userName}'s</span> Todos
+            </h1>
+            <div style={{ float: "right" }}>
+              <AddTodo />
+            </div>
+          </HeaderDiv>
+
           {usersTodos && usersTodos[0]?.created_at ? (
             <TableContainer>
               <UsersTodoTable />
