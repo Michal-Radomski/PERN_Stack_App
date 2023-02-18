@@ -3,8 +3,9 @@ import { Button, Form, Modal } from "react-bootstrap";
 
 import { addTodo, getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import addIcon from "../Icons/addIcon.svg";
 
-const AddTodo2 = (): JSX.Element => {
+const AddTodo = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
   const [userMessageFromRedux]: [string] = useAppSelector((state: RootState) => [state?.todos?.userTodos?.message]);
   // console.log({ userMessageFromRedux });
@@ -61,8 +62,13 @@ const AddTodo2 = (): JSX.Element => {
         </button>
       </form> */}
 
-      <Button variant="warning" onClick={handleShow} size="sm">
-        Update
+      <Button
+        variant="outline-danger"
+        onClick={handleShow}
+        size="sm"
+        style={{ borderRadius: "50%", width: "56px", height: "56px", padding: 3 }}
+      >
+        <img src={addIcon} alt="Add Icon" width="48px" height="48px" />
       </Button>
 
       <Modal show={show} onHide={resetDescription}>
@@ -113,4 +119,4 @@ const AddTodo2 = (): JSX.Element => {
   );
 };
 
-export default AddTodo2;
+export default AddTodo;
