@@ -102,6 +102,10 @@ const Header = (): JSX.Element => {
     await dispatch(refreshTokenAction());
   };
 
+  const deleteAccount = async () => {
+    console.log("deleteAccount");
+  };
+
   return (
     <React.Fragment>
       <Navbar bg="secondary" variant="dark" fixed="top" style={{ padding: "0px" }}>
@@ -179,6 +183,9 @@ const Header = (): JSX.Element => {
                   </Button>
                   <Button onClick={refreshTokenButton} variant="outline-warning" size="sm">
                     Refresh Token
+                  </Button>
+                  <Button onClick={deleteAccount} variant="danger" size="sm">
+                    Delete Account
                   </Button>
                 </ButtonGroup>
               </React.Fragment>

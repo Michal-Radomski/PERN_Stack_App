@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import { addTodo, getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -62,14 +62,23 @@ const AddTodo = (): JSX.Element => {
         </button>
       </form> */}
 
-      <Button
-        variant="outline-danger"
-        onClick={handleShow}
-        size="sm"
-        style={{ borderRadius: "50%", width: "56px", height: "56px", padding: 3 }}
+      <OverlayTrigger
+        placement={"top"}
+        overlay={
+          <Tooltip id="add_todo_tooltip">
+            Add new <strong>Todo</strong>
+          </Tooltip>
+        }
       >
-        <img src={addIcon} alt="Add Icon" width="48px" height="48px" />
-      </Button>
+        <Button
+          variant="outline-danger"
+          onClick={handleShow}
+          size="sm"
+          style={{ borderRadius: "50%", width: "56px", height: "56px", padding: 3 }}
+        >
+          <img src={addIcon} alt="Add Icon" width="48px" height="48px" />
+        </Button>
+      </OverlayTrigger>
 
       <Modal show={show} onHide={resetDescription}>
         <Modal.Header closeButton>
