@@ -43,10 +43,11 @@ export const createTodo: RequestHandler = async (req: CustomRequest, res: Respon
   try {
     // console.log("req.user:", req.user);
     // console.log("req.body:", req.body);
-    const { description } = req.body;
-    const newTodo = await pool.query("INSERT INTO todos (user_id, description) VALUES ($1, $2) RETURNING *", [
+    const { description, privateTodo } = req.body;
+    const newTodo = await pool.query("INSERT INTO todos (user_id, description, private) VALUES ($1, $2, $3) RETURNING *", [
       req.user!.id,
       description,
+      privateTodo,
     ]);
     res.status(201).json({
       answerPSQL: newTodo.rows[0],

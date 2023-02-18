@@ -13,7 +13,7 @@ const AddTodo = (): JSX.Element => {
   const [show, setShow] = React.useState(false);
   const [description, setDescription] = React.useState<string>("");
   const [privateTodo, setPrivateTodo] = React.useState<boolean>(false);
-  // console.log({ description });
+  // console.log({ description, privateTodo });
 
   const changePrivateTodo = () => {
     setPrivateTodo(!privateTodo);
@@ -24,13 +24,16 @@ const AddTodo = (): JSX.Element => {
 
   const resetDescription = async () => {
     await setDescription("");
+    await setPrivateTodo(false);
     await handleClose();
   };
 
   const onSubmitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const body = { description: description };
-    dispatch(addTodo(body));
+    const body = { description, privateTodo };
+    // console.log("body:", body);
+    await dispatch(addTodo(body));
+    await handleClose();
   };
 
   React.useEffect(() => {
@@ -42,6 +45,7 @@ const AddTodo = (): JSX.Element => {
         setTimeout(async () => {
           await setDescription("");
           await dispatch(getUserTodos());
+          await setPrivateTodo(false);
         }, 2000);
       }
     }
@@ -49,19 +53,6 @@ const AddTodo = (): JSX.Element => {
 
   return (
     <React.Fragment>
-      {/* <form className="d-flex" onSubmit={onSubmitForm} style={{ marginTop: "80px", width: "100%" }}>
-        <input
-          type="text"
-          className="form-control"
-          value={description}
-          placeholder="Enter description"
-          onChange={(event) => setDescription(event.target.value)}
-        />
-        <button className="btn btn-success btn-sm" style={{ width: "100px" }}>
-          Add Todo
-        </button>
-      </form> */}
-
       <OverlayTrigger
         placement={"top"}
         overlay={
@@ -82,7 +73,7 @@ const AddTodo = (): JSX.Element => {
 
       <Modal show={show} onHide={resetDescription}>
         <Modal.Header closeButton>
-          <Modal.Title>Update Todo</Modal.Title>
+          <Modal.Title>Add new Todo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -113,14 +104,8 @@ const AddTodo = (): JSX.Element => {
           <Button variant="secondary" onClick={resetDescription}>
             Close
           </Button>
-          <Button
-            variant="primary"
-            // onClick={(event) => updateDescription(event)}
-            // disabled={
-            //   (todo.description === description && todo.private === privateTodo) || description === "" ? true : false
-            // }
-          >
-            Update
+          <Button variant="primary" onClick={(event) => onSubmitForm(event)} disabled={description === "" ? true : false}>
+            Add Todo
           </Button>
         </Modal.Footer>
       </Modal>

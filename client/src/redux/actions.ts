@@ -193,7 +193,7 @@ export const getUserTodos = () => async (dispatch: AppDispatch) => {
     });
 };
 
-export const addTodo = (body: { description: string }) => async (dispatch: AppDispatch) => {
+export const addTodo = (body: { description: string; privateTodo: boolean }) => async (dispatch: AppDispatch) => {
   const URL = "/todos";
   await customAxiosInstance
     .post(URL, body)
