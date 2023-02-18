@@ -43,7 +43,6 @@ const TdDiv = styled.div`
 `;
 
 const HeaderDiv = styled.div`
-  background-color: yellow;
   margin-top: 50px;
   display: flex;
   flex-direction: row;
@@ -51,8 +50,13 @@ const HeaderDiv = styled.div`
   align-items: center;
   align-content: center;
   width: 100%;
+  position: relative;
   h1 {
     text-align: center;
+  }
+  div {
+    position: absolute;
+    right: 0;
   }
 `;
 
@@ -175,7 +179,7 @@ const Dashboard = (): JSX.Element => {
             <h1>
               <span className="span_bold">{userName}'s</span> Todos
             </h1>
-            <div style={{ float: "right" }}>
+            <div>
               <AddTodo />
             </div>
           </HeaderDiv>
