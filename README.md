@@ -24,7 +24,7 @@ App is build thanks to [these tutorials](https://www.youtube.com/@TheStoicProgra
 The .env file is not hosted on the [GitHub.com](https://github.com).\
 I have some packages installed globally (e.g. TypeScript, Nodemon) so you have to install them manually.
 
-## ScreenShots
+## Screenshots
 
 <img alt="Add_Todo" src="./screenshots/Add_Todo.png">
 <img alt="All_Todos" src="./screenshots/All_Todos.png">
@@ -37,9 +37,9 @@ I have some packages installed globally (e.g. TypeScript, Nodemon) so you have t
 - The App is written in [TypeScript](https://www.typescriptlang.org).
 - [React-Bootstrap](https://react-bootstrap.github.io), [Sass](https://sass-lang.com) and
   [Styled-Components](https://styled-components.com) are used to customize the UI.
-- CRUD operations are performed using : [Axios](https://axios-http.com).
-- Client-side routing is done using: [React Router](https://reactrouter.com/en/main).
-- Global state of the App is maintained by: [Redux](https://redux.js.org).
+- CRUD operations are performed using [Axios](https://axios-http.com).
+- Client-side routing is done using [React Router](https://reactrouter.com/en/main).
+- Global state of the App is maintained by [Redux](https://redux.js.org).
 - [React](https://reactjs.org) is used to build client-side.
 - [Express](https://expressjs.com) is used to build server-side.
 - [Node-Postgres](https://www.npmjs.com/package/pg) is used as a [PostgreSQL](https://www.postgresql.org/) client for
