@@ -24,7 +24,7 @@ indexRouter.post("/logout", logout);
 
 indexRouter.post("/refresh", checkAuth, refreshJWT_Token);
 
-indexRouter.delete("/user", checkAuth, deleteUser);
+indexRouter.delete("/delete/user", checkAuth, deleteUser);
 
 //* Unnecessary - for testing only
 // indexRouter.get("/dashboard", checkAuth, dashboard);

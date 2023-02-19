@@ -12,6 +12,7 @@ import {
   ADD_TODO,
   DELETE_TODO,
   UPDATE_TODO,
+  DELETE_USER,
 } from "./actionTypes";
 // import { Action, RootState } from "../Interfaces";
 
@@ -32,6 +33,8 @@ const authReducer = function (state = initialState, action: Action): RootState {
       return { ...state, authStatus: { ...state.authStatus, ...action.payload } };
     case REFRESH_TOKEN:
       return { ...state, authStatus: action.payload };
+    case DELETE_USER:
+      return { ...state, authStatus: { ...state.authStatus, ...action.payload } };
 
     default:
       return state;

@@ -250,11 +250,13 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
 export const deleteUser = async (req: CustomRequest, res: Response): Promise<object | undefined> => {
   try {
     const deleteUser = await pool.query("DELETE FROM users WHERE user_id = $1 RETURNING *", [req.user!.id]);
-    console.log("deleteUser:", deleteUser);
+    // console.log("deleteUser.rows:", deleteUser.rows);
     if (deleteUser.rows.length === 0) {
       return res.status(404).json({ message: "404, No such user", color: "danger" });
     }
-    res.status(200).json({ message: `200, User id: ${req.user!.id} was deleted`, color: "danger" });
+    await res.cookie("jwtToken", "", { maxAge: 3000 });
+    await res.cookie("refreshToken", "", { maxAge: 3000 });
+    await res.status(200).json({ message: `200, User id: ${req.user!.id} was deleted`, color: "danger" });
   } catch (error) {
     console.error({ error });
   }

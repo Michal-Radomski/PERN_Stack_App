@@ -14,6 +14,7 @@ import {
   ADD_TODO,
   DELETE_TODO,
   UPDATE_TODO,
+  DELETE_USER,
 } from "./actionTypes";
 
 //* Auth
@@ -136,6 +137,38 @@ export const refreshTokenAction = () => async (dispatch: AppDispatch) => {
         const dataToPassWithStatus = { ...dataToPass, auth: true };
         // console.log("dataToPassWithStatus:", dataToPassWithStatus);
         dispatch({ type: REFRESH_TOKEN, payload: dataToPassWithStatus });
+      }
+    })
+    .catch(function (error) {
+      if (error.response) {
+        if (error.response.status !== 200) {
+          const dataToPass = error.response.data;
+          const dataToPassWithStatus = { ...dataToPass, auth: false };
+          dispatch({ type: CHECK_AUTH, payload: dataToPassWithStatus });
+        }
+      } else if (error.request) {
+        console.log("error.request:", error.request);
+      } else {
+        console.log("Error - error.message", error.message);
+      }
+      console.log("error.config:", error.config);
+    });
+};
+
+export const deleteUser = () => async (dispatch: AppDispatch) => {
+  const URL = "/api/delete/user";
+  await axios
+    .delete(URL)
+    .then((response) => {
+      const dataToPass = response?.data;
+      // console.log("response.status:", response.status);
+      // console.log("dataToPass:", dataToPass);
+      if (response.status === 200) {
+        //* auth: false - in next action: logout
+        // const dataToPassWithStatus = { ...dataToPass, auth: false };
+        const dataToPassWithStatus = { ...dataToPass };
+        // console.log("dataToPassWithStatus:", dataToPassWithStatus);
+        dispatch({ type: DELETE_USER, payload: dataToPassWithStatus });
       }
     })
     .catch(function (error) {

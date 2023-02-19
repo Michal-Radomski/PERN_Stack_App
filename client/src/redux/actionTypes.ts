@@ -11,6 +11,8 @@ export const CHANGE_MESSAGE = "CHANGE_MESSAGE";
 
 export const REFRESH_TOKEN = "REFRESH_TOKEN";
 
+export const DELETE_USER = "DELETE_USER";
+
 // Get Todos
 export const GET_ALL_TODOS = "GET_ALL_TODOS";
 

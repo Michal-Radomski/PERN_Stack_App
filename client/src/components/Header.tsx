@@ -4,7 +4,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import jwt_decode from "jwt-decode";
 
-import { changeMessage, logoutAction, refreshTokenAction } from "../redux/actions";
+import { changeMessage, deleteUser, logoutAction, refreshTokenAction } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { timestampToString } from "../utils/helpers";
 
@@ -103,7 +103,13 @@ const Header = (): JSX.Element => {
   };
 
   const deleteAccount = async () => {
-    console.log("deleteAccount");
+    if (window.confirm(`Do you really want to delete your account?`)) {
+      await dispatch(deleteUser());
+      await setTimeout(async () => {
+        await dispatch(logoutAction());
+        await navigate("/");
+      }, 2000);
+    }
   };
 
   return (

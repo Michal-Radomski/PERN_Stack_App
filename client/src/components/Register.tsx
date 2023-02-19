@@ -36,7 +36,7 @@ const Register = (): JSX.Element => {
   });
 
   React.useEffect(() => {
-    if (authMessage === "User registered") {
+    if (authMessage === "201, User registered") {
       const postRegisterAction = async () => {
         // await alert("You will be redirected to Login Page");
         setTimeout(() => {
