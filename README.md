@@ -28,7 +28,7 @@ I have some packages installed globally (e.g. TypeScript, Nodemon) so you have t
 
 <img alt="Add_Todo" src="./screenshots/Add_Todo.png">
 <img alt="All_Todos" src="./screenshots/All_Todos.png">
-<img alt="Toast" src="./screenshots/Toast.png">
+<img alt="Toast" src="./screenshots/Toasts.png">
 <img alt="Update_Todo" src="./screenshots/Update_Todo.png">
 <img alt="User_dashboard" src="./screenshots/User_dashboard.png">
 
@@ -37,15 +37,14 @@ I have some packages installed globally (e.g. TypeScript, Nodemon) so you have t
 - The App is written in [TypeScript](https://www.typescriptlang.org).
 - [React-Bootstrap](https://react-bootstrap.github.io), [Sass](https://sass-lang.com) and
   [Styled-Components](https://styled-components.com) are used to customize the UI.
-- Fetching data is done by using : [Axios](https://axios-http.com).
-- Client-side routing is done using: [React Router](https://v5.reactrouter.com).
+- CRUD operations are done by using : [Axios](https://axios-http.com).
+- Client-side routing is done using: [React Router](https://reactrouter.com/en/main).
 - Global state of the App is maintained by: [Redux](https://redux.js.org).
 - [React](https://reactjs.org) is used to build client-side.
 - [Express](https://expressjs.com) is used to build server-side.
 - [Node-Postgres](https://www.npmjs.com/package/pg) is used as [PostgreSQL](https://www.postgresql.org/) client for Node.js.
 - [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken) is used to to decode, verify and generate
   [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token).
-- [React Router](https://reactrouter.com/en/main) is used for client side routing.
 - [JWT-decode](https://www.npmjs.com/package/jwt-decode) is used for decoding JWTs token which are Base64Url encoded.
 - [Bcrypt](https://www.npmjs.com/package/bcrypt) is used to hash passwords.
 
