@@ -1,6 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "description": "PERN Stack App - client",
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
