@@ -12,12 +12,13 @@ This is my first [PERN stack](https://www.geeksforgeeks.org/what-is-pern-stack) 
 
 ### General Info
 
-This is [Crud App](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete). You can login, logout, register and delete
-account (this remove all todos - build with
-[ON DELETE CASCADE Constraint](https://www.geeksforgeeks.org/mysql-on-delete-cascade-constraint/)). While You are logged in
-you can add, update, delete your todos and read your todos and other users' todos if are not private. AutoLogout is after 10
-mins of inactivity. There are axios interceptors to refresh access token.\
-App is build thanks to [those tutorials](https://www.youtube.com/@TheStoicProgrammers/videos) and [this one](https://dev.to/olumidesamuel_/implementing-autologout-feature-in-web-applications-react-js-28k5).
+This is [Crud App](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete). You can log in, log out, register and
+delete account (this will remove all todos -
+[ON DELETE CASCADE Constraint](https://www.geeksforgeeks.org/mysql-on-delete-cascade-constraint/)) is used. When you are
+logged in you can add, update, delete your tasks and read your tasks and those of other users if they are not private.
+Automatic logout is after 10 minutes of inactivity. There are axios interceptors to refresh the access token.\
+App is build thanks to [these tutorials](https://www.youtube.com/@TheStoicProgrammers/videos) and [these one](https://dev.to/olumidesamuel_/implementing-autologout-feature-in-web-applications-
+react-js-28k5).
 
 ## Notes
 
@@ -37,12 +38,13 @@ I have some packages installed globally (e.g. TypeScript, Nodemon) so you have t
 - The App is written in [TypeScript](https://www.typescriptlang.org).
 - [React-Bootstrap](https://react-bootstrap.github.io), [Sass](https://sass-lang.com) and
   [Styled-Components](https://styled-components.com) are used to customize the UI.
-- CRUD operations are done by using : [Axios](https://axios-http.com).
+- CRUD operations are performed using : [Axios](https://axios-http.com).
 - Client-side routing is done using: [React Router](https://reactrouter.com/en/main).
 - Global state of the App is maintained by: [Redux](https://redux.js.org).
 - [React](https://reactjs.org) is used to build client-side.
 - [Express](https://expressjs.com) is used to build server-side.
-- [Node-Postgres](https://www.npmjs.com/package/pg) is used as [PostgreSQL](https://www.postgresql.org/) client for Node.js.
+- [Node-Postgres](https://www.npmjs.com/package/pg) is used as [PostgreSQL](https://www.postgresql.org/) client for
+  [Node.js](https://nodejs.org/en/).
 - [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken) is used to to decode, verify and generate
   [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token).
 - [JWT-decode](https://www.npmjs.com/package/jwt-decode) is used for decoding JWTs token which are Base64Url encoded.
