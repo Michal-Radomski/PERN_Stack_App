@@ -72,6 +72,7 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
                 onChange={changePrivateTodo}
               />
             </Form.Group>
+            {!privateTodo && <p style={{ color: "red", marginBottom: "4px" }}>Your Todo is public!</p>}
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -85,7 +86,7 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
               (todo.description === description && todo.private === privateTodo) || description === "" ? true : false
             }
           >
-            Update
+            Update Todo
           </Button>
         </Modal.Footer>
       </Modal>

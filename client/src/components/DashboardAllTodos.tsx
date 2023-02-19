@@ -92,7 +92,12 @@ const DashboardAllTodo = (): JSX.Element => {
       <TokensInfo />
       <ToDoDiv>
         <h1 style={{ textAlign: "center", marginTop: "80px" }}>
-          All Todos, Quantity: {allTodos && <span className="span_bold">{allTodos.length}</span>}
+          All Todos, Quantity:{" "}
+          {allTodos && allTodos.length > 1 ? (
+            <span className="span_bold">{allTodos.length}</span>
+          ) : (
+            <span className="span_bold">0</span>
+          )}
         </h1>
         {allTodos && allTodos[0]?.created_at ? (
           <TableContainer2>

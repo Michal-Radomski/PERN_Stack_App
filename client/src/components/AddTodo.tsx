@@ -103,7 +103,7 @@ const AddTodo = (): JSX.Element => {
               />
             </Form.Group>
           </Form>
-          {!privateTodo && <p style={{ color: "red" }}>Your Todo will be public!</p>}
+          {!privateTodo && <p style={{ color: "red", marginBottom: "4px" }}>Your Todo will be public!</p>}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={resetDescription}>

@@ -178,7 +178,11 @@ const Dashboard = (): JSX.Element => {
           <HeaderDiv>
             <h1>
               <span className="span_bold">{userName}'s</span> Todos, Quantity:{" "}
-              {usersTodos && <span className="span_bold">{usersTodos.length}</span>}
+              {usersTodos && usersTodos.length > 1 ? (
+                <span className="span_bold">{usersTodos.length}</span>
+              ) : (
+                <span className="span_bold">0</span>
+              )}
             </h1>
             <div>
               <AddTodo />
