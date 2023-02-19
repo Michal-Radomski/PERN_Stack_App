@@ -74,7 +74,7 @@ const Dashboard = (): JSX.Element => {
 
   const deleteTodo = async (id: number) => {
     // console.log({ id });
-    if (window.confirm(`Do you really want to delete todo id: ${id}?`)) {
+    if (window.confirm(`Do you really want to DELETE todo id: ${id}?`)) {
       await dispatch(deleteTodoAction(id));
     }
   };
@@ -178,7 +178,7 @@ const Dashboard = (): JSX.Element => {
           <HeaderDiv>
             <h1>
               <span className="span_bold">{userName}'s</span> Todos, Quantity:{" "}
-              {usersTodos && usersTodos.length > 1 ? (
+              {usersTodos && usersTodos[0]?.created_at ? (
                 <span className="span_bold">{usersTodos.length}</span>
               ) : (
                 <span className="span_bold">0</span>

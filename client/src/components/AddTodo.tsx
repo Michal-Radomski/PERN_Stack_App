@@ -76,7 +76,7 @@ const AddTodo = (): JSX.Element => {
           <Modal.Title>Add new Todo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={onSubmitForm}>
             <Form.Group className="mb-3">
               <Form.Label>Todo Description</Form.Label>
               <FloatingLabel label="Enter description" className="mb-3">

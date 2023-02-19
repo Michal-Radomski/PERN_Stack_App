@@ -50,7 +50,7 @@ const EditTodo = ({ todo }: { todo: Todo }): JSX.Element => {
           <Modal.Title>Update Todo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={updateDescription}>
             <Form.Group className="mb-3">
               <Form.Label>Description</Form.Label>
               <Form.Control

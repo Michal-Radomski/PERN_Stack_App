@@ -99,7 +99,7 @@ export const deleteTodo = async (req: CustomRequest, res: Response): Promise<obj
     if (deleteTodo.rows.length === 0) {
       return res.status(403).json({ message: "403, This todo is not yours", color: "danger" });
     }
-    res.status(200).json({ message: `200, Todo id: ${id} was deleted`, color: "warning" });
+    res.status(200).json({ message: `200, Todo id: ${id} was deleted`, color: "danger" });
   } catch (error) {
     console.error({ error });
   }
