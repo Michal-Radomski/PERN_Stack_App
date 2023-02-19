@@ -48,6 +48,7 @@ I have some packages installed globally (e.g. TypeScript, Nodemon) so you have t
   [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token).
 - [JWT-decode](https://www.npmjs.com/package/jwt-decode) is used for decoding JWTs token which are Base64Url encoded.
 - [Bcrypt](https://www.npmjs.com/package/bcrypt) is used to hash passwords.
+- Some icons were taken from [IconFinder](https://www.iconfinder.com).
 
 ## License
 
