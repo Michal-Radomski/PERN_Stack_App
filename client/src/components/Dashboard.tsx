@@ -93,7 +93,7 @@ const Dashboard = (): JSX.Element => {
 
   React.useEffect(() => {
     if (userTodosFromRedux && Object.keys(userTodosFromRedux).length >= 1) {
-      const userTodosFromReduxSorted = userTodosFromRedux.list.sort((a: Todo, b: Todo) => a.todo_id - b.todo_id);
+      const userTodosFromReduxSorted = userTodosFromRedux.list.sort((a: Todo, b: Todo) => b.todo_id - a.todo_id);
       setUsersTodos(userTodosFromReduxSorted);
     }
   }, [userTodosFromRedux]);
@@ -177,7 +177,8 @@ const Dashboard = (): JSX.Element => {
         <ToDoDiv>
           <HeaderDiv>
             <h1>
-              <span className="span_bold">{userName}'s</span> Todos
+              <span className="span_bold">{userName}'s</span> Todos, Quantity:{" "}
+              {usersTodos && <span className="span_bold">{usersTodos.length}</span>}
             </h1>
             <div>
               <AddTodo />

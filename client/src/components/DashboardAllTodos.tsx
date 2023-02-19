@@ -39,7 +39,7 @@ const DashboardAllTodo = (): JSX.Element => {
 
   React.useEffect(() => {
     if (allTodosFromRedux && Object.keys(allTodosFromRedux).length >= 1) {
-      let allTodosFromReduxSorted = allTodosFromRedux.list.sort((a: Todo, b: Todo) => a.todo_id - b.todo_id);
+      let allTodosFromReduxSorted = allTodosFromRedux.list.sort((a: Todo, b: Todo) => b.todo_id - a.todo_id);
       allTodosFromReduxSorted = allTodosFromReduxSorted.filter((todo) => JSON.stringify(todo.private) === "false");
       setAllTodos(allTodosFromReduxSorted);
     }
@@ -91,7 +91,9 @@ const DashboardAllTodo = (): JSX.Element => {
     <React.Fragment>
       <TokensInfo />
       <ToDoDiv>
-        <h1 style={{ textAlign: "center", marginTop: "80px" }}>All Todos</h1>
+        <h1 style={{ textAlign: "center", marginTop: "80px" }}>
+          All Todos, Quantity: {allTodos && <span className="span_bold">{allTodos.length}</span>}
+        </h1>
         {allTodos && allTodos[0]?.created_at ? (
           <TableContainer2>
             <AllTodosTable />
