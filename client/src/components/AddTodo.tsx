@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, FloatingLabel, Form, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import { addTodo, getUserTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -78,33 +78,42 @@ const AddTodo = (): JSX.Element => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter description"
-                as="input"
-                value={description}
-                onChange={(event) => setDescription(event.target.value)}
-              />
-              <Form.Text className="text-muted">Enter description of your todo</Form.Text>
+              <Form.Label>Todo Description</Form.Label>
+              <FloatingLabel label="Enter description" className="mb-3">
+                <Form.Control
+                  type="text"
+                  placeholder="Enter description"
+                  as="input"
+                  value={description}
+                  onChange={(event) => setDescription(event.target.value)}
+                  minLength={4}
+                  required={true}
+                />
+              </FloatingLabel>
+              {!description && <Form.Text className="text-muted">Enter description of your todo</Form.Text>}
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Check
                 type="switch"
                 id="private_todo"
-                label="Private todo?"
+                label="Private todo? "
                 checked={privateTodo}
                 onChange={changePrivateTodo}
               />
             </Form.Group>
           </Form>
+          {!privateTodo && <p style={{ color: "red" }}>Your Todo will be public!</p>}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={resetDescription}>
             Close
           </Button>
-          <Button variant="primary" onClick={(event) => onSubmitForm(event)} disabled={description === "" ? true : false}>
+          <Button
+            variant="primary"
+            onClick={(event) => onSubmitForm(event)}
+            disabled={description === "" || description.length <= 3 ? true : false}
+          >
             Add Todo
           </Button>
         </Modal.Footer>
