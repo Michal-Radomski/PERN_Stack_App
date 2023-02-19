@@ -103,7 +103,10 @@ const Header = (): JSX.Element => {
   };
 
   const deleteAccount = async () => {
-    if (window.confirm(`Do you really want to delete your account?`)) {
+    if (
+      window.confirm(`Do you really want to delete your account?\n
+    All your Todos will be REMOVED`)
+    ) {
       await dispatch(deleteUser());
       await setTimeout(async () => {
         await dispatch(logoutAction());
@@ -190,9 +193,19 @@ const Header = (): JSX.Element => {
                   <Button onClick={refreshTokenButton} variant="outline-warning" size="sm">
                     Refresh Token
                   </Button>
-                  <Button onClick={deleteAccount} variant="danger" size="sm">
-                    Delete Account
-                  </Button>
+
+                  <OverlayTrigger
+                    placement={"bottom"}
+                    overlay={
+                      <Tooltip id="delete_user_tooltip">
+                        Your account and all your todos <strong>will be REMOVED</strong>
+                      </Tooltip>
+                    }
+                  >
+                    <Button onClick={deleteAccount} variant="danger" size="sm">
+                      Delete Account
+                    </Button>
+                  </OverlayTrigger>
                 </ButtonGroup>
               </React.Fragment>
             )}

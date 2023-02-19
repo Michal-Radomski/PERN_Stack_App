@@ -74,7 +74,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     // console.log({ newUser });
 
     return res.status(201).json({
-      message: "201, User registered",
+      message: "201, User registered, please Login",
       color: "success",
     });
   } catch (error) {
@@ -256,7 +256,9 @@ export const deleteUser = async (req: CustomRequest, res: Response): Promise<obj
     }
     await res.cookie("jwtToken", "", { maxAge: 3000 });
     await res.cookie("refreshToken", "", { maxAge: 3000 });
-    await res.status(200).json({ message: `200, User id: ${req.user!.id} was deleted`, color: "danger" });
+    await res
+      .status(200)
+      .json({ message: `200, User id: ${req.user!.id} and all user's Todos were DELETED`, color: "danger" });
   } catch (error) {
     console.error({ error });
   }

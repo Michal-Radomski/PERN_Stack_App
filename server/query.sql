@@ -37,6 +37,12 @@ CREATE TABLE todos(
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+-- Remove user's todos when user is deleted
+alter table
+  todos drop constraint todos_user_id_fkey,
+add
+  constraint todos_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) on delete cascade;
+
 -- Fake Data!
 INSERT INTO
   todos (user_id, description)
