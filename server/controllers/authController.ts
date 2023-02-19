@@ -245,3 +245,17 @@ export const refreshJWT_Token: RequestHandler = async (req: CustomRequest, res: 
     res.status(401).json({ message: "401, Token is not valid", error: error });
   }
 };
+
+// Delete a User
+export const deleteUser = async (req: CustomRequest, res: Response): Promise<object | undefined> => {
+  try {
+    const deleteUser = await pool.query("DELETE FROM users WHERE user_id = $1 RETURNING *", [req.user!.id]);
+    console.log("deleteUser:", deleteUser);
+    if (deleteUser.rows.length === 0) {
+      return res.status(404).json({ message: "404, No such user", color: "danger" });
+    }
+    res.status(200).json({ message: `200, User id: ${req.user!.id} was deleted`, color: "danger" });
+  } catch (error) {
+    console.error({ error });
+  }
+};

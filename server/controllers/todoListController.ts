@@ -89,6 +89,7 @@ export const updateTodo = async (req: CustomRequest, res: Response): Promise<obj
 
 // Delete a todo
 export const deleteTodo = async (req: CustomRequest, res: Response): Promise<object | undefined> => {
+  // console.log("req.user!.id:", req.user!.id);
   try {
     const { id } = req.params;
     const deleteTodo = await pool.query("DELETE FROM todos WHERE todo_id = $1 AND user_id = $2 RETURNING *", [

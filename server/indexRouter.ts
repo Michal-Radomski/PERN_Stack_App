@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 
 import {
+  deleteUser,
   // dashboard,
   // getTestRoute,
   login,
@@ -21,7 +22,9 @@ indexRouter.post("/login", login);
 
 indexRouter.post("/logout", logout);
 
-indexRouter.post("/refresh", refreshJWT_Token);
+indexRouter.post("/refresh", checkAuth, refreshJWT_Token);
+
+indexRouter.delete("/user", checkAuth, deleteUser);
 
 //* Unnecessary - for testing only
 // indexRouter.get("/dashboard", checkAuth, dashboard);
