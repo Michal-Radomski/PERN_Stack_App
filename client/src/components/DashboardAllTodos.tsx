@@ -2,6 +2,8 @@ import React from "react";
 import { Badge, Table } from "react-bootstrap";
 import jwt_decode from "jwt-decode";
 import styled from "styled-components";
+//Todo: use it?
+import { shallowEqual } from "react-redux";
 
 import { getAllTodos } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -16,10 +18,10 @@ const TableContainer2 = styled(TableContainer)`
 const DashboardAllTodo = (): JSX.Element => {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [jwtToken, allTodosFromRedux]: [string, { list: Array<Todo> }] = useAppSelector((state: RootState) => [
-    state?.auth?.authStatus?.jwtToken,
-    state?.todos.allTodos,
-  ]);
+  const [jwtToken, allTodosFromRedux]: [string, { list: Array<Todo> }] = useAppSelector(
+    (state: RootState) => [state?.auth?.authStatus?.jwtToken, state?.todos.allTodos],
+    shallowEqual
+  );
 
   const [userEmail, setUserEmail] = React.useState<string>("");
   const [allTodos, setAllTodos] = React.useState<Array<Todo> | null>(null);

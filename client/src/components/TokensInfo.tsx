@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+//Todo: use it?
+import { shallowEqual } from "react-redux";
 
 import { useAppSelector } from "../redux/hooks";
 
@@ -15,10 +17,10 @@ const P2 = styled(P)`
 `;
 
 const TokensInfo = (): JSX.Element => {
-  const [jwtToken, refreshTokenFromRedux]: [string, string] = useAppSelector((state: RootState) => [
-    state?.auth?.authStatus?.jwtToken,
-    state?.auth?.authStatus?.refreshToken,
-  ]);
+  const [jwtToken, refreshTokenFromRedux]: [string, string] = useAppSelector(
+    (state: RootState) => [state?.auth?.authStatus?.jwtToken, state?.auth?.authStatus?.refreshToken],
+    shallowEqual
+  );
 
   const [token, setToken] = React.useState<string>("");
   const [refreshToken, setRefreshToken] = React.useState<string>("");

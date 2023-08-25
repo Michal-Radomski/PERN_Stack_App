@@ -3,6 +3,8 @@ import { Button, ButtonGroup, Nav, Navbar, OverlayTrigger, Tooltip } from "react
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import jwt_decode from "jwt-decode";
+//Todo: use it?
+import { shallowEqual } from "react-redux";
 
 import { changeMessage, deleteUser, logoutAction, refreshTokenAction } from "../redux/actions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -56,11 +58,14 @@ const Header = (): JSX.Element => {
   // console.log({ path });
 
   const dispatch: AppDispatch = useAppDispatch();
-  const [authStatus, jwtToken, refreshTokenFromRedux]: [boolean, string, string] = useAppSelector((state: RootState) => [
-    state?.auth?.authStatus?.auth,
-    state?.auth?.authStatus?.jwtToken,
-    state?.auth?.authStatus?.refreshToken,
-  ]);
+  const [authStatus, jwtToken, refreshTokenFromRedux]: [boolean, string, string] = useAppSelector(
+    (state: RootState) => [
+      state?.auth?.authStatus?.auth,
+      state?.auth?.authStatus?.jwtToken,
+      state?.auth?.authStatus?.refreshToken,
+    ],
+    shallowEqual
+  );
   // console.log("jwtToken;", jwtToken);
 
   const [token, setToken] = React.useState<Token>({

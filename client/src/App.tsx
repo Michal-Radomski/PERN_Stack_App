@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+//Todo: use it?
+import { shallowEqual } from "react-redux";
 
 import "./App.scss";
 import Footer from "./components/Footer";
@@ -26,15 +28,18 @@ function App(): JSX.Element {
     userColorFromRedux,
     allTodosMessageFromRedux,
     allTodosColorFromRedux,
-  ]: [boolean, string, string, string, string, string, string] = useAppSelector((state: RootState) => [
-    state?.auth?.authStatus?.auth,
-    state?.auth?.authStatus?.message,
-    state?.auth?.authStatus?.color,
-    state?.todos?.userTodos?.message,
-    state?.todos?.userTodos?.color,
-    state?.todos?.allTodos?.message,
-    state?.todos?.allTodos?.color,
-  ]);
+  ]: [boolean, string, string, string, string, string, string] = useAppSelector(
+    (state: RootState) => [
+      state?.auth?.authStatus?.auth,
+      state?.auth?.authStatus?.message,
+      state?.auth?.authStatus?.color,
+      state?.todos?.userTodos?.message,
+      state?.todos?.userTodos?.color,
+      state?.todos?.allTodos?.message,
+      state?.todos?.allTodos?.color,
+    ],
+    shallowEqual
+  );
   // console.log("authMessage;", authMessage);
 
   const [authMessage, setAuthMessage] = React.useState<string>("");

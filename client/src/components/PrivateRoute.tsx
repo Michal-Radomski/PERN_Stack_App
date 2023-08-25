@@ -1,14 +1,19 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
+//Todo: use it?
+import { shallowEqual } from "react-redux";
 
 import { useAppSelector } from "../redux/hooks";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }): JSX.Element => {
-  const [authStatus, jwtToken, refreshToken]: [boolean, string, string] = useAppSelector((state: RootState) => [
-    state?.auth?.authStatus?.auth,
-    state?.auth?.authStatus?.jwtToken,
-    state?.auth?.authStatus?.refreshToken,
-  ]);
+  const [authStatus, jwtToken, refreshToken]: [boolean, string, string] = useAppSelector(
+    (state: RootState) => [
+      state?.auth?.authStatus?.auth,
+      state?.auth?.authStatus?.jwtToken,
+      state?.auth?.authStatus?.refreshToken,
+    ],
+    shallowEqual
+  );
 
   let location = useLocation();
 
