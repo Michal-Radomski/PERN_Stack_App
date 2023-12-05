@@ -201,8 +201,8 @@ export const getAllTodos = () => async (dispatch: AppDispatch) => {
       }
     })
     .catch(function (error) {
-      if (error) {
-        console.log({ error });
+      if (error?.response) {
+        console.error("error?.response?.status:", error?.response?.status);
       }
     });
 };
@@ -220,8 +220,8 @@ export const getUserTodos = () => async (dispatch: AppDispatch) => {
       }
     })
     .catch(function (error) {
-      if (error) {
-        console.log({ error });
+      if (error?.response) {
+        console.error("error?.response?.status:", error?.response?.status);
       }
     });
 };
