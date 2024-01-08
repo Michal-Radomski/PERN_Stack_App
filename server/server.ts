@@ -63,3 +63,6 @@ server.listen({ port: port }, () => {
 //* Generate JWT secret string
 // const JWT_Secret = require("crypto").randomBytes(48).toString("hex");
 // console.log({ JWT_Secret }, JWT_Secret.length);
+
+//* Generate JWT secret string - v2
+// openssl rand -hex 64
