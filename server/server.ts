@@ -45,6 +45,7 @@ app.use("/api", indexRouter);
 // Port
 const port = (process.env.PORT || 5000) as number;
 
+//* PostgresQL DB
 // connectDb();
 pool
   .connect()
