@@ -1,3 +1,5 @@
+// Todo: add compression: https://www.npmjs.com/package/compression
+
 import http from "http";
 
 import * as dotenv from "dotenv";
