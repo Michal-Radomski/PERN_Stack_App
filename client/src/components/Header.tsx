@@ -3,7 +3,6 @@ import { Button, ButtonGroup, Nav, Navbar, OverlayTrigger, Tooltip } from "react
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import jwt_decode from "jwt-decode";
-//Todo: use it?
 import { shallowEqual } from "react-redux";
 
 import { changeMessage, deleteUser, logoutAction, refreshTokenAction } from "../redux/actions";

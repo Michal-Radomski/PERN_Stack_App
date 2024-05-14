@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-//Todo: use it?
 import { shallowEqual } from "react-redux";
 
 import { useAppSelector } from "../redux/hooks";

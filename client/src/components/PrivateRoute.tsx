@@ -1,6 +1,5 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-//Todo: use it?
 import { shallowEqual } from "react-redux";
 
 import { useAppSelector } from "../redux/hooks";

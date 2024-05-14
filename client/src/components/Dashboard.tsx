@@ -2,7 +2,6 @@ import React from "react";
 import { Badge, Button, Table } from "react-bootstrap";
 import styled from "styled-components";
 import jwt_decode from "jwt-decode";
-//Todo: use it?
 import { shallowEqual } from "react-redux";
 
 import { deleteTodoAction, getUserTodos } from "../redux/actions";
