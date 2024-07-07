@@ -13,7 +13,7 @@ import {
 import { createTodo, deleteTodo, getUserList, getWholeList, updateTodo } from "./controllers/todoListController";
 import { checkAuth } from "./middleware";
 
-const indexRouter: Router = express.Router();
+const indexRouter: Router = express.Router({ strict: false, caseSensitive: true });
 
 //* Auth
 indexRouter.post("/register", register);
