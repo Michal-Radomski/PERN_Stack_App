@@ -2,7 +2,7 @@
 
 type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
-type Fetch = typeof store.fetch;
+type Fetch = () => RootState;
 type Action = typeof store.action;
 
 interface User {
