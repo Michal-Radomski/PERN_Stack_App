@@ -58,7 +58,7 @@ pool
   .catch((error) => console.error({ error }));
 
 const server = http.createServer(app);
-server.listen({ port: port }, () => {
+server.listen({ port: port }, (): void => {
   console.log(`Server is listening at http://localhost:${port}`);
   // For testing only
   console.log("Current Time:", new Date().toLocaleTimeString());
