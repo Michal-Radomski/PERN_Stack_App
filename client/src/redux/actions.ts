@@ -50,7 +50,10 @@ export const checkAuth = () => async (dispatch: AppDispatch) => {
       // console.log("error.config:", error.config);
       //! Better way of handling errors?
       if (axios.isAxiosError(error)) {
-        console.log("error?.response?.status:", error?.response?.status);
+        console.error("Axios error:", error.response?.data);
+        console.error("Status code:", error.response?.status);
+      } else {
+        console.error("Unexpected error:", error);
       }
     });
 };
