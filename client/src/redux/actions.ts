@@ -41,7 +41,7 @@ export const checkAuth = () => async (dispatch: AppDispatch) => {
         }
         // console.log("error.response.data:", error.response.data);
         // console.log("error.response.status:", error.response.status);
-        // console.log("error.response.headers:", error.response.status);
+        // console.log("error.response.headers:", error.response.headers);
         // } else if (error.request) {
         // console.log("error.request:", error.request);
         // } else {
