@@ -1,5 +1,9 @@
 // Types and Interfaces
 
+declare module "*.scss";
+declare module "*.sass";
+declare module "*.css";
+
 type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
 type Fetch = () => RootState;
